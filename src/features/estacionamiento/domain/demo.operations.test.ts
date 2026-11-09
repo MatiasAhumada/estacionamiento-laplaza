@@ -10,8 +10,18 @@ import { calculateStayPrice } from "./tariff";
 import { parseDemoState } from "../demo/demo-storage";
 import { entrySchema } from "../validation/entry.schema";
 import { staySearchSchema } from "../validation/stay-search.schema";
+import { receivedCashSchema } from "../validation/payment.schema";
 
 describe("estado demo del estacionamiento", () => {
+  it("convierte efectivo a centavos y rechaza importes insuficientes, negativos o mal formados", () => {
+    assert.equal(receivedCashSchema.parse("8000"), 800_000);
+    assert.equal(receivedCashSchema.parse("8000,50"), 800_050);
+    assert.equal(receivedCashSchema.safeParse("7559").success, true);
+    assert.equal(receivedCashSchema.safeParse("-1").success, false);
+    assert.equal(receivedCashSchema.safeParse("12,345").success, false);
+    assert.equal(receivedCashSchema.safeParse("0").success, false);
+  });
+
   it("valida el ingreso con fragmentos alfanuméricos y normaliza antes de registrar", () => {
     const validEntry = entrySchema.safeParse({ category: "auto", plateFragment: " 782z " });
 
@@ -153,6 +163,18 @@ describe("estado demo del estacionamiento", () => {
       category: "auto",
     });
     assert.equal(rejectedEntry.success, false);
+
+    const rejectedClosedShiftPayment = applyDemoAction(closedShiftState, {
+      type: "confirm-payment-and-exit",
+      id: "payment-after-shift-close",
+      occurredAt: "2026-11-09T12:05:00.000-03:00",
+      stayId: "stay-active-001",
+      method: "debito",
+      totalCents: 756_000,
+      requestInvoice: false,
+    });
+    assert.equal(rejectedClosedShiftPayment.success, false);
+    assert.equal(rejectedClosedShiftPayment.state.payments.length, DEMO_SEED_STATE.payments.length);
 
     assert.deepEqual(parseDemoState("{"), { status: "corrupt" });
     assert.deepEqual(parseDemoState(JSON.stringify({

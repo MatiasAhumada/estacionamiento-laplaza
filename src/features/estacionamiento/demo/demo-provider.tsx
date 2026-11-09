@@ -16,6 +16,7 @@ import type {
   DemoOperationAction,
   DemoOperationInput,
   DemoOperationResult,
+  DemoPaymentConfirmationInput,
   DemoStorageLoadResult,
   DemoStayCategory,
 } from "../domain/demo.types";
@@ -108,9 +109,32 @@ export function DemoProvider({ children }: Readonly<{ children: React.ReactNode 
     return operationResult;
   }, [state]);
 
+  const confirmStayPayment = useCallback((payment: DemoPaymentConfirmationInput): DemoOperationResult => {
+    const action = createDemoAction({ ...payment, type: "confirm-payment-and-exit" });
+    const operationResult = applyDemoAction(state, action);
+
+    if (!operationResult.success) {
+      dispatch(action);
+      return operationResult;
+    }
+
+    if (!writeDemoState(operationResult.state)) {
+      updateStorageStatus("unavailable");
+      return {
+        success: false,
+        state: operationResult.state,
+        message: "No se pudo guardar el cobro en esta sesión. Revisá el almacenamiento e intentá nuevamente.",
+      };
+    }
+
+    dispatch(action);
+    updateStorageStatus("restored");
+    return operationResult;
+  }, [state]);
+
   const value = useMemo<DemoContextValue>(
-    () => ({ state, isHydrated, storageStatus, dispatch: dispatchOperation, registerStayEntry, resetDemo }),
-    [state, isHydrated, storageStatus, dispatchOperation, registerStayEntry, resetDemo],
+    () => ({ state, isHydrated, storageStatus, dispatch: dispatchOperation, registerStayEntry, confirmStayPayment, resetDemo }),
+    [state, isHydrated, storageStatus, dispatchOperation, registerStayEntry, confirmStayPayment, resetDemo],
   );
 
   return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;

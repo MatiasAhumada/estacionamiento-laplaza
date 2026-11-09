@@ -147,6 +147,10 @@ export type DemoAction =
 export type DemoOperationAction = Exclude<DemoAction, { type: "hydrate" | "reset" }>;
 export type DemoOperationInput<Action extends DemoOperationAction = DemoOperationAction> =
   Action extends DemoOperationAction ? Omit<Action, "id" | "occurredAt"> : never;
+export type DemoPaymentConfirmationInput = Omit<
+  DemoOperationInput<Extract<DemoOperationAction, { type: "confirm-payment-and-exit" }>>,
+  "type"
+>;
 
 export interface DemoContextValue {
   state: DemoState;
@@ -154,5 +158,6 @@ export interface DemoContextValue {
   storageStatus: DemoStorageLoadResult["status"];
   dispatch: (action: DemoOperationAction) => void;
   registerStayEntry: (category: DemoStayCategory, plateFragment: string) => DemoOperationResult;
+  confirmStayPayment: (payment: DemoPaymentConfirmationInput) => DemoOperationResult;
   resetDemo: () => void;
 }

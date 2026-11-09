@@ -45,11 +45,9 @@ import {
   selectMatchingActiveStays,
   selectOccupancy,
 } from "@/features/estacionamiento/domain/selectors";
-import {
-  createDemoAction,
-  useDemoState,
-} from "@/features/estacionamiento/demo/demo-provider";
+import { useDemoState } from "@/features/estacionamiento/demo/demo-provider";
 import { entrySchema } from "@/features/estacionamiento/validation/entry.schema";
+import { receivedCashSchema } from "@/features/estacionamiento/validation/payment.schema";
 import { staySearchSchema } from "@/features/estacionamiento/validation/stay-search.schema";
 
 const CATEGORY_DETAILS: Record<DemoStayCategory, { label: string; shortcut: string }> = {
@@ -209,9 +207,10 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 export function EmployeeTerminal() {
-  const { state, dispatch, registerStayEntry, storageStatus } = useDemoState();
+  const { state, registerStayEntry, confirmStayPayment, storageStatus } = useDemoState();
   const terminalActionsRef = useRef<HTMLElement>(null);
   const entrySubmittingRef = useRef(false);
+  const paymentSubmittingRef = useRef(false);
   const [dialog, setDialog] = useState<TerminalDialog>();
   const [ticketStayId, setTicketStayId] = useState("");
   const [entryCategory, setEntryCategory] = useState<DemoStayCategory>("auto");
@@ -222,6 +221,8 @@ export function EmployeeTerminal() {
   const [selectedStayId, setSelectedStayId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<DemoPaymentMethod>("efectivo");
   const [receivedAmount, setReceivedAmount] = useState("");
+  const [paymentError, setPaymentError] = useState("");
+  const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
   const [now, setNow] = useState(0);
 
   const activeShift = selectActiveShift(state);
@@ -240,6 +241,7 @@ export function EmployeeTerminal() {
 
   const activeStays = selectMatchingActiveStays(state, searchQuery);
   const parsedSearchQuery = staySearchSchema.safeParse(searchQuery);
+  const parsedReceivedCash = receivedCashSchema.safeParse(receivedAmount);
   const ticketStay = state.stays.find((stay) => stay.id === ticketStayId);
   const selectedStay = activeStays.find((stay) => stay.id === selectedStayId);
   let selectedTariff: DemoTariff | undefined;
@@ -252,6 +254,8 @@ export function EmployeeTerminal() {
   if (selectedStay && selectedTariff) {
     selectedPrice = calculateStayPrice(selectedStay.enteredAt, new Date(now).toISOString(), selectedTariff);
   }
+
+  const receivedCashIsSufficient = parsedReceivedCash.success && Boolean(selectedPrice) && parsedReceivedCash.data >= (selectedPrice?.totalCents ?? 0);
 
   const isShiftOpen = Boolean(activeShift);
 
@@ -325,6 +329,9 @@ export function EmployeeTerminal() {
     setSelectedStayId("");
     setPaymentMethod("efectivo");
     setReceivedAmount("");
+    setPaymentError("");
+    setIsPaymentSubmitting(false);
+    paymentSubmittingRef.current = false;
   }
 
   function openTicket(stayId: string): void {
@@ -375,24 +382,44 @@ export function EmployeeTerminal() {
   function confirmPayment(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    if (!selectedStay || !selectedPrice) {
+    if (paymentSubmittingRef.current || !selectedStay || !selectedPrice) {
       return;
     }
 
     let receivedCents: number | undefined;
 
     if (paymentMethod === "efectivo") {
-      receivedCents = Math.round(Number(receivedAmount) * 100);
+      if (!parsedReceivedCash.success) {
+        setPaymentError(parsedReceivedCash.error.issues[0]?.message ?? "Ingresá el efectivo recibido.");
+        return;
+      }
+
+      if (parsedReceivedCash.data < selectedPrice.totalCents) {
+        setPaymentError("El efectivo recibido no alcanza para cubrir el total.");
+        return;
+      }
+
+      receivedCents = parsedReceivedCash.data;
     }
 
-    dispatch(createDemoAction({
-      type: "confirm-payment-and-exit",
+    paymentSubmittingRef.current = true;
+    setIsPaymentSubmitting(true);
+    setPaymentError("");
+    const operationResult = confirmStayPayment({
       stayId: selectedStay.id,
       method: paymentMethod,
       totalCents: selectedPrice.totalCents,
       receivedCents,
       requestInvoice: false,
-    }));
+    });
+
+    if (!operationResult.success) {
+      setPaymentError(operationResult.message);
+      paymentSubmittingRef.current = false;
+      setIsPaymentSubmitting(false);
+      return;
+    }
+
     resetDialog();
   }
 
@@ -680,7 +707,7 @@ export function EmployeeTerminal() {
                       <p className="mt-1 text-xs text-muted-foreground">Ingreso {formatStayDateTime(selectedStay.enteredAt)} · {formatElapsed(selectedStay.enteredAt, now)}</p>
                       <p className="mt-1 break-all font-mono text-[11px] text-muted-foreground">ID {selectedStay.id}</p>
                     </div>
-                    <p className="shrink-0 font-display text-xl font-bold tabular-nums text-primary">{formatCurrency(selectedPrice.totalCents)}</p>
+                    <p className="shrink-0 font-display text-2xl font-extrabold tabular-nums text-primary">{formatCurrency(selectedPrice.totalCents)}</p>
                   </div>
                   <div className="grid gap-1 border-t border-border pt-3 text-xs text-muted-foreground">
                     <p>Tarifa ilustrativa: {formatCurrency(selectedPrice.tariffPerFractionCents)} cada {selectedPrice.fractionMinutes} min</p>
@@ -692,7 +719,7 @@ export function EmployeeTerminal() {
                       {PAYMENT_METHODS.map(({ label, value }) => (
                         <Button
                           aria-pressed={paymentMethod === value}
-                          className="min-h-10 rounded-xl px-2 text-xs sm:text-sm"
+                          className="min-h-11 rounded-xl px-2 text-xs sm:text-sm"
                           key={value}
                           onClick={() => setPaymentMethod(value)}
                           type="button"
@@ -707,25 +734,39 @@ export function EmployeeTerminal() {
                     <div className="grid gap-2">
                       <Label htmlFor="received-amount">Efectivo recibido</Label>
                       <Input
+                        aria-describedby="received-amount-help"
+                        aria-invalid={Boolean(paymentError) || (Boolean(receivedAmount) && !parsedReceivedCash.success) || (Boolean(receivedAmount) && parsedReceivedCash.success && !receivedCashIsSufficient)}
                         className="min-h-11 rounded-xl"
                         id="received-amount"
                         inputMode="decimal"
-                        min="0"
-                        onChange={(event) => setReceivedAmount(event.currentTarget.value)}
+                        onChange={(event) => {
+                          setReceivedAmount(event.currentTarget.value);
+                          setPaymentError("");
+                        }}
                         placeholder="0"
                         required
-                        step="0.01"
-                        type="number"
+                        type="text"
                         value={receivedAmount}
                       />
-                      <p className="text-xs text-muted-foreground">Vuelto: {formatCurrency(Math.max(0, Math.round(Number(receivedAmount) * 100) - selectedPrice.totalCents))}</p>
+                      <p className="text-xs text-muted-foreground" id="received-amount-help">
+                        Vuelto: {formatCurrency(parsedReceivedCash.success ? Math.max(0, parsedReceivedCash.data - selectedPrice.totalCents) : 0)}
+                      </p>
+                      {Boolean(receivedAmount) && !parsedReceivedCash.success && (
+                        <p className="text-sm text-destructive" role="alert">{parsedReceivedCash.error.issues[0]?.message}</p>
+                      )}
+                      {Boolean(receivedAmount) && parsedReceivedCash.success && !receivedCashIsSufficient && (
+                        <p className="text-sm text-destructive" role="alert">El efectivo recibido no alcanza para cubrir el total.</p>
+                      )}
                     </div>
                   )}
                 </div>
               )}
-              {state.notice && <p className="text-sm text-destructive" role="alert">{state.notice}</p>}
+              {paymentError && <p className="text-sm text-destructive" role="alert">{paymentError}</p>}
               <DialogFooter>
-                <Button className="min-h-11 rounded-xl" disabled={!selectedStay || !selectedPrice} type="submit" variant="action">Confirmar cobro y egreso</Button>
+                <Button className="min-h-11 rounded-xl" disabled={!selectedStay || !selectedPrice || isPaymentSubmitting || (paymentMethod === "efectivo" && !receivedCashIsSufficient)} type="submit" variant="action">
+                  {isPaymentSubmitting ? "Confirmando…" : "Confirmar cobro y egreso"}
+                </Button>
+                <Button className="min-h-11 rounded-xl" disabled={isPaymentSubmitting} onClick={resetDialog} type="button" variant="outline">Cancelar</Button>
               </DialogFooter>
             </form>
           )}

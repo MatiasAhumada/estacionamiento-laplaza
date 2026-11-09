@@ -68,7 +68,11 @@ function closePayment(
   const activeShift = selectActiveShift(state);
   const stay = selectStayById(state, action.stayId);
 
-  if (!activeShift || !stay || stay.status !== "active" || state.payments.some((payment) => payment.stayId === stay.id)) {
+  if (!activeShift) {
+    return reject(state, DEMO_MESSAGES.noOpenShift);
+  }
+
+  if (!stay || stay.status !== "active" || state.payments.some((payment) => payment.stayId === stay.id)) {
     return reject(state, DEMO_MESSAGES.missingStay);
   }
 
@@ -83,11 +87,17 @@ function closePayment(
     return reject(state, DEMO_MESSAGES.invalidPayment);
   }
 
-  if (action.method === "efectivo" && (!action.receivedCents || action.receivedCents < action.totalCents)) {
-    return reject(state, DEMO_MESSAGES.insufficientCash);
+  if (action.method === "efectivo") {
+    if (!Number.isSafeInteger(action.receivedCents) || (action.receivedCents ?? 0) <= 0) {
+      return reject(state, DEMO_MESSAGES.invalidPayment);
+    }
+
+    if ((action.receivedCents ?? 0) < action.totalCents) {
+      return reject(state, DEMO_MESSAGES.insufficientCash);
+    }
   }
 
-  if (action.method !== "efectivo" && action.receivedCents) {
+  if (action.method !== "efectivo" && (action.receivedCents || action.receivedCents === 0)) {
     return reject(state, DEMO_MESSAGES.invalidPayment);
   }
 
