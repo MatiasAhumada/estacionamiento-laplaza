@@ -153,5 +153,6 @@ export interface DemoContextValue {
   isHydrated: boolean;
   storageStatus: DemoStorageLoadResult["status"];
   dispatch: (action: DemoOperationAction) => void;
+  registerStayEntry: (category: DemoStayCategory, plateFragment: string) => DemoOperationResult;
   resetDemo: () => void;
 }

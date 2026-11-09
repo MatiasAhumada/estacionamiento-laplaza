@@ -15,9 +15,11 @@ import type {
   DemoContextValue,
   DemoOperationAction,
   DemoOperationInput,
+  DemoOperationResult,
   DemoStorageLoadResult,
+  DemoStayCategory,
 } from "../domain/demo.types";
-import { demoReducer } from "../domain/demo.operations";
+import { applyDemoAction, demoReducer } from "../domain/demo.operations";
 import { readDemoState, removeDemoState, writeDemoState } from "./demo-storage";
 
 const DemoContext = createContext<DemoContextValue | undefined>(undefined);
@@ -84,9 +86,31 @@ export function DemoProvider({ children }: Readonly<{ children: React.ReactNode 
     dispatch(action);
   }, []);
 
+  const registerStayEntry = useCallback((category: DemoStayCategory, plateFragment: string): DemoOperationResult => {
+    const action = createDemoAction({ type: "register-entry", category, plateFragment });
+    const operationResult = applyDemoAction(state, action);
+
+    if (!operationResult.success) {
+      return operationResult;
+    }
+
+    if (!writeDemoState(operationResult.state)) {
+      updateStorageStatus("unavailable");
+      return {
+        success: false,
+        state: operationResult.state,
+        message: "No se pudo guardar el ingreso en esta sesión. Revisá el almacenamiento e intentá nuevamente.",
+      };
+    }
+
+    dispatch(action);
+    updateStorageStatus("restored");
+    return operationResult;
+  }, [state]);
+
   const value = useMemo<DemoContextValue>(
-    () => ({ state, isHydrated, storageStatus, dispatch: dispatchOperation, resetDemo }),
-    [state, isHydrated, storageStatus, dispatchOperation, resetDemo],
+    () => ({ state, isHydrated, storageStatus, dispatch: dispatchOperation, registerStayEntry, resetDemo }),
+    [state, isHydrated, storageStatus, dispatchOperation, registerStayEntry, resetDemo],
   );
 
   return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;

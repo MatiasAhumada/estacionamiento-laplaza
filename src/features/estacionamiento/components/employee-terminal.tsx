@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -48,6 +48,7 @@ import {
   createDemoAction,
   useDemoState,
 } from "@/features/estacionamiento/demo/demo-provider";
+import { entrySchema } from "@/features/estacionamiento/validation/entry.schema";
 
 const CATEGORY_DETAILS: Record<DemoStayCategory, { label: string; shortcut: string }> = {
   auto: { label: "Auto", shortcut: "F1" },
@@ -194,10 +195,14 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 export function EmployeeTerminal() {
-  const { state, dispatch } = useDemoState();
+  const { state, dispatch, registerStayEntry, storageStatus } = useDemoState();
+  const terminalActionsRef = useRef<HTMLElement>(null);
+  const entrySubmittingRef = useRef(false);
   const [dialog, setDialog] = useState<TerminalDialog>();
   const [entryCategory, setEntryCategory] = useState<DemoStayCategory>("auto");
   const [plateFragment, setPlateFragment] = useState("");
+  const [entryError, setEntryError] = useState("");
+  const [isEntrySubmitting, setIsEntrySubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStayId, setSelectedStayId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<DemoPaymentMethod>("efectivo");
@@ -296,6 +301,9 @@ export function EmployeeTerminal() {
   function resetDialog(): void {
     setDialog(undefined);
     setPlateFragment("");
+    setEntryError("");
+    setIsEntrySubmitting(false);
+    entrySubmittingRef.current = false;
     setSearchQuery("");
     setSelectedStayId("");
     setPaymentMethod("efectivo");
@@ -304,11 +312,34 @@ export function EmployeeTerminal() {
 
   function registerEntry(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    dispatch(createDemoAction({
-      type: "register-entry",
-      category: entryCategory,
-      plateFragment,
-    }));
+
+    if (entrySubmittingRef.current) {
+      return;
+    }
+
+    const parsedEntry = entrySchema.safeParse({ category: entryCategory, plateFragment });
+
+    if (!parsedEntry.success) {
+      setEntryError("Ingresá solo letras y números para identificar la patente.");
+      return;
+    }
+
+    if (!selectActiveShift(state)) {
+      setEntryError("No hay un turno abierto para registrar el ingreso.");
+      return;
+    }
+
+    entrySubmittingRef.current = true;
+    setIsEntrySubmitting(true);
+    const operationResult = registerStayEntry(parsedEntry.data.category, parsedEntry.data.plateFragment);
+
+    if (!operationResult.success) {
+      setEntryError(operationResult.message);
+      entrySubmittingRef.current = false;
+      setIsEntrySubmitting(false);
+      return;
+    }
+
     resetDialog();
   }
 
@@ -391,7 +422,7 @@ export function EmployeeTerminal() {
         </div>
       )}
 
-      <section aria-labelledby="actions-title" className="grid gap-4">
+      <section aria-labelledby="actions-title" className="grid gap-4" ref={terminalActionsRef} tabIndex={-1}>
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <p className="text-xs font-bold tracking-[0.16em] text-secondary uppercase">Acciones de atención</p>
@@ -521,7 +552,10 @@ export function EmployeeTerminal() {
       </p>
 
       <Dialog onOpenChange={(open) => { if (!open) { resetDialog(); } }} open={Boolean(dialog)}>
-        <DialogContent className="max-h-[min(90dvh,48rem)] overflow-y-auto rounded-3xl p-5 sm:p-6">
+        <DialogContent className="max-h-[min(90dvh,48rem)] overflow-y-auto rounded-3xl p-5 sm:p-6" onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          terminalActionsRef.current?.focus();
+        }}>
           {dialog === "entry" && (
             <form className="grid gap-5" onSubmit={registerEntry}>
               <DialogHeader>
@@ -533,18 +567,26 @@ export function EmployeeTerminal() {
                 <Input
                   autoComplete="off"
                   autoFocus
+                  aria-describedby="plate-fragment-help"
+                  aria-invalid={Boolean(entryError)}
                   className="min-h-12 rounded-xl font-mono text-lg uppercase"
                   id="plate-fragment"
-                  maxLength={12}
-                  onChange={(event) => setPlateFragment(event.currentTarget.value.toUpperCase())}
+                  maxLength={20}
+                  onChange={(event) => {
+                    setPlateFragment(event.currentTarget.value.toUpperCase());
+                    setEntryError("");
+                  }}
                   placeholder="Ej.: 782Z"
-                  required
                   value={plateFragment}
                 />
-                <p className="text-xs leading-5 text-muted-foreground">Podés ingresar una parte de la patente. No hace falta escribirla completa.</p>
+                <p className="text-xs leading-5 text-muted-foreground" id="plate-fragment-help">Podés ingresar una parte de la patente. No hace falta escribirla completa.</p>
+                {entryError && <p className="text-sm text-destructive" role="alert">{entryError}</p>}
+                {storageStatus === "unavailable" && (
+                  <p className="text-sm text-destructive" role="status">El almacenamiento de esta sesión no está disponible. Los cambios pueden perderse al recargar.</p>
+                )}
               </div>
               <DialogFooter>
-                <Button className="min-h-11 rounded-xl" type="submit" variant="action">Registrar ingreso</Button>
+                <Button className="min-h-11 rounded-xl" disabled={isEntrySubmitting} type="submit" variant="action">Registrar ingreso</Button>
               </DialogFooter>
             </form>
           )}

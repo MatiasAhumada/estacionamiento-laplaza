@@ -8,8 +8,22 @@ import { normalizePlateFragment } from "./plate";
 import { selectActiveStays, selectCashSummary, selectMatchingActiveStays, selectOccupancy } from "./selectors";
 import { calculateStayPrice } from "./tariff";
 import { parseDemoState } from "../demo/demo-storage";
+import { entrySchema } from "../validation/entry.schema";
 
 describe("estado demo del estacionamiento", () => {
+  it("valida el ingreso con fragmentos alfanuméricos y normaliza antes de registrar", () => {
+    const validEntry = entrySchema.safeParse({ category: "auto", plateFragment: " 782z " });
+
+    assert.equal(validEntry.success, true);
+
+    if (validEntry.success) {
+      assert.equal(validEntry.data.plateFragment, "782Z");
+    }
+
+    assert.equal(entrySchema.safeParse({ category: "auto", plateFragment: "" }).success, false);
+    assert.equal(entrySchema.safeParse({ category: "auto", plateFragment: "78-2" }).success, false);
+  });
+
   it("normaliza la patente parcial y permite fragmentos repetidos con estadías distintas", () => {
     assert.equal(normalizePlateFragment(" 782z "), "782Z");
 
