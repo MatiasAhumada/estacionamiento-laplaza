@@ -26,12 +26,75 @@ export interface DemoCashSummary {
   expectedCashCents: number;
 }
 
+export interface DemoActiveStaySummary {
+  stay: DemoStay;
+  employeeName: string;
+  elapsedMinutes: number;
+}
+
+export interface DemoDailyRevenue {
+  paymentCount: number;
+  totalCents: number;
+  netByMethod: Record<DemoPaymentMethod, number>;
+}
+
 export function selectActiveShift(state: DemoState): DemoShift | undefined {
   return state.shifts.find((shift) => shift.status === "open");
 }
 
 export function selectActiveStays(state: DemoState): DemoStay[] {
   return state.stays.filter((stay) => stay.status === "active");
+}
+
+export function selectActiveStaySummaries(state: DemoState, currentTime: Date): DemoActiveStaySummary[] {
+  return selectActiveStays(state).map((stay) => {
+    const employee = selectEmployee(state, stay.enteredByEmployeeId);
+    const entryTime = new Date(stay.enteredAt).getTime();
+
+    return {
+      stay,
+      employeeName: employee?.displayName ?? "Empleado no disponible",
+      elapsedMinutes: Math.max(0, Math.floor((currentTime.getTime() - entryTime) / 60_000)),
+    };
+  }).sort((firstStay, secondStay) =>
+    new Date(firstStay.stay.enteredAt).getTime() - new Date(secondStay.stay.enteredAt).getTime(),
+  );
+}
+
+export function selectDailyRevenue(state: DemoState, currentTime: Date): DemoDailyRevenue {
+  const currentDateKey = getLocalDateKey(currentTime);
+  const paymentsToday = state.payments.filter((payment) =>
+    getLocalDateKey(new Date(payment.paidAt)) === currentDateKey,
+  );
+  const netByMethod: Record<DemoPaymentMethod, number> = {
+    efectivo: 0,
+    debito: 0,
+    transferencia: 0,
+  };
+
+  for (const payment of paymentsToday) {
+    netByMethod[payment.method] += payment.netCents;
+  }
+
+  return {
+    paymentCount: paymentsToday.length,
+    totalCents: paymentsToday.reduce((total, payment) => total + payment.netCents, 0),
+    netByMethod,
+  };
+}
+
+function getLocalDateKey(date: Date): string {
+  const dateParts = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+    month: "2-digit",
+    timeZone: "America/Argentina/Buenos_Aires",
+    year: "numeric",
+  }).formatToParts(date);
+  const year = dateParts.find((part) => part.type === "year")?.value ?? "";
+  const month = dateParts.find((part) => part.type === "month")?.value ?? "";
+  const day = dateParts.find((part) => part.type === "day")?.value ?? "";
+
+  return `${year}-${month}-${day}`;
 }
 
 export function selectMatchingActiveStays(state: DemoState, plateFragment: string): DemoStay[] {

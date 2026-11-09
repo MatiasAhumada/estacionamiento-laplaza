@@ -5,7 +5,7 @@ import { DEMO_SEED_STATE } from "@/constants/demo-fixture.constant";
 import { DEMO_STORAGE_VERSION } from "@/constants/demo.constant";
 import { applyDemoAction } from "./demo.operations";
 import { normalizePlateFragment } from "./plate";
-import { selectActiveStays, selectCashSummary, selectMatchingActiveStays, selectOccupancy } from "./selectors";
+import { selectActiveStaySummaries, selectActiveStays, selectCashSummary, selectDailyRevenue, selectMatchingActiveStays, selectOccupancy } from "./selectors";
 import { calculateStayPrice } from "./tariff";
 import { parseDemoState } from "../demo/demo-storage";
 import { entrySchema } from "../validation/entry.schema";
@@ -130,6 +130,61 @@ describe("estado demo del estacionamiento", () => {
 
     assert.equal(repeatedPayment.success, false);
     assert.equal(repeatedPayment.state.payments.length, result.state.payments.length);
+  });
+
+  it("resume ocupación por categoría, duración y recaudación diaria local", () => {
+    const currentTime = new Date("2026-11-09T12:00:00.000-03:00");
+    const activeStaySummaries = selectActiveStaySummaries(DEMO_SEED_STATE, currentTime);
+    const dailyRevenue = selectDailyRevenue(DEMO_SEED_STATE, currentTime);
+
+    assert.equal(activeStaySummaries.length, 3);
+    assert.equal(activeStaySummaries[0]?.stay.id, "stay-active-001");
+    assert.equal(activeStaySummaries[0]?.elapsedMinutes, 205);
+    assert.equal(activeStaySummaries[0]?.employeeName, "Ana Gómez");
+    assert.deepEqual(selectOccupancy(DEMO_SEED_STATE).byCategory, { auto: 1, camioneta: 1, moto: 1 });
+    assert.deepEqual(dailyRevenue, {
+      paymentCount: 0,
+      totalCents: 0,
+      netByMethod: { efectivo: 0, debito: 0, transferencia: 0 },
+    });
+
+    const paymentTodayState = {
+      ...DEMO_SEED_STATE,
+      payments: [
+        ...DEMO_SEED_STATE.payments,
+        {
+          id: "payment-today",
+          stayId: "stay-active-001",
+          shiftId: "shift-current",
+          method: "transferencia" as const,
+          totalCents: 50_000,
+          changeCents: 0,
+          netCents: 50_000,
+          paidAt: "2026-11-10T01:30:00.000+00:00",
+          employeeId: "employee-ana",
+          fractionMinutes: 30,
+          tariffPerFractionCents: 50_000,
+        },
+      ],
+    };
+
+    assert.deepEqual(selectDailyRevenue(paymentTodayState, currentTime), {
+      paymentCount: 1,
+      totalCents: 50_000,
+      netByMethod: { efectivo: 0, debito: 0, transferencia: 50_000 },
+    });
+
+    const zeroCapacityState = { ...DEMO_SEED_STATE, settings: { ...DEMO_SEED_STATE.settings, capacity: 0 } };
+    const exceededCapacityState = { ...DEMO_SEED_STATE, settings: { ...DEMO_SEED_STATE.settings, capacity: 2 } };
+    assert.deepEqual(selectOccupancy(zeroCapacityState), {
+      active: 3,
+      byCategory: { auto: 1, camioneta: 1, moto: 1 },
+      capacity: 0,
+      available: 0,
+      percentage: 0,
+    });
+    assert.equal(selectOccupancy(exceededCapacityState).available, 0);
+    assert.equal(selectOccupancy(exceededCapacityState).percentage, 150);
   });
 
   it("bloquea efectivo insuficiente, caja cerrada y storage inválido o de otra versión", () => {
