@@ -267,8 +267,16 @@ function closeShift(
   const lastCashCount = state.cashCounts
     .filter((cashCount) => cashCount.shiftId === activeShift.id)
     .at(-1);
+  const lastCashAdjustment = state.cashAdjustments
+    .filter((adjustment) => adjustment.shiftId === activeShift.id)
+    .at(-1);
 
-  if (!cashSummary || !lastCashCount || lastCashCount.expectedCents !== cashSummary.expectedCashCents) {
+  if (
+    !cashSummary ||
+    !lastCashCount ||
+    lastCashCount.expectedCents !== cashSummary.expectedCashCents ||
+    (lastCashAdjustment && new Date(lastCashCount.createdAt).getTime() < new Date(lastCashAdjustment.occurredAt).getTime())
+  ) {
     return reject(state, DEMO_MESSAGES.cashCountRequired);
   }
 

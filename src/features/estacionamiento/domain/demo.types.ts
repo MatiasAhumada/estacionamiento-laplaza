@@ -156,7 +156,7 @@ export interface DemoContextValue {
   state: DemoState;
   isHydrated: boolean;
   storageStatus: DemoStorageLoadResult["status"];
-  dispatch: (action: DemoOperationAction) => void;
+  runDemoOperation: (action: DemoOperationInput) => DemoOperationResult;
   registerStayEntry: (category: DemoStayCategory, plateFragment: string) => DemoOperationResult;
   confirmStayPayment: (payment: DemoPaymentConfirmationInput) => DemoOperationResult;
   resetDemo: () => void;

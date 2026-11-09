@@ -83,9 +83,27 @@ export function DemoProvider({ children }: Readonly<{ children: React.ReactNode 
     }
   }, []);
 
-  const dispatchOperation = useCallback((action: DemoOperationAction): void => {
+  const runDemoOperation = useCallback((input: DemoOperationInput): DemoOperationResult => {
+    const action = createDemoAction(input);
+    const operationResult = applyDemoAction(state, action);
+
+    if (!operationResult.success) {
+      return operationResult;
+    }
+
+    if (!writeDemoState(operationResult.state)) {
+      updateStorageStatus("unavailable");
+      return {
+        success: false,
+        state: operationResult.state,
+        message: "No se pudo guardar la operación en esta sesión. Revisá el almacenamiento e intentá nuevamente.",
+      };
+    }
+
     dispatch(action);
-  }, []);
+    updateStorageStatus("restored");
+    return operationResult;
+  }, [state]);
 
   const registerStayEntry = useCallback((category: DemoStayCategory, plateFragment: string): DemoOperationResult => {
     const action = createDemoAction({ type: "register-entry", category, plateFragment });
@@ -133,8 +151,8 @@ export function DemoProvider({ children }: Readonly<{ children: React.ReactNode 
   }, [state]);
 
   const value = useMemo<DemoContextValue>(
-    () => ({ state, isHydrated, storageStatus, dispatch: dispatchOperation, registerStayEntry, confirmStayPayment, resetDemo }),
-    [state, isHydrated, storageStatus, dispatchOperation, registerStayEntry, confirmStayPayment, resetDemo],
+    () => ({ state, isHydrated, storageStatus, runDemoOperation, registerStayEntry, confirmStayPayment, resetDemo }),
+    [state, isHydrated, storageStatus, runDemoOperation, registerStayEntry, confirmStayPayment, resetDemo],
   );
 
   return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;
