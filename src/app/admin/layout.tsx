@@ -1,6 +1,7 @@
 import { DemoHeader } from "@/components/shared/demo-header";
 import { DemoRoleNavigation } from "@/components/shared/demo-role-navigation";
 import { ParkingBrand } from "@/components/shared/parking-brand";
+import { AdminRecordsNavigation } from "@/components/shared/admin-records-navigation";
 
 export default function AdminLayout({
   children,
@@ -38,6 +39,7 @@ export default function AdminLayout({
             Simulación · Sin autenticación
           </span>
         </header>
+        <div className="mx-auto w-full max-w-5xl px-4 pt-5 sm:px-6 lg:px-8"><AdminRecordsNavigation /></div>
         {children}
       </div>
     </div>
