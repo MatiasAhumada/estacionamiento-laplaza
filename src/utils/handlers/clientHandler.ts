@@ -1,46 +1,44 @@
 import { AxiosError } from "axios";
-import { ExternalToast } from "sonner";
 import {
   toastSuccess,
   toastError,
   toastWarning,
   toastInfo,
+  type ToastOptions,
 } from "@/utils/toast.util";
 import { ERROR_MESSAGES } from "@/constants/error-messages.constant";
+import { z } from "zod";
 
 interface HandlerOptions {
   logToConsole?: boolean;
   showToast?: boolean;
   messagePrefix?: string;
   defaultMessage?: string;
-  toastOptions?: Partial<ExternalToast>;
+  toastOptions?: ToastOptions;
 }
 
 function normalizeError(error: unknown): Error {
   if (error instanceof AxiosError) {
     const isNetworkError = !error.response;
-    return {
-      name: "AxiosError",
-      message: isNetworkError
-        ? "Error de conexión"
-        : error.response?.data?.error?.message || error.message,
-      stack: error.response?.data?.error?.stack || error.stack,
-    };
-  }
+    if (isNetworkError) return new Error("Error de conexión");
 
-  if (error && typeof error === "object" && !("message" in error)) {
-    return new Error(ERROR_MESSAGES.FORM_VALIDATION);
+    const responseError = z
+      .object({ error: z.object({ message: z.string() }) })
+      .safeParse(error.response?.data);
+    if (responseError.success) return new Error(responseError.data.error.message);
+    return new Error(error.message);
   }
 
   if (error instanceof Error) return error;
-  if (typeof error === "string") return new Error(error);
 
-  if (error && typeof error === "object") {
-    if ("message" in error && typeof (error as any).message === "string") {
-      return new Error((error as any).message);
-    }
-    return new Error(JSON.stringify(error));
-  }
+  const stringError = z.string().safeParse(error);
+  if (stringError.success) return new Error(stringError.data);
+
+  const messageError = z.object({ message: z.string() }).safeParse(error);
+  if (messageError.success) return new Error(messageError.data.message);
+
+  const objectError = z.record(z.string(), z.unknown()).safeParse(error);
+  if (objectError.success) return new Error(ERROR_MESSAGES.FORM_VALIDATION);
 
   return new Error(ERROR_MESSAGES.UNKNOWN_ERROR);
 }
@@ -77,6 +75,7 @@ export function clientSuccessHandler(
     toastOptions = {},
   }: Omit<HandlerOptions, "defaultMessage"> = {}
 ): void {
+  if (logToConsole) console.info(message);
   if (showToast) {
     toastSuccess(`${messagePrefix}${message}`, toastOptions);
   }

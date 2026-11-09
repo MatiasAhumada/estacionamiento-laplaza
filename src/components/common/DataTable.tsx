@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search01Icon } from "hugeicons-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
 
 interface Column<T> {
@@ -140,7 +139,7 @@ export function DataTable<T>({
                           >
                             {column.render
                               ? column.render(item)
-                              : (item as any)[column.key]}
+                              : String(item[column.key as keyof T] ?? "")}
                           </td>
                         ))}
                       </motion.tr>
