@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { EntryTicket } from "@/features/estacionamiento/components/entry-ticket";
 import {
   Dialog,
   DialogContent,
@@ -62,7 +63,7 @@ const PAYMENT_METHODS: { label: string; value: DemoPaymentMethod }[] = [
   { label: "Transferencia", value: "transferencia" },
 ];
 
-type TerminalDialog = "entry" | "payment" | undefined;
+type TerminalDialog = "entry" | "payment" | "ticket" | undefined;
 
 function getConnectionLabel(scenario: "online" | "offline" | "syncing"): string {
   if (scenario === "online") {
@@ -199,6 +200,7 @@ export function EmployeeTerminal() {
   const terminalActionsRef = useRef<HTMLElement>(null);
   const entrySubmittingRef = useRef(false);
   const [dialog, setDialog] = useState<TerminalDialog>();
+  const [ticketStayId, setTicketStayId] = useState("");
   const [entryCategory, setEntryCategory] = useState<DemoStayCategory>("auto");
   const [plateFragment, setPlateFragment] = useState("");
   const [entryError, setEntryError] = useState("");
@@ -224,6 +226,7 @@ export function EmployeeTerminal() {
   }
 
   const activeStays = selectMatchingActiveStays(state, searchQuery);
+  const ticketStay = state.stays.find((stay) => stay.id === ticketStayId);
   const selectedStay = activeStays.find((stay) => stay.id === selectedStayId);
   let selectedTariff: DemoTariff | undefined;
   let selectedPrice: DemoStayPrice | null | undefined;
@@ -310,6 +313,11 @@ export function EmployeeTerminal() {
     setReceivedAmount("");
   }
 
+  function openTicket(stayId: string): void {
+    setTicketStayId(stayId);
+    setDialog("ticket");
+  }
+
   function registerEntry(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
@@ -340,7 +348,14 @@ export function EmployeeTerminal() {
       return;
     }
 
+    const registeredStay = operationResult.state.stays.find((stay) =>
+      !state.stays.some((existingStay) => existingStay.id === stay.id),
+    );
     resetDialog();
+
+    if (registeredStay) {
+      openTicket(registeredStay.id);
+    }
   }
 
   function confirmPayment(event: FormEvent<HTMLFormElement>): void {
@@ -534,6 +549,17 @@ export function EmployeeTerminal() {
                   <span className="shrink-0 text-xs font-medium tabular-nums text-muted-foreground">
                     {getMovementAmountLabel(movement.amountCents)}
                   </span>
+                  {movement.kind === "entry" && movement.stayId && (
+                    <Button
+                      aria-label={`Ver comprobante del ticket ${state.stays.find((stay) => stay.id === movement.stayId)?.ticketNumber ?? "de ingreso"}`}
+                      className="min-h-11 shrink-0 rounded-xl px-3 text-xs"
+                      onClick={() => openTicket(movement.stayId ?? "")}
+                      type="button"
+                      variant="outline"
+                    >
+                      Ver ticket
+                    </Button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -675,6 +701,19 @@ export function EmployeeTerminal() {
                 <Button className="min-h-11 rounded-xl" disabled={!selectedStay || !selectedPrice} type="submit" variant="action">Confirmar cobro y egreso</Button>
               </DialogFooter>
             </form>
+          )}
+          {dialog === "ticket" && ticketStay && (
+            <div className="grid gap-5">
+              <DialogHeader>
+                <DialogTitle className="font-display text-xl font-bold text-primary">
+                  Ingreso registrado
+                </DialogTitle>
+                <DialogDescription>
+                  Revisá los datos del comprobante operativo antes de imprimirlo.
+                </DialogDescription>
+              </DialogHeader>
+              <EntryTicket onPrint={() => window.print()} stay={ticketStay} />
+            </div>
           )}
         </DialogContent>
       </Dialog>

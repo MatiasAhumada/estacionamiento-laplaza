@@ -109,6 +109,56 @@
   }
 }
 
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  [data-slot="dialog-content"] {
+    position: fixed !important;
+    top: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    transform: none !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .entry-ticket-print,
+  .entry-ticket-print * {
+    visibility: visible !important;
+  }
+
+  .entry-ticket-print {
+    position: static !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    box-shadow: none !important;
+  }
+
+  .entry-ticket-actions,
+  [data-slot="dialog-header"],
+  [data-slot="dialog-overlay"],
+  [data-slot="dialog-close"] {
+    display: none !important;
+  }
+}
+
 .font-display {
   font-family: var(--font-display), sans-serif;
 }
