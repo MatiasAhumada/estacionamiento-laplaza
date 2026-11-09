@@ -50,6 +50,7 @@ import {
   useDemoState,
 } from "@/features/estacionamiento/demo/demo-provider";
 import { entrySchema } from "@/features/estacionamiento/validation/entry.schema";
+import { staySearchSchema } from "@/features/estacionamiento/validation/stay-search.schema";
 
 const CATEGORY_DETAILS: Record<DemoStayCategory, { label: string; shortcut: string }> = {
   auto: { label: "Auto", shortcut: "F1" },
@@ -147,6 +148,18 @@ function formatTime(date: string): string {
   return formatClock(new Date(date));
 }
 
+function formatStayDateTime(date: string): string {
+  return new Intl.DateTimeFormat(DEMO_LOCALE, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    timeZone: "America/Argentina/Buenos_Aires",
+  }).format(new Date(date));
+}
+
 function formatLiveClock(timestamp: number): string {
   if (timestamp < 1) {
     return "—";
@@ -226,6 +239,7 @@ export function EmployeeTerminal() {
   }
 
   const activeStays = selectMatchingActiveStays(state, searchQuery);
+  const parsedSearchQuery = staySearchSchema.safeParse(searchQuery);
   const ticketStay = state.stays.find((stay) => stay.id === ticketStayId);
   const selectedStay = activeStays.find((stay) => stay.id === selectedStayId);
   let selectedTariff: DemoTariff | undefined;
@@ -625,6 +639,8 @@ export function EmployeeTerminal() {
               <div className="grid gap-2">
                 <Label htmlFor="stay-search">Patente parcial</Label>
                 <Input
+                  aria-describedby="stay-search-help"
+                  aria-invalid={!parsedSearchQuery.success}
                   autoComplete="off"
                   autoFocus
                   className="min-h-12 rounded-xl font-mono text-lg uppercase"
@@ -636,9 +652,15 @@ export function EmployeeTerminal() {
                   placeholder="Ej.: 782"
                   value={searchQuery}
                 />
+                <p className="text-xs leading-5 text-muted-foreground" id="stay-search-help">
+                  Buscá por cualquier fragmento de letras o números. La búsqueda distingue cada estadía por su ID interno.
+                </p>
+                {!parsedSearchQuery.success && (
+                  <p className="text-sm text-destructive" role="alert">Usá solo letras y números para buscar.</p>
+                )}
               </div>
               <div aria-live="polite" className="grid max-h-52 gap-2 overflow-y-auto">
-                {searchQuery && activeStays.length > 0 && activeStays.map((stay) => (
+                {parsedSearchQuery.success && searchQuery.trim() && activeStays.length > 0 && activeStays.map((stay) => (
                   <StayOption
                     key={stay.id}
                     onSelect={() => setSelectedStayId(stay.id)}
@@ -646,7 +668,7 @@ export function EmployeeTerminal() {
                     stay={stay}
                   />
                 ))}
-                {searchQuery && !activeStays.length && (
+                {parsedSearchQuery.success && searchQuery.trim() && !activeStays.length && (
                   <p className="rounded-xl border border-dashed border-border px-4 py-5 text-center text-sm text-muted-foreground">No encontramos estadías activas con ese fragmento.</p>
                 )}
               </div>
@@ -655,9 +677,14 @@ export function EmployeeTerminal() {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold text-primary">Ticket #{selectedStay.ticketNumber} · {CATEGORY_DETAILS[selectedStay.category].label}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">Ingreso {formatTime(selectedStay.enteredAt)} · {formatElapsed(selectedStay.enteredAt, now)}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Ingreso {formatStayDateTime(selectedStay.enteredAt)} · {formatElapsed(selectedStay.enteredAt, now)}</p>
+                      <p className="mt-1 break-all font-mono text-[11px] text-muted-foreground">ID {selectedStay.id}</p>
                     </div>
-                    <p className="font-display text-xl font-bold tabular-nums text-primary">{formatCurrency(selectedPrice.totalCents)}</p>
+                    <p className="shrink-0 font-display text-xl font-bold tabular-nums text-primary">{formatCurrency(selectedPrice.totalCents)}</p>
+                  </div>
+                  <div className="grid gap-1 border-t border-border pt-3 text-xs text-muted-foreground">
+                    <p>Tarifa ilustrativa: {formatCurrency(selectedPrice.tariffPerFractionCents)} cada {selectedPrice.fractionMinutes} min</p>
+                    <p>{selectedPrice.blocks} {selectedPrice.blocks === 1 ? "bloque" : "bloques"} · {selectedPrice.billableMinutes} min facturables</p>
                   </div>
                   <div className="grid gap-2">
                     <Label>Medio de pago</Label>
@@ -736,7 +763,8 @@ function StayOption({
     >
       <span className="grid min-w-0 gap-0.5">
         <span className="truncate font-mono text-sm font-bold">{stay.plateFragment}</span>
-        <span className="text-xs font-normal">Ticket #{stay.ticketNumber} · {CATEGORY_DETAILS[stay.category].label} · {formatTime(stay.enteredAt)}</span>
+        <span className="text-xs font-normal">Ticket #{stay.ticketNumber} · {CATEGORY_DETAILS[stay.category].label} · {formatStayDateTime(stay.enteredAt)}</span>
+        <span className="truncate font-mono text-[10px] font-normal opacity-80">ID {stay.id}</span>
       </span>
       <span className="ml-2 shrink-0 text-xs">{selected && "Elegida"}{!selected && "Elegir"}</span>
     </Button>

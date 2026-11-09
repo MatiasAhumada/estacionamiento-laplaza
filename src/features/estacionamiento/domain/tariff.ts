@@ -22,7 +22,13 @@ export function calculateStayPrice(
 
   const elapsedMinutes = (exitedTime - enteredTime) / 60_000;
 
-  if (elapsedMinutes < 0 || tariff.fractionMinutes < 1 || tariff.hourlyCents < 0) {
+  if (
+    elapsedMinutes < 0 ||
+    tariff.fractionMinutes < 1 ||
+    !Number.isSafeInteger(tariff.fractionMinutes) ||
+    tariff.hourlyCents < 0 ||
+    !Number.isSafeInteger(tariff.hourlyCents)
+  ) {
     return null;
   }
 

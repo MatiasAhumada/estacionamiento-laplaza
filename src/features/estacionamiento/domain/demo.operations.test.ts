@@ -9,6 +9,7 @@ import { selectActiveStays, selectCashSummary, selectMatchingActiveStays, select
 import { calculateStayPrice } from "./tariff";
 import { parseDemoState } from "../demo/demo-storage";
 import { entrySchema } from "../validation/entry.schema";
+import { staySearchSchema } from "../validation/stay-search.schema";
 
 describe("estado demo del estacionamiento", () => {
   it("valida el ingreso con fragmentos alfanuméricos y normaliza antes de registrar", () => {
@@ -40,6 +41,40 @@ describe("estado demo del estacionamiento", () => {
     assert.equal(result.state.stays.at(-1)?.ticketNumber, 6);
     assert.equal(result.state.stays.at(-1)?.id, "stay-new-duplicate-plate");
     assert.equal(selectMatchingActiveStays(result.state, "782").length, 3);
+  });
+
+  it("distingue coincidencias activas por ID y valida fragmentos de búsqueda", () => {
+    const matches = selectMatchingActiveStays(DEMO_SEED_STATE, " 782 ");
+
+    assert.equal(matches.length, 2);
+    assert.notEqual(matches[0]?.id, matches[1]?.id);
+    assert.deepEqual(selectMatchingActiveStays(DEMO_SEED_STATE, "78-2"), []);
+    assert.deepEqual(selectMatchingActiveStays(DEMO_SEED_STATE, "ABC"), []);
+    assert.equal(staySearchSchema.safeParse(" 782z ").data, "782Z");
+    assert.equal(staySearchSchema.safeParse("78-2").success, false);
+    assert.equal(staySearchSchema.safeParse("").success, true);
+  });
+
+  it("calcula bloques de tarifa ilustrativa y rechaza fechas o tarifas inválidas", () => {
+    const autoTariff = DEMO_SEED_STATE.tariffs.find((tariff) => tariff.category === "auto");
+    assert.ok(autoTariff);
+
+    const expectedPrice = calculateStayPrice(
+      "2026-11-09T08:35:00.000-03:00",
+      "2026-11-09T12:05:00.000-03:00",
+      autoTariff,
+    );
+    assert.deepEqual(expectedPrice, {
+      billableMinutes: 210,
+      blocks: 7,
+      fractionMinutes: 30,
+      tariffPerFractionCents: 108_000,
+      totalCents: 756_000,
+    });
+
+    assert.equal(calculateStayPrice("fecha inválida", "2026-11-09T12:05:00.000-03:00", autoTariff), null);
+    assert.equal(calculateStayPrice("2026-11-09T12:05:00.000-03:00", "2026-11-09T12:04:00.000-03:00", autoTariff), null);
+    assert.equal(calculateStayPrice("2026-11-09T08:35:00.000-03:00", "2026-11-09T09:05:00.000-03:00", { ...autoTariff, fractionMinutes: 0 }), null);
   });
 
   it("deriva ocupación y conserva pagos atómicos en el historial", () => {

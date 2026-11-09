@@ -7,7 +7,7 @@ import type {
   DemoStay,
   DemoStayCategory,
 } from "./demo.types";
-import { normalizePlateFragment } from "./plate";
+import { isValidPlateFragment, normalizePlateFragment } from "./plate";
 
 export interface DemoOccupancy {
   active: number;
@@ -37,7 +37,7 @@ export function selectActiveStays(state: DemoState): DemoStay[] {
 export function selectMatchingActiveStays(state: DemoState, plateFragment: string): DemoStay[] {
   const normalizedFragment = normalizePlateFragment(plateFragment);
 
-  if (!normalizedFragment) {
+  if (!normalizedFragment || !isValidPlateFragment(normalizedFragment)) {
     return [];
   }
 
