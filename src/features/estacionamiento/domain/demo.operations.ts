@@ -393,11 +393,11 @@ export function applyDemoAction(state: DemoState, action: DemoAction): DemoOpera
   if (action.type === "open-shift") {
     if (selectActiveShift(state)) return reject(state, "Ya hay un turno abierto.");
     const employee = state.employees.find((item) => item.id === action.employeeId && item.active);
-    if (!employee || !Number.isSafeInteger(action.openingCashCents) || action.openingCashCents < 0) {
+    if (!employee || !state.settings.shiftLabels.includes(action.label) || !Number.isSafeInteger(action.openingCashCents) || action.openingCashCents < 0) {
       return reject(state, "Seleccioná un empleado activo y un fondo inicial válido.");
     }
     return succeed({ ...state, shifts: [...state.shifts, {
-      id: action.id, employeeId: employee.id, openedAt: action.occurredAt,
+      id: action.id, employeeId: employee.id, label: action.label, openedAt: action.occurredAt,
       openingCashCents: action.openingCashCents, status: "open",
     }] });
   }

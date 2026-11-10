@@ -235,8 +235,10 @@ export function EmployeeTerminal() {
   const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
   const [now, setNow] = useState(0);
   const [newShiftEmployeeId, setNewShiftEmployeeId] = useState(state.employees.find((item) => item.active)?.id ?? "");
+  const [newShiftLabel, setNewShiftLabel] = useState(state.settings.shiftLabels[0] ?? "");
   const [openingCash, setOpeningCash] = useState("0");
   const [shiftError, setShiftError] = useState("");
+  const selectedShiftLabel = state.settings.shiftLabels.includes(newShiftLabel) ? newShiftLabel : state.settings.shiftLabels[0] ?? "";
 
   const activeShift = selectActiveShift(state);
   let employee: DemoEmployee | undefined;
@@ -440,7 +442,7 @@ export function EmployeeTerminal() {
     event.preventDefault();
     const parsed = z.coerce.number().finite().nonnegative().safeParse(openingCash);
     if (!parsed.success) { setShiftError("Ingresá un fondo inicial válido."); return; }
-    const result = runDemoOperation({ type: "open-shift", employeeId: newShiftEmployeeId, openingCashCents: Math.round(parsed.data * 100) });
+    const result = runDemoOperation({ type: "open-shift", employeeId: newShiftEmployeeId, label: selectedShiftLabel, openingCashCents: Math.round(parsed.data * 100) });
     if (!result.success) { setShiftError(result.message); return; }
     setShiftError("");
   }
@@ -477,7 +479,7 @@ export function EmployeeTerminal() {
             {!activeShift && "—"}
           </span>
           <span className="grid gap-1">
-            <span className="text-sm font-semibold">{activeShift && "Turno abierto"}{!activeShift && "Turno cerrado"}</span>
+            <span className="text-sm font-semibold">{activeShift && `${activeShift.label ?? "Turno"} abierto`}{!activeShift && "Turno cerrado"}</span>
             <span className="text-xs text-sky-100">
               {activeShift && `Desde las ${formatTime(activeShift.openedAt)}`}
               {!activeShift && "Las acciones están deshabilitadas"}
@@ -490,11 +492,12 @@ export function EmployeeTerminal() {
       </section>
 
       {!isShiftOpen && (
-        <form className="grid gap-4 rounded-2xl border border-action/50 bg-action/15 p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end" onSubmit={openShift}>
+        <form className="grid gap-4 rounded-2xl border border-action/50 bg-action/15 p-4 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end" onSubmit={openShift}>
           <div className="space-y-2"><Label htmlFor="new-shift-employee">Empleado del nuevo turno</Label><Select onValueChange={setNewShiftEmployeeId} value={newShiftEmployeeId}><SelectTrigger className="w-full bg-white" id="new-shift-employee"><SelectValue placeholder="Seleccionar empleado" /></SelectTrigger><SelectContent>{state.employees.filter((item) => item.active).map((item) => <SelectItem key={item.id} value={item.id}>{item.displayName}</SelectItem>)}</SelectContent></Select></div>
+          <div className="space-y-2"><Label htmlFor="new-shift-label">Nombre del turno</Label><Select onValueChange={setNewShiftLabel} value={selectedShiftLabel}><SelectTrigger className="w-full bg-white" id="new-shift-label"><SelectValue placeholder="Seleccionar turno" /></SelectTrigger><SelectContent>{state.settings.shiftLabels.map((label) => <SelectItem key={label} value={label}>{label}</SelectItem>)}</SelectContent></Select></div>
           <div className="space-y-2"><Label htmlFor="new-shift-cash">Fondo inicial (ARS)</Label><Input id="new-shift-cash" min={0} onChange={(event) => setOpeningCash(event.target.value)} step="0.01" type="number" value={openingCash} /></div>
           <Button className="bg-action font-bold text-primary hover:bg-action/90" type="submit">Abrir turno</Button>
-          {shiftError ? <p className="text-sm text-destructive sm:col-span-3" role="alert">{shiftError}</p> : null}
+          {shiftError ? <p className="text-sm text-destructive md:col-span-4" role="alert">{shiftError}</p> : null}
         </form>
       )}
 

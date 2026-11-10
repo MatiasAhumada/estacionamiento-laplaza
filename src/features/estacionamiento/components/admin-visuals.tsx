@@ -22,14 +22,19 @@ export function AdminPanel({ title, subtitle, children, className = "" }: Readon
   </Card>;
 }
 
-export function AdminBarChart({ values, labels, color = "bg-secondary" }: Readonly<{ values: number[]; labels: string[]; color?: string }>) {
+export function AdminBarChart({ values, labels, color = "bg-secondary", formatValue = formatMoney }: Readonly<{ values: number[]; labels: string[]; color?: string; formatValue?: (value: number) => string }>) {
   const max = Math.max(1, ...values);
-  return <div className="grid h-44 items-end gap-2" style={{ gridTemplateColumns: `repeat(${values.length}, minmax(0, 1fr))` }} role="img" aria-label={values.map((value, index) => `${labels[index]}: ${formatMoney(value)}`).join("; ")}>
+  return <div className="grid h-44 items-end gap-2" style={{ gridTemplateColumns: `repeat(${values.length}, minmax(0, 1fr))` }} role="img" aria-label={values.map((value, index) => `${labels[index]}: ${formatValue(value)}`).join("; ")}>
     {values.map((value, index) => <div className="flex h-full flex-col items-center justify-end gap-2" key={`${labels[index]}-${index}`}>
       <div className="flex w-full flex-1 items-end rounded-t-lg bg-muted/60"><div className={`w-full rounded-t-lg ${color}`} style={{ height: `${Math.max(value > 0 ? 5 : 0, value / max * 100)}%` }} /></div>
       <span className="text-[10px] font-medium text-muted-foreground">{labels[index]}</span>
     </div>)}
   </div>;
+}
+
+export function AdminComparison({ items, formatValue = formatMoney }: Readonly<{ items: { label: string; value: number; color: string }[]; formatValue?: (value: number) => string }>) {
+  const maximum = Math.max(1, ...items.map((item) => Math.abs(item.value)));
+  return <div className="space-y-4">{items.map((item) => <div key={item.label}><div className="mb-1.5 flex items-center justify-between gap-3 text-xs"><span className="font-medium text-muted-foreground">{item.label}</span><strong className="tabular-nums text-primary">{formatValue(item.value)}</strong></div><div className="h-3 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full transition-[width]" style={{ background: item.color, width: `${Math.abs(item.value) / maximum * 100}%` }} /></div></div>)}</div>;
 }
 
 export function AdminDonut({ segments, center, label }: Readonly<{ segments: { label: string; value: number; color: string }[]; center: string; label: string }>) {

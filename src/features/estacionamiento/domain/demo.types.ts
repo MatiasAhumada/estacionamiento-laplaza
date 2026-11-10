@@ -18,6 +18,7 @@ export interface DemoEmployee {
 
 export interface DemoShift {
   id: string;
+  label?: string;
   employeeId: string;
   openedAt: string;
   closedAt?: string;
@@ -187,7 +188,7 @@ export type DemoAction =
   | { type: "record-cash-adjustment"; id: string; occurredAt: string; direction: DemoCashDirection; amountCents: number; reason: string }
   | { type: "count-cash"; id: string; occurredAt: string; countedCents: number }
   | { type: "close-shift"; id: string; occurredAt: string }
-  | { type: "open-shift"; id: string; occurredAt: string; employeeId: string; openingCashCents: number }
+  | { type: "open-shift"; id: string; occurredAt: string; employeeId: string; label: string; openingCashCents: number }
   | { type: "record-expense"; id: string; occurredAt: string; expenseDate: string; category: string; concept: string; method: DemoPaymentMethod; amountCents: number }
   | { type: "create-audit"; id: string; occurredAt: string }
   | { type: "save-employee"; id: string; occurredAt: string; employeeId?: string; displayName: string; active: boolean }

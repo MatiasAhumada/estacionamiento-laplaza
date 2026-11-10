@@ -12,6 +12,7 @@ const demoStateSchema = z.object({
   employees: z.array(z.object({ id: z.string().min(1), displayName: z.string().min(1), active: z.boolean() })),
   shifts: z.array(z.object({
     id: z.string().min(1),
+    label: z.string().min(1).optional(),
     employeeId: z.string().min(1),
     openedAt: isoDateSchema,
     closedAt: isoDateSchema.optional(),

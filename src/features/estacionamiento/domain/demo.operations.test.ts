@@ -411,11 +411,12 @@ describe("estado demo del estacionamiento", () => {
 
   it("permite abrir otro turno desde la terminal con un empleado activo", () => {
     const state = { ...DEMO_SEED_STATE, shifts: DEMO_SEED_STATE.shifts.map((shift) => shift.id === "shift-current" ? { ...shift, status: "closed" as const, closedAt: "2026-11-09T16:00:00.000-03:00", closedCashCountId: "cash-count-yesterday" } : shift) };
-    const invalid = applyDemoAction(state, { type: "open-shift", id: "shift-invalid", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "missing", openingCashCents: 0 });
+    const invalid = applyDemoAction(state, { type: "open-shift", id: "shift-invalid", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "missing", label: "Tarde", openingCashCents: 0 });
     assert.equal(invalid.success, false);
-    const opened = applyDemoAction(state, { type: "open-shift", id: "shift-next", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "employee-lucia", openingCashCents: 50_000 });
+    const opened = applyDemoAction(state, { type: "open-shift", id: "shift-next", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "employee-lucia", label: "Tarde", openingCashCents: 50_000 });
     assert.equal(opened.success, true);
     assert.equal(opened.state.shifts.at(-1)?.employeeId, "employee-lucia");
+    assert.equal(opened.state.shifts.at(-1)?.label, "Tarde");
     assert.equal(selectCashSummary(opened.state, "shift-next")?.expectedCashCents, 50_000);
   });
 

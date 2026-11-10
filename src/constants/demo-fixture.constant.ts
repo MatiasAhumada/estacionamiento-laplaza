@@ -9,6 +9,7 @@ export const DEMO_SEED_STATE: DemoState = {
   shifts: [
     {
       id: "shift-closed-yesterday",
+      label: "Mañana",
       employeeId: "employee-marcos",
       openedAt: "2026-11-08T08:00:00.000-03:00",
       closedAt: "2026-11-08T16:00:00.000-03:00",
@@ -18,6 +19,7 @@ export const DEMO_SEED_STATE: DemoState = {
     },
     {
       id: "shift-current",
+      label: "Mañana",
       employeeId: "employee-ana",
       openedAt: "2026-11-09T08:00:00.000-03:00",
       openingCashCents: 25_000,
