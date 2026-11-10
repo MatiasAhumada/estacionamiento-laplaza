@@ -1,5 +1,7 @@
 # Arquitectura frontend propuesta
 
+> Documento de planificación inicial. El estado implementado, las cuatro rutas administrativas y los componentes actuales están registrados en [Panel administrativo 2026-11-09](admin-frontend-2026-11-09.md). Los párrafos que hablan de una plantilla sin estado describen el punto de partida anterior.
+
 La plantilla solo ofrece `src/app`, `components/ui`, `components/common`, constantes, servicio Axios de usuarios y ejemplo de servidor/Prisma. No hay estado de aplicación. La estructura siguiente es **propuesta**, no implementada:
 
 ```text

@@ -156,7 +156,7 @@ export function CashRegister() {
       <Card className="overflow-hidden border-primary/10 shadow-sm">
         <CardHeader className="gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-2">
-            <p className="text-xs font-bold tracking-[0.14em] text-secondary uppercase">Administración · Caja</p>
+            <p className="text-xs font-bold tracking-[0.14em] text-secondary uppercase">Terminal · Caja operativa</p>
             <CardTitle className="font-display text-2xl font-bold text-primary">Turnos y arqueos</CardTitle>
             <CardDescription>Controlá efectivo y cierre del turno actual. Datos de demostración.</CardDescription>
           </div>

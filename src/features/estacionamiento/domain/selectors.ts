@@ -176,6 +176,9 @@ export function selectCashSummary(state: DemoState, shiftId: string): DemoCashSu
   const adjustmentOutCents = state.cashAdjustments
     .filter((adjustment) => adjustment.shiftId === shiftId && adjustment.direction === "out")
     .reduce((total, adjustment) => total + adjustment.amountCents, 0);
+  const cashExpensesCents = (state.expenses ?? [])
+    .filter((expense) => expense.shiftId === shiftId && expense.method === "efectivo")
+    .reduce((total, expense) => total + expense.amountCents, 0);
 
   return {
     openingCashCents: shift.openingCashCents,
@@ -187,7 +190,7 @@ export function selectCashSummary(state: DemoState, shiftId: string): DemoCashSu
       shift.openingCashCents +
       netByMethod.efectivo +
       adjustmentInCents -
-      adjustmentOutCents,
+      adjustmentOutCents - cashExpensesCents,
   };
 }
 

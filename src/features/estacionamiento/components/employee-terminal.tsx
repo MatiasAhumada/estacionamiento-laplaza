@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EntryTicket } from "@/features/estacionamiento/components/entry-ticket";
 import {
   Dialog,
@@ -195,6 +197,14 @@ function getMovementLabel(kind: DemoMovement["kind"]): string {
     return "Arqueo de caja";
   }
 
+  if (kind === "expense") {
+    return "Gasto registrado";
+  }
+
+  if (kind === "audit") {
+    return "Auditoría de playa";
+  }
+
   return "Cierre de turno";
 }
 
@@ -207,7 +217,7 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 export function EmployeeTerminal() {
-  const { state, registerStayEntry, confirmStayPayment, storageStatus } = useDemoState();
+  const { state, registerStayEntry, confirmStayPayment, runDemoOperation, storageStatus } = useDemoState();
   const terminalActionsRef = useRef<HTMLElement>(null);
   const entrySubmittingRef = useRef(false);
   const paymentSubmittingRef = useRef(false);
@@ -224,6 +234,9 @@ export function EmployeeTerminal() {
   const [paymentError, setPaymentError] = useState("");
   const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
   const [now, setNow] = useState(0);
+  const [newShiftEmployeeId, setNewShiftEmployeeId] = useState(state.employees.find((item) => item.active)?.id ?? "");
+  const [openingCash, setOpeningCash] = useState("0");
+  const [shiftError, setShiftError] = useState("");
 
   const activeShift = selectActiveShift(state);
   let employee: DemoEmployee | undefined;
@@ -423,6 +436,15 @@ export function EmployeeTerminal() {
     resetDialog();
   }
 
+  function openShift(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    const parsed = z.coerce.number().finite().nonnegative().safeParse(openingCash);
+    if (!parsed.success) { setShiftError("Ingresá un fondo inicial válido."); return; }
+    const result = runDemoOperation({ type: "open-shift", employeeId: newShiftEmployeeId, openingCashCents: Math.round(parsed.data * 100) });
+    if (!result.success) { setShiftError(result.message); return; }
+    setShiftError("");
+  }
+
   let currentMovements: DemoMovement[] = [];
 
   if (activeShift) {
@@ -447,6 +469,7 @@ export function EmployeeTerminal() {
           <p className="mt-2 max-w-xl text-sm leading-6 text-sky-100 sm:mt-3 sm:text-base">
             Registrá ingresos y cobros del turno desde una sola pantalla.
           </p>
+          <Button asChild className="mt-4 border-white/30 bg-white/10 text-white hover:bg-white/20" variant="outline"><a href="#caja-turno">Caja y arqueo ↓</a></Button>
         </div>
         <div className="flex min-w-0 items-center justify-between gap-4 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 sm:min-w-64 sm:justify-start">
           <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-action font-display text-lg font-bold text-action-foreground">
@@ -467,9 +490,12 @@ export function EmployeeTerminal() {
       </section>
 
       {!isShiftOpen && (
-        <div className="rounded-2xl border border-action/50 bg-action/15 px-4 py-3 text-sm leading-6 text-primary" role="status">
-          El turno está cerrado. Para continuar, abrí un turno desde la administración de la demo.
-        </div>
+        <form className="grid gap-4 rounded-2xl border border-action/50 bg-action/15 p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end" onSubmit={openShift}>
+          <div className="space-y-2"><Label htmlFor="new-shift-employee">Empleado del nuevo turno</Label><Select onValueChange={setNewShiftEmployeeId} value={newShiftEmployeeId}><SelectTrigger className="w-full bg-white" id="new-shift-employee"><SelectValue placeholder="Seleccionar empleado" /></SelectTrigger><SelectContent>{state.employees.filter((item) => item.active).map((item) => <SelectItem key={item.id} value={item.id}>{item.displayName}</SelectItem>)}</SelectContent></Select></div>
+          <div className="space-y-2"><Label htmlFor="new-shift-cash">Fondo inicial (ARS)</Label><Input id="new-shift-cash" min={0} onChange={(event) => setOpeningCash(event.target.value)} step="0.01" type="number" value={openingCash} /></div>
+          <Button className="bg-action font-bold text-primary hover:bg-action/90" type="submit">Abrir turno</Button>
+          {shiftError ? <p className="text-sm text-destructive sm:col-span-3" role="alert">{shiftError}</p> : null}
+        </form>
       )}
 
       {state.notice && (

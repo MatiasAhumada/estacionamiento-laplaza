@@ -6,7 +6,7 @@ export type DemoPaymentMethod = "efectivo" | "debito" | "transferencia";
 
 export type DemoShiftStatus = "open" | "closed";
 export type DemoStayStatus = "active" | "closed";
-export type DemoMovementKind = "entry" | "payment" | "cash-adjustment" | "cash-count" | "shift-close";
+export type DemoMovementKind = "entry" | "payment" | "cash-adjustment" | "cash-count" | "shift-close" | "expense" | "audit";
 export type DemoCashDirection = "in" | "out";
 export type DemoInvoiceRequestStatus = "pending";
 
@@ -35,6 +35,7 @@ export interface DemoStay {
   enteredByEmployeeId: string;
   shiftId: string;
   status: DemoStayStatus;
+  positionId?: string;
   exitedAt?: string;
 }
 
@@ -98,9 +99,51 @@ export interface DemoTariff {
   effectiveFrom: string;
 }
 
+export interface DemoExpense {
+  id: string;
+  shiftId: string;
+  employeeId: string;
+  category: string;
+  concept: string;
+  method: DemoPaymentMethod;
+  amountCents: number;
+  occurredAt: string;
+}
+
+export interface DemoAuditVehicle {
+  stayId: string;
+  ticketNumber: number;
+  plateFragment: string;
+  category: DemoStayCategory;
+  positionId?: string;
+  enteredAt: string;
+  employeeName: string;
+  shiftId: string;
+}
+
+export interface DemoAudit {
+  id: string;
+  number: number;
+  createdAt: string;
+  shiftId?: string;
+  employeeName: string;
+  vehicles: DemoAuditVehicle[];
+  capacity: number;
+  parkingName: string;
+  motorcyclePositions: number;
+  autoPositions: number;
+  vanPositions: number;
+}
+
 export interface DemoSettings {
   capacity: number;
   connectionScenario: "online" | "offline" | "syncing";
+  parkingName: string;
+  motorcyclePositions: number;
+  autoPositions: number;
+  vanPositions: number;
+  shiftLabels: string[];
+  expenseCategories: string[];
 }
 
 export interface DemoState {
@@ -113,6 +156,8 @@ export interface DemoState {
   cashCounts: DemoCashCount[];
   invoiceRequests: DemoInvoiceRequest[];
   tariffs: DemoTariff[];
+  expenses: DemoExpense[];
+  audits: DemoAudit[];
   settings: DemoSettings;
   nextTicketNumber: number;
   notice?: string;
@@ -142,6 +187,12 @@ export type DemoAction =
   | { type: "record-cash-adjustment"; id: string; occurredAt: string; direction: DemoCashDirection; amountCents: number; reason: string }
   | { type: "count-cash"; id: string; occurredAt: string; countedCents: number }
   | { type: "close-shift"; id: string; occurredAt: string }
+  | { type: "open-shift"; id: string; occurredAt: string; employeeId: string; openingCashCents: number }
+  | { type: "record-expense"; id: string; occurredAt: string; expenseDate: string; category: string; concept: string; method: DemoPaymentMethod; amountCents: number }
+  | { type: "create-audit"; id: string; occurredAt: string }
+  | { type: "save-employee"; id: string; occurredAt: string; employeeId?: string; displayName: string; active: boolean }
+  | { type: "save-settings"; id: string; occurredAt: string; settings: DemoSettings }
+  | { type: "save-tariffs"; id: string; occurredAt: string; tariffs: DemoTariff[] }
   | { type: "reset"; state: DemoState };
 
 export type DemoOperationAction = Exclude<DemoAction, { type: "hydrate" | "reset" }>;

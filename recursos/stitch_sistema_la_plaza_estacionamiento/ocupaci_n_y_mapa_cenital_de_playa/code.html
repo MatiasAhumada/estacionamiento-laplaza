@@ -1,0 +1,719 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-variant":"#d5e4f6","primary-fixed-dim":"#a6cbe8","on-primary-container":"#7498b4","inverse-surface":"#243240","on-primary-fixed":"#001e2f","on-primary-fixed-variant":"#254a63","secondary":"#00677d","tertiary":"#2a1100","primary-fixed":"#c8e6ff","surface-tint":"#3e627b","error-container":"#ffdad6","surface":"#f7f9ff","inverse-primary":"#a6cbe8","on-tertiary-fixed":"#301400","on-secondary-fixed":"#001f27","secondary-fixed-dim":"#69d4f4","surface-container-high":"#dbeafc","tertiary-fixed-dim":"#ffb781","on-tertiary-fixed-variant":"#703800","tertiary-fixed":"#ffdcc4","on-tertiary":"#ffffff","on-background":"#0e1d2a","on-secondary-container":"#006075","on-secondary-fixed-variant":"#004e5f","surface-container":"#e3efff","surface-bright":"#f7f9ff","outline":"#72787d","surface-dim":"#cddbee","secondary-fixed":"#b2ebff","background":"#f7f9ff","outline-variant":"#c2c7cd","secondary-container":"#72ddfd","on-tertiary-container":"#e27700","surface-container-low":"#edf4ff","inverse-on-surface":"#e8f2ff","tertiary-container":"#492200","on-secondary":"#ffffff","on-primary":"#ffffff","primary-container":"#023047","on-surface":"#0e1d2a","on-error":"#ffffff","on-error-container":"#93000a","primary":"#001a2a","on-surface-variant":"#42474d","surface-container-highest":"#d5e4f6","surface-container-lowest":"#ffffff","error":"#ba1a1a"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.25rem","margin-lg":"2rem","space-2xl":"3rem","space-sm":"0.5rem","space-md":"0.75rem","gutter":"1rem","margin":"1rem","space-xs":"0.25rem","gutter-lg":"1.5rem","margin-md":"1.5rem","space-xl":"2rem"},fontFamily:{"body-md":["Inter"],"label-lg":["Inter"],"label-sm":["Inter"],"body-lg":["Inter"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"body-sm":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Inter"],"monospace-data":["Inter"]},fontSize:{"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display-lg-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"24px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"monospace-data":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center gap-space-sm px-gutter-lg bg-surface-container-low"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="font-headline-lg text-headline-lg font-bold text-on-primary">E</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-on-surface leading-tight tracking-tight">Auditoría Visual de Ocupación</span><span class="font-label-sm text-label-sm text-secondary tracking-wider uppercase font-semibold">Gestión Ejecutiva</span></div></div><div class="px-gutter-lg pt-space-lg pb-space-sm"><span class="font-label-sm text-label-sm uppercase text-outline tracking-wider font-bold">Panel de Control</span></div><nav class="flex flex-col gap-space-xs px-gutter" data-active-classes="bg-primary-container text-on-primary font-semibold shadow-sm"><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inicio" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Inicio</a><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ocupacion" href="#"><span class="material-symbols-outlined text-[20px]">local_parking</span>Ocupación</a><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="turnos-y-cajas" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Turnos y Cajas</a><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="configuracion" href="#"><span class="material-symbols-outlined text-[20px]">tune</span>Configuración</a></nav></div><div class="p-gutter"><div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant font-semibold uppercase">Terminal POS</span><span class="font-label-sm text-label-sm text-secondary font-bold">B-04</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">wifi_tethering</span><span class="font-label-sm text-label-sm text-on-surface">Barreras activas</span></div></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg"><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-xs bg-surface-container px-space-md py-space-xs rounded-full"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm font-bold text-on-surface">En línea / Sincronizado</span></div><div class="h-4 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-secondary">schedule</span><span class="font-semibold text-on-surface">Turno Mañana</span><span class="text-outline">•</span><span class="">Carlos Rossi</span></div></div><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-lg"><span class="material-symbols-outlined text-secondary text-[18px]">payments</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Caja Apertura:</span><span class="font-monospace-data text-monospace-data font-bold text-on-surface">$145.200</span></div><div class="h-5 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="flex flex-col text-right"><span class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Carlos Rossi</span><span class="font-label-sm text-label-sm text-on-surface-variant">Supervisor de Turno</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background"><div class="flex flex-col w-full">
+<div class="p-gutter-lg flex flex-col gap-space-lg">
+<!-- A. BANNER SUPERIOR INTERACTIVO: MODO AUDITORÍA VISUAL -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col lg:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md w-full lg:w-auto">
+<div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed shadow-sm">
+<span class="material-symbols-outlined text-[24px]">visibility</span>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Auditoría Visual de Ocupación</span>
+<span class="bg-secondary-container text-on-secondary-container px-space-xs py-0.5 rounded text-label-sm font-bold tracking-wider uppercase">Corte #AUD-20241024-02</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Instantánea física verificada contra registros de mostrador POS • 13:58 hs</span>
+</div>
+</div>
+<!-- Action Pill and Switches -->
+<div class="flex flex-wrap items-center gap-space-sm w-full lg:w-auto justify-end">
+<!-- Live vs Snapshot Toggle -->
+<div class="flex items-center bg-surface-container-highest p-1 rounded-lg">
+<button class="px-space-md py-1.5 rounded text-label-md font-semibold text-on-surface-variant transition-all hover:text-on-surface" id="btn-live" onclick="setAuditMode(false)">
+            Operativo Vivo
+          </button>
+<button class="px-space-md py-1.5 rounded text-label-md font-bold bg-primary-container text-on-primary shadow-sm transition-all" id="btn-audit" onclick="setAuditMode(true)">
+            Auditoría Congelada
+          </button>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant hidden sm:block"></div>
+<button class="flex items-center gap-space-xs px-space-md py-2 bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-lg font-label-md shadow-sm transition-transform active:scale-95" onclick="freezeAuditoria()">
+<span class="material-symbols-outlined text-[18px] text-secondary">camera</span>
+<span class="">Congelar Foto</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-2 bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-lg font-label-md shadow-sm transition-transform active:scale-95" onclick="window.print()">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">print</span>
+<span class="">Padrón A4 / Térmico</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-2 bg-primary-container text-on-primary hover:bg-primary rounded-lg font-label-md shadow-sm transition-transform active:scale-95"><span class="material-symbols-outlined text-[18px]">file_download</span>
+<span class="">Exportar Ocupación</span></button>
+</div>
+</div>
+<!-- B. RESUMEN ANALÍTICO SUPERIOR (GRID DE 4 TARJETAS) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Donut Ocupación Global -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm uppercase tracking-wider text-outline font-bold">Ocupación Total</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">83.3%</span>
+</div>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="font-label-md font-bold text-secondary">25 ocupadas</span>
+<span class="text-outline text-body-sm">•</span>
+<span class="font-label-md font-semibold text-outline">5 libres</span>
+</div>
+</div>
+<div class="relative w-20 h-20 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5"></path>
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="83.3, 100" stroke-linecap="round" stroke-width="4.5"></path>
+</svg>
+<span class="absolute font-monospace-data text-body-sm font-bold text-on-surface">25/30</span>
+</div>
+</div>
+<!-- Distribución Motos y Autos -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-wider text-outline font-bold">Sectorizado por Espacios</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">two_wheeler</span>
+</div>
+<div class="flex flex-col gap-space-xs my-2">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant font-medium">Motos Entrada</span>
+<span class="font-monospace-data font-bold text-on-surface">3 / 8 <span class="text-secondary font-normal">(37%)</span></span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 37.5%"></div>
+</div>
+<div class="flex justify-between items-center text-body-sm mt-1">
+<span class="text-on-surface-variant font-medium">Sedán / Estándar</span>
+<span class="font-monospace-data font-bold text-on-surface">17 / 18 <span class="text-error font-semibold">(94%)</span></span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 94.4%"></div>
+</div>
+</div>
+</div>
+<!-- Pickups & SUVs + Rotación -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-wider text-outline font-bold">Pickups 4x4 / Fondo</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">directions_car</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex flex-col">
+<span class="font-headline-xl text-headline-xl font-bold text-on-surface leading-none">5 / 6</span>
+<span class="font-label-sm text-error font-bold mt-1">1 espacio libre (C-04)</span>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg">
+<span class="font-monospace-data text-body-sm font-bold text-secondary">Porte Mayor</span>
+</div>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 mt-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 83.3%"></div>
+</div>
+</div>
+<!-- Gráfico de Permanencia -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm uppercase tracking-wider text-outline font-bold">Permanencia en Playa</span>
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">avg_time</span>
+</div>
+<div class="flex items-end gap-1.5 h-10 mt-1">
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary-fixed rounded-t" style="height: 42%;"></div>
+<span class="text-[9px] font-monospace-data font-bold text-on-surface-variant">&lt;1h</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-secondary rounded-t" style="height: 36%;"></div>
+<span class="text-[9px] font-monospace-data font-bold text-on-surface-variant">1-3h</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-primary-container rounded-t" style="height: 20%;"></div>
+<span class="text-[9px] font-monospace-data font-bold text-on-surface-variant">3-6h</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-on-tertiary-container rounded-t animate-pulse" style="height: 12%;"></div>
+<span class="text-[9px] font-monospace-data font-bold text-on-tertiary-container">&gt;6h</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1 text-center font-medium">2 vehículos exceden las 5 horas continuas</span>
+</div>
+</div>
+<!-- C & D. MAPA CENITAL 2D ARQUITECTÓNICO (50m × 10m) + PANEL INSPECTOR LATERAL -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+<!-- CONTENEDOR PLANO 2D CENITAL (COL 8 / 9) -->
+<div class="xl:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<!-- Header del plano técnico -->
+<div class="flex flex-wrap items-center justify-between pb-space-sm bg-surface-container-low p-space-md rounded-lg gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Auto</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Moto</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-on-secondary-fixed-variant"></span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4x4 / SUV</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm font-bold text-outline">Libre</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-bold text-on-tertiary-container">&gt;5h Alerta</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm text-body-sm font-monospace-data text-outline">
+<span class="">DIMENSIÓN REAL: 50.00m × 10.00m</span>
+<span class="">•</span>
+<span class="">RADIO GIRO: R=5.50m</span>
+</div>
+</div>
+<!-- PLANO ARQUITECTÓNICO CENITAL SVG + HTML OVERLAYS -->
+<div class="relative w-full overflow-x-auto pb-space-sm">
+<div class="min-w-[940px] bg-surface rounded-xl p-space-md relative shadow-inner">
+<!-- MARCAS DE FACHADA Y ACCESO (OESTE / ENTRADA) -->
+<div class="absolute left-0 top-0 bottom-0 w-16 bg-surface-container flex flex-col justify-between items-center py- space-sm rounded-l-xl z-20">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-[20px] text-secondary">door_front</span>
+<span class="text-[9px] font-bold uppercase tracking-wider text-secondary mt-1 [writing-mode:vertical-rl] rotate-180">PORTÓN ENTRADA</span>
+</div>
+<div class="w-full h-12 flex items-center justify-center bg-surface-container-high rounded text-center">
+<span class="text-[9px] font-bold font-monospace-data text-on-surface-variant">ANCHO<br>3.80m</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-[18px] text-outline">directions_walk</span>
+<span class="text-[8px] uppercase tracking-tighter text-outline [writing-mode:vertical-rl] rotate-180">PEATORAL</span>
+</div>
+</div>
+<!-- CONTENIDO INTERNO DE LA PLAYA -->
+<div class="ml-16 mr-2 flex flex-col gap-3">
+<!-- FILA SUPERIOR: MOTOS (M-01 A M-08) + AUTOS LADO NORTE (A-01 A A-08) + CAMIONETAS FONDO (C-01 A C-03) -->
+<div class="grid grid-cols-12 gap-2">
+<!-- SECTOR MOTOS COMPACTAS EN BAHÍA FRONTAL (M-01 a M-08 en bloque de 3 columnas del grid) -->
+<div class="col-span-3 bg-surface-container-low rounded-lg p-2 flex flex-col gap-1.5 shadow-sm">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-sm text-secondary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">two_wheeler</span> Espacios Motos (8 Plazas)</span>
+<span class="text-[10px] font-monospace-data text-on-surface-variant font-bold">2.20m × 1.20m</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5"><button class="darsena-btn p-1 rounded bg-surface-container-lowest hover:bg-secondary-container text-left flex flex-col justify-between h-16 transition-all shadow-sm" onclick="inspectBay('M-01', 'MOTO', '082', 'Moto Particular', '12:20 hs', '1h 38m', '$1.200/h', '$2.400')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-01</span>
+<span class="text-[11px] font-bold font-monospace-data text-on-surface">082</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">two_wheeler</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-lowest hover:bg-secondary-container text-left flex flex-col justify-between h-16 transition-all shadow-sm" onclick="inspectBay('M-02', 'MOTO', '514', 'Moto Particular', '11:45 hs', '2h 13m', '$1.200/h', '$3.600')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-02</span>
+<span class="text-[11px] font-bold font-monospace-data text-on-surface">514</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">two_wheeler</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-lowest hover:bg-secondary-container text-left flex flex-col justify-between h-16 transition-all shadow-sm" onclick="inspectBay('M-03', 'MOTO', '992', 'Moto Particular', '13:10 hs', '0h 48m', '$1.200/h', '$1.200')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-03</span>
+<span class="text-[11px] font-bold font-monospace-data text-on-surface">992</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">two_wheeler</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-high/60 text-left flex flex-col justify-between h-16 opacity-75" onclick="inspectBay('M-04', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-04</span>
+<span class="text-[9px] font-bold uppercase text-secondary">LIBRE</span>
+<span class="material-symbols-outlined text-[14px] text-outline">check_circle</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-high/60 text-left flex flex-col justify-between h-16 opacity-75" onclick="inspectBay('M-05', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-05</span>
+<span class="text-[9px] font-bold uppercase text-secondary">LIBRE</span>
+<span class="material-symbols-outlined text-[14px] text-outline">check_circle</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-high/60 text-left flex flex-col justify-between h-16 opacity-75" onclick="inspectBay('M-06', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-06</span>
+<span class="text-[9px] font-bold uppercase text-secondary">LIBRE</span>
+<span class="material-symbols-outlined text-[14px] text-outline">check_circle</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-high/60 text-left flex flex-col justify-between h-16 opacity-75" onclick="inspectBay('M-07', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-07</span>
+<span class="text-[9px] font-bold uppercase text-secondary">LIBRE</span>
+<span class="material-symbols-outlined text-[14px] text-outline">check_circle</span>
+</button>
+<button class="darsena-btn p-1 rounded bg-surface-container-high/60 text-left flex flex-col justify-between h-16 opacity-75" onclick="inspectBay('M-08', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<span class="text-[9px] font-bold font-monospace-data text-outline">M-08</span>
+<span class="text-[9px] font-bold uppercase text-secondary">LIBRE</span>
+<span class="material-symbols-outlined text-[14px] text-outline">check_circle</span>
+</button></div>
+</div>
+<!-- SECTOR AUTOS NORTE (A-01 A A-06 en col-span-6) -->
+<div class="col-span-6 grid grid-cols-6 gap-1.5"><button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest ring-2 ring-secondary flex flex-col justify-between h-24 transition-all shadow-md" id="bay-A01" onclick="inspectBay('A-01', 'SEDAN', '782', 'Auto Sedán', '10:15 hs', '3h 43m', '$2.160/h', '$7.560')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-secondary">A-01</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">782</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">3h 43m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-02', 'SEDAN', '492', 'Auto Sedán', '12:00 hs', '1h 58m', '$2.160/h', '$4.320')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-02</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">492</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">1h 58m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-tertiary-fixed hover:bg-tertiary-fixed-dim flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-03', 'SEDAN', '310', 'Auto Sedán', '08:45 hs', '5h 13m', '$2.160/h', '$12.960')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-tertiary-fixed">A-03</span>
+<span class="material-symbols-outlined text-[14px] text-on-tertiary-container animate-pulse">warning</span>
+</div>
+<div class="bg-surface-container-lowest px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-tertiary-container">310</span>
+</div>
+<div class="flex justify-between items-center text-[10px] font-bold text-on-tertiary-container font-monospace-data">
+<span class="">5h 13m</span>
+<span class="material-symbols-outlined text-[14px]">alarm</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-04', 'SEDAN', '901', 'Auto Sedán', '11:15 hs', '2h 43m', '$2.160/h', '$6.480')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-04</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">901</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 43m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-05', 'SEDAN', '344', 'Auto Sedán', '13:05 hs', '0h 53m', '$2.160/h', '$2.160')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-05</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">344</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">0h 53m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-06', 'SEDAN', '712', 'Auto Sedán', '12:30 hs', '1h 28m', '$2.160/h', '$4.320')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-06</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">712</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">1h 28m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button></div>
+<!-- SECTOR FONDO NORTE: CAMIONETAS 4X4 (C-01 A C-03 en col-span-3) -->
+<div class="col-span-3 grid grid-cols-3 gap-1.5 bg-surface-container-low p-1.5 rounded-lg"><button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('C-01', 'SUV_4X4', '119', 'Camioneta 4x4', '09:20 hs', '4h 38m', '$2.800/h', '$14.000')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-secondary-fixed-variant">C-01</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-secondary-fixed px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-secondary-fixed">119</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">4h 38m</span>
+<span class="material-symbols-outlined text-[14px] text-on-secondary-fixed-variant">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('C-02', 'SUV_4X4', '670', 'Camioneta 4x4', '11:50 hs', '2h 08m', '$2.800/h', '$8.400')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-secondary-fixed-variant">C-02</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-secondary-fixed px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-secondary-fixed">670</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 08m</span>
+<span class="material-symbols-outlined text-[14px] text-on-secondary-fixed-variant">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('C-03', 'SUV_4X4', '884', 'Camioneta 4x4', '12:40 hs', '1h 18m', '$2.800/h', '$5.600')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-secondary-fixed-variant">C-03</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-secondary-fixed px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-secondary-fixed">884</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">1h 18m</span>
+<span class="material-symbols-outlined text-[14px] text-on-secondary-fixed-variant">directions_car</span>
+</div>
+</button></div>
+</div>
+<!-- PASILLO CENTRAL DE CIRCULACIÓN Y MANIOBRA (4.00m DE ANCHO) -->
+<div class="h-16 bg-surface-container-high rounded-xl relative flex items-center justify-between px-space-xl overflow-hidden shadow-inner">
+<!-- Flechas y línea central de circulación -->
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t-2 border-dashed border-outline-variant opacity-60"></div>
+</div>
+<div class="relative z-10 flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur px-space-md py-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[18px]">arrow_forward</span>
+<span class="font-label-sm font-bold text-on-surface uppercase tracking-wider">Sentido Único Maniobras</span>
+</div>
+<div class="relative z-10 flex items-center gap-space-xs font-monospace-data text-body-sm font-bold text-on-surface-variant bg-surface-container-lowest/80 backdrop-blur px-space-md py-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">straighten</span>
+<span class="">CARRIL CENTRAL: 4.00 m</span>
+</div>
+<div class="relative z-10 flex items-center gap-space-sm bg-surface-container-lowest/80 backdrop-blur px-space-md py-1 rounded-full shadow-sm">
+<span class="font-label-sm font-bold text-outline uppercase tracking-wider">Fondo Ciego / Retorno</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">turn_left</span>
+</div>
+</div>
+<!-- FILA INFERIOR: AUTOS LADO SUR (A-07 A A-18) + CAMIONETAS FONDO (C-04 A C-06) -->
+<div class="grid grid-cols-12 gap-2">
+<!-- SECTOR AUTOS SUR BLOQUE 1 (A-07 A A-12 en col-span-5) -->
+<div class="col-span-5 grid grid-cols-6 gap-1.5"><button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-07', 'SEDAN', '089', 'Auto Sedán', '11:30 hs', '2h 28m', '$2.160/h', '$6.480')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-07</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">089</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 28m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-08', 'SEDAN', '633', 'Auto Sedán', '13:20 hs', '0h 38m', '$2.160/h', '$2.160')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-08</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">633</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">0h 38m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-09', 'SEDAN', '429', 'Auto Sedán', '10:40 hs', '3h 18m', '$2.160/h', '$8.640')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-09</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">429</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">3h 18m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-10', 'SEDAN', '102', 'Auto Sedán', '12:15 hs', '1h 43m', '$2.160/h', '$4.320')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-10</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">102</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">1h 43m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-11', 'SEDAN', '931', 'Auto Sedán', '11:00 hs', '2h 58m', '$2.160/h', '$6.480')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-11</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">931</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 28m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-high/60 flex flex-col justify-between h-24 transition-all opacity-80 hover:opacity-100" onclick="inspectBay('A-12', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-12</span>
+<span class="material-symbols-outlined text-[12px] text-secondary">check</span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[10px] font-bold text-secondary uppercase">LIBRE</span>
+</div>
+<div class="text-[9px] text-outline font-medium text-center">Disponible</div>
+</button></div>
+<!-- SECTOR AUTOS SUR BLOQUE 2 (A-13 A A-18 en col-span-4) -->
+<div class="col-span-4 grid grid-cols-5 gap-1.5"><button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-13', 'SEDAN', '558', 'Auto Sedán', '12:50 hs', '1h 08m', '$2.160/h', '$4.320')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-13</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">558</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">1h 08m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-14', 'SEDAN', '210', 'Auto Sedán', '09:05 hs', '4h 53m', '$2.160/h', '$10.800')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-14</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">210</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">4h 53m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-15', 'SEDAN', '987', 'Auto Sedán', '11:40 hs', '2h 18m', '$2.160/h', '$6.480')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-15</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">987</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 18m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('A-16', 'SEDAN', '004', 'Auto Sedán', '10:30 hs', '3h 28m', '$2.160/h', '$8.640')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-16</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-surface">004</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">3h 28m</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-high/60 flex flex-col justify-between h-24 transition-all opacity-80 hover:opacity-100" onclick="inspectBay('A-17', 'LIBRE', '-', 'Espacio Libre', '-', '-', '-', '$0')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">A-17</span>
+<span class="material-symbols-outlined text-[12px] text-secondary">check</span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[10px] font-bold text-secondary uppercase">LIBRE</span>
+</div>
+<div class="text-[9px] text-outline font-medium text-center">Disponible</div>
+</button></div>
+<!-- SECTOR FONDO SUR: CAMIONETAS 4X4 (C-04 A C-06 en col-span-3) -->
+<div class="col-span-3 grid grid-cols-3 gap-1.5 bg-surface-container-low p-1.5 rounded-lg"><button class="darsena-btn p-1.5 rounded-lg bg-surface-container-high/60 flex flex-col justify-between h-24 transition-all opacity-80 hover:opacity-100" onclick="inspectBay('C-04', 'LIBRE', '-', 'Espacio Grande Libre (4x4)', '-', '-', '-', '$0')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-outline">C-04</span>
+<span class="material-symbols-outlined text-[12px] text-secondary">check</span>
+</div>
+<div class="bg-surface-container px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[10px] font-bold text-secondary uppercase">LIBRE</span>
+</div>
+<div class="text-[9px] text-outline font-medium text-center">4x4 Grande</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('C-05', 'SUV_4X4', '765', 'Camioneta 4x4', '10:00 hs', '3h 58m', '$2.800/h', '$11.200')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-secondary-fixed-variant">C-05</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-secondary-fixed px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-secondary-fixed">765</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">3h 58m</span>
+<span class="material-symbols-outlined text-[14px] text-on-secondary-fixed-variant">directions_car</span>
+</div>
+</button>
+<button class="darsena-btn p-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container flex flex-col justify-between h-24 transition-all shadow-sm" onclick="inspectBay('C-06', 'SUV_4X4', '201', 'Camioneta 4x4', '11:10 hs', '2h 48m', '$2.800/h', '$8.400')">
+<div class="flex items-center justify-between w-full">
+<span class="text-[10px] font-bold font-monospace-data text-on-secondary-fixed-variant">C-06</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-secondary-fixed px-1 py-0.5 rounded text-center">
+<span class="font-monospace-data text-[12px] font-bold text-on-secondary-fixed">201</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-outline font-monospace-data">
+<span class="">2h 48m</span>
+<span class="material-symbols-outlined text-[14px] text-on-secondary-fixed-variant">directions_car</span>
+</div>
+</button></div>
+</div>
+</div>
+<!-- EXTREMO ESTE (MURO FONDO DE PLAYA) -->
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-surface-container-highest rounded-r-xl"></div>
+</div>
+</div>
+<!-- Leyenda Técnica Inferior sin hardware ficticio -->
+<div class="flex flex-col sm:flex-row items-center justify-between pt-space-xs text-body-sm text-outline gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">info</span>
+<span class="">Plano 2D generado a partir de la planilla y ticketera POS física de cabina.</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm">
+<span class="">Último sync de mostrador: hace 2 min (Operador Carlos Rossi)</span>
+</div>
+</div>
+</div>
+<!-- D. PANEL LATERAL INSPECTOR DE DÁRSENA (SOLO SUPERVISIÓN / SIN COBROS) (COL 4) -->
+<div class="xl:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<!-- Header del Inspector -->
+<div class="flex items-center justify-between pb-space-sm bg-surface-container-low p-space-md rounded-lg">
+<div class="flex items-center gap-space-xs">
+<div class="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Ficha de Supervisión</span>
+</div>
+<span class="font-monospace-data font-bold px-space-sm py-0.5 rounded bg-primary-container text-on-primary text-label-sm" id="insp-bay-badge">ESPACIO A-01</span>
+</div>
+<!-- Patente Mercosur / Nacional Estilizada -->
+<div class="flex flex-col items-center justify-center p-space-md bg-surface-container-low rounded-xl gap-space-xs"><span class="font-label-sm text-outline uppercase tracking-wider font-semibold">Identificador Registrado</span>
+<div class="w-full bg-surface-container-lowest rounded-xl py-3 px-4 shadow-sm flex flex-col items-center justify-center border-dashed border-outline-variant mt-1">
+<span class="font-monospace-data text-display-lg font-bold text-primary-container tracking-wider" id="insp-plate">782</span>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md font-semibold text-on-surface" id="insp-model">Auto Sedán</span>
+</div>
+</div>
+<span class="font-label-sm text-secondary font-semibold uppercase mt-1" id="insp-category">Vehículo Particular</span></div>
+<!-- Métricas de Permanencia y Arancel (Informativo) -->
+<div class="grid grid-cols-2 gap-space-md">
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-outline uppercase font-semibold">Hora de Ingreso</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">login</span>
+<span class="font-monospace-data text-headline-sm font-bold text-on-surface" id="insp-entry">10:15 hs</span>
+</div>
+<span class="text-body-sm text-on-surface-variant mt-1">Ticket #89204</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-outline uppercase font-semibold">Tiempo Acumulado</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">timer</span>
+<span class="font-monospace-data text-headline-sm font-bold text-on-surface" id="insp-duration">3h 43m</span>
+</div>
+<span class="text-body-sm text-secondary font-semibold mt-1">Dentro de tolerancia</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-outline uppercase font-semibold">Tarifa Aplicada</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">sell</span>
+<span class="font-monospace-data text-body-lg font-bold text-on-surface" id="insp-rate">$2.160 / h</span>
+</div>
+<span class="text-body-sm text-outline mt-1">Fracción 1/2 hora</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-secondary font-bold uppercase">Estimado Informativo</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">receipt_long</span>
+<span class="font-monospace-data text-headline-sm font-bold text-on-surface" id="insp-total">$7.560</span>
+</div>
+<span class="text-[11px] font-semibold text-secondary mt-1">Liquidación al salir</span>
+</div>
+</div>
+<!-- Registro de Mostrador e Inspector -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs text-body-sm">
+<div class="flex justify-between">
+<span class="text-outline">Operador de Ingreso:</span>
+<span class="font-semibold text-on-surface">C. Rossi (Caja 1)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Modalidad de Estadía:</span>
+<span class="font-semibold text-on-surface">Por Tiempo / Rotación</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Validación Física de Playa:</span>
+<span class="font-bold text-secondary">Confirmada en Corte</span>
+</div>
+</div>
+<!-- Acciones Estrictamente Informativas (SUPERVISIÓN PURA - CERO COBROS) -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<button class="w-full flex items-center justify-center gap-space-sm py-3 px-space-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg rounded-lg shadow-sm transition-all" onclick="verHistorial()">
+<span class="material-symbols-outlined text-[18px] text-secondary">history</span>
+<span class="">Ver Historial de Movimientos</span>
+</button>
+<button class="w-full flex items-center justify-center gap-space-sm py-2.5 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-outline hover:text-on-surface font-label-md rounded-lg transition-colors" onclick="resetInspector()"><span class="material-symbols-outlined text-[18px]">close</span>
+<span class="">Cerrar Ficha de Espacio</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function inspectBay(bay, type, plate, model, entry, duration, rate, total) {
+    // Highlight active bay
+    document.querySelectorAll('.darsena-btn').forEach(btn => {
+      btn.classList.remove('ring-2', 'ring-secondary', 'shadow-md');
+    });
+    event.currentTarget.classList.add('ring-2', 'ring-secondary', 'shadow-md');
+
+    // Update Sidebar Panel
+    document.getElementById('insp-bay-badge').innerText = 'DÁRSENA ' + bay;
+
+    if (type === 'LIBRE') {
+      document.getElementById('insp-plate').innerText = 'VACÍA';
+      document.getElementById('insp-model').innerText = 'Dársena Desocupada';
+      document.getElementById('insp-category').innerText = 'Disponible para Asignación';
+      document.getElementById('insp-entry').innerText = '--:--';
+      document.getElementById('insp-duration').innerText = '0m';
+      document.getElementById('insp-rate').innerText = '$0';
+      document.getElementById('insp-total').innerText = '$0';
+    } else {
+      document.getElementById('insp-plate').innerText = plate;
+      document.getElementById('insp-model').innerText = model;
+      document.getElementById('insp-category').innerText = type === 'MOTO' ? 'Motocicleta Ligera' : (type === 'SUV_4X4' ? 'Camioneta 4x4 / SUV' : 'Auto Sedán / Hatchback');
+      document.getElementById('insp-entry').innerText = entry;
+      document.getElementById('insp-duration').innerText = duration;
+      document.getElementById('insp-rate').innerText = rate;
+      document.getElementById('insp-total').innerText = total;
+    }
+  }
+
+  function setAuditMode(isAudit) {
+    const btnLive = document.getElementById('btn-live');
+    const btnAudit = document.getElementById('btn-audit');
+    if (isAudit) {
+      btnAudit.className = "px-space-md py-1.5 rounded text-label-md font-bold bg-primary-container text-on-primary shadow-sm transition-all";
+      btnLive.className = "px-space-md py-1.5 rounded text-label-md font-semibold text-on-surface-variant transition-all hover:text-on-surface";
+    } else {
+      btnLive.className = "px-space-md py-1.5 rounded text-label-md font-bold bg-secondary text-on-secondary shadow-sm transition-all";
+      btnAudit.className = "px-space-md py-1.5 rounded text-label-md font-semibold text-on-surface-variant transition-all hover:text-on-surface";
+    }
+  }
+
+  function freezeAuditoria() {
+    alert("Foto de corte #AUD-20241024-02 congelada con éxito. Se guardó copia para conciliar con el arqueo de turno.");
+  }
+
+  function verHistorial() {
+    alert("Historial de la dársena: 14 rotaciones registradas en las últimas 24 horas por el mostrador.");
+  }
+
+  function resetInspector() {
+    document.getElementById('insp-bay-badge').innerText = 'SELECCIÓN';
+    document.getElementById('insp-plate').innerText = '--';
+    document.getElementById('insp-model').innerText = 'Haga clic en una dársena';
+    document.getElementById('insp-category').innerText = 'Supervisión en tiempo real';
+    document.getElementById('insp-entry').innerText = '--:--';
+    document.getElementById('insp-duration').innerText = '--';
+    document.getElementById('insp-rate').innerText = '--';
+    document.getElementById('insp-total').innerText = '$0';
+  }
+</script></main></div>
+
+</body></html>

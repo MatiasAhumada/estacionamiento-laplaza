@@ -1,5 +1,7 @@
 # Modelo de datos propuesto para la demo
 
+> Contrato de planificación inicial. Para los tipos implementados y las extensiones de gastos, auditorías y posiciones simuladas, consultar [Panel administrativo 2026-11-09](admin-frontend-2026-11-09.md) y `src/features/estacionamiento/domain/demo.types.ts`.
+
 Estos contratos **no existen aún**. El ticket de estado compartido los creará sin Prisma. Usar centavos ARS enteros, fechas ISO e `Intl.DateTimeFormat` con `es-AR` para presentación.
 
 | Entidad | Campos mínimos | Relación |

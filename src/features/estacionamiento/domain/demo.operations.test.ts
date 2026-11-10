@@ -379,4 +379,54 @@ describe("estado demo del estacionamiento", () => {
     assert.equal(rejectedEntry.success, false);
 
   });
+
+  it("asigna una posición simulada libre y conserva la auditoría tras un egreso", () => {
+    const entry = applyDemoAction(DEMO_SEED_STATE, {
+      type: "register-entry", id: "stay-map-test", occurredAt: "2026-11-09T11:00:00.000-03:00",
+      plateFragment: "P45", category: "moto",
+    });
+    assert.equal(entry.state.stays.at(-1)?.positionId, "M-02");
+    const audit = applyDemoAction(entry.state, { type: "create-audit", id: "audit-map-test", occurredAt: "2026-11-09T11:10:00.000-03:00" });
+    assert.equal(audit.state.audits.at(-1)?.vehicles.find((vehicle) => vehicle.stayId === "stay-map-test")?.positionId, "M-02");
+    const tariff = audit.state.tariffs.find((item) => item.category === "moto");
+    assert.ok(tariff);
+    const price = calculateStayPrice("2026-11-09T11:00:00.000-03:00", "2026-11-09T12:00:00.000-03:00", tariff);
+    assert.ok(price);
+    const exit = applyDemoAction(audit.state, { type: "confirm-payment-and-exit", id: "payment-map-test", occurredAt: "2026-11-09T12:00:00.000-03:00", stayId: "stay-map-test", method: "debito", totalCents: price.totalCents, requestInvoice: false });
+    assert.equal(exit.success, true);
+    assert.equal(selectActiveStays(exit.state).some((stay) => stay.id === "stay-map-test"), false);
+    assert.equal(exit.state.audits.at(-1)?.vehicles.some((vehicle) => vehicle.stayId === "stay-map-test"), true);
+  });
+
+  it("descuenta una vez el gasto en efectivo y conserva empleados desactivados", () => {
+    const expense = applyDemoAction(DEMO_SEED_STATE, { type: "record-expense", id: "expense-test", occurredAt: "2026-11-09T12:00:00.000-03:00", expenseDate: "2026-11-09T12:00:00.000-03:00", category: "Insumos", concept: "Papel", method: "efectivo", amountCents: 5_000 });
+    assert.equal(expense.success, true);
+    assert.equal(expense.state.expenses.length, 1);
+    assert.equal(expense.state.cashAdjustments.length, 0);
+    assert.equal(selectCashSummary(expense.state, "shift-current")?.expectedCashCents, 20_000);
+    const employee = applyDemoAction(expense.state, { type: "save-employee", id: "edit-employee-test", occurredAt: "2026-11-09T12:05:00.000-03:00", employeeId: "employee-ana", displayName: "Ana Gómez", active: false });
+    assert.equal(employee.state.employees.find((item) => item.id === "employee-ana")?.active, false);
+    assert.equal(employee.state.shifts.find((item) => item.employeeId === "employee-ana")?.id, "shift-current");
+  });
+
+  it("permite abrir otro turno desde la terminal con un empleado activo", () => {
+    const state = { ...DEMO_SEED_STATE, shifts: DEMO_SEED_STATE.shifts.map((shift) => shift.id === "shift-current" ? { ...shift, status: "closed" as const, closedAt: "2026-11-09T16:00:00.000-03:00", closedCashCountId: "cash-count-yesterday" } : shift) };
+    const invalid = applyDemoAction(state, { type: "open-shift", id: "shift-invalid", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "missing", openingCashCents: 0 });
+    assert.equal(invalid.success, false);
+    const opened = applyDemoAction(state, { type: "open-shift", id: "shift-next", occurredAt: "2026-11-09T16:10:00.000-03:00", employeeId: "employee-lucia", openingCashCents: 50_000 });
+    assert.equal(opened.success, true);
+    assert.equal(opened.state.shifts.at(-1)?.employeeId, "employee-lucia");
+    assert.equal(selectCashSummary(opened.state, "shift-next")?.expectedCashCents, 50_000);
+  });
+
+  it("restaura sesiones antiguas con los campos nuevos de administración", () => {
+    const legacyState = { ...DEMO_SEED_STATE, expenses: undefined, audits: undefined, settings: { capacity: 80, connectionScenario: "online" } };
+    const loaded = parseDemoState(JSON.stringify({ version: DEMO_STORAGE_VERSION, savedAt: "2026-11-09T12:00:00.000-03:00", state: legacyState }));
+    assert.equal(loaded.status, "restored");
+    if (loaded.status === "restored") {
+      assert.deepEqual(loaded.state.expenses, []);
+      assert.deepEqual(loaded.state.audits, []);
+      assert.equal(loaded.state.settings.capacity, 30);
+    }
+  });
 });

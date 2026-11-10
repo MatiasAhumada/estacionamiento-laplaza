@@ -28,6 +28,7 @@ const demoStateSchema = z.object({
     enteredByEmployeeId: z.string().min(1),
     shiftId: z.string().min(1),
     status: z.enum(["active", "closed"]),
+    positionId: z.string().min(1).optional(),
     exitedAt: isoDateSchema.optional(),
   })),
   payments: z.array(z.object({
@@ -46,7 +47,7 @@ const demoStateSchema = z.object({
   })),
   movements: z.array(z.object({
     id: z.string().min(1),
-    kind: z.enum(["entry", "payment", "cash-adjustment", "cash-count", "shift-close"]),
+    kind: z.enum(["entry", "payment", "cash-adjustment", "cash-count", "shift-close", "expense", "audit"]),
     stayId: z.string().min(1).optional(),
     shiftId: z.string().min(1),
     employeeId: z.string().min(1),
@@ -84,10 +85,32 @@ const demoStateSchema = z.object({
     fractionMinutes: positiveCentsSchema,
     effectiveFrom: isoDateSchema,
   })),
+  expenses: z.array(z.object({
+    id: z.string().min(1), shiftId: z.string().min(1), employeeId: z.string().min(1),
+    category: z.string().min(1), concept: z.string().min(1), method: z.enum(DEMO_PAYMENT_METHODS),
+    amountCents: positiveCentsSchema, occurredAt: isoDateSchema,
+  })).default([]),
+  audits: z.array(z.object({
+    id: z.string().min(1), number: z.number().int().positive(), createdAt: isoDateSchema,
+    shiftId: z.string().min(1).optional(), employeeName: z.string().min(1), capacity: nonNegativeCentsSchema,
+    parkingName: z.string().min(1), motorcyclePositions: nonNegativeCentsSchema,
+    autoPositions: nonNegativeCentsSchema, vanPositions: nonNegativeCentsSchema,
+    vehicles: z.array(z.object({
+      stayId: z.string().min(1), ticketNumber: z.number().int().positive(), plateFragment: z.string().min(1),
+      category: z.enum(DEMO_STAY_CATEGORIES), positionId: z.string().min(1).optional(),
+      enteredAt: isoDateSchema, employeeName: z.string().min(1), shiftId: z.string().min(1),
+    })),
+  })).default([]),
   settings: z.object({
     capacity: nonNegativeCentsSchema,
     connectionScenario: z.enum(["online", "offline", "syncing"]),
-  }),
+    parkingName: z.string().min(1).default("Estacionamiento La Plaza"),
+    motorcyclePositions: nonNegativeCentsSchema.default(8),
+    autoPositions: nonNegativeCentsSchema.default(16),
+    vanPositions: nonNegativeCentsSchema.default(6),
+    shiftLabels: z.array(z.string().min(1)).default(["Mañana", "Tarde", "Noche"]),
+    expenseCategories: z.array(z.string().min(1)).default(["Mantenimiento", "Limpieza", "Insumos", "Servicios", "Otros"]),
+  }).transform((settings) => ({ ...settings, capacity: settings.motorcyclePositions + settings.autoPositions + settings.vanPositions })),
   nextTicketNumber: z.number().int().positive(),
   notice: z.string().optional(),
 }).superRefine((state, context) => {
@@ -100,6 +123,8 @@ const demoStateSchema = z.object({
     state.cashAdjustments.map((adjustment) => adjustment.id),
     state.cashCounts.map((cashCount) => cashCount.id),
     state.invoiceRequests.map((request) => request.id),
+    state.expenses.map((expense) => expense.id),
+    state.audits.map((audit) => audit.id),
   ];
 
   for (const identifiers of identifierGroups) {

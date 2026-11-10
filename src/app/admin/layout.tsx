@@ -1,46 +1,35 @@
-import { DemoHeader } from "@/components/shared/demo-header";
-import { DemoRoleNavigation } from "@/components/shared/demo-role-navigation";
+import Link from "next/link";
 import { ParkingBrand } from "@/components/shared/parking-brand";
-import { AdminRecordsNavigation } from "@/components/shared/admin-records-navigation";
+import { AdminSectionNavigation } from "@/components/shared/admin-section-navigation";
 
 export default function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[17rem_minmax(0,1fr)]">
-      <aside className="hidden bg-sidebar px-5 py-6 text-sidebar-foreground lg:flex lg:flex-col">
-        <ParkingBrand inverted />
-        <div className="my-8 border-t border-sidebar-border" />
-        <p className="mb-3 px-3 text-[0.65rem] font-bold tracking-[0.16em] text-sky-100/75 uppercase">
-          Vistas de la demo
-        </p>
-        <DemoRoleNavigation orientation="vertical" tone="dark" />
+    <div className="min-h-screen lg:grid lg:grid-cols-[15.5rem_minmax(0,1fr)]">
+      <aside className="hidden bg-sidebar px-4 py-7 text-sidebar-foreground lg:flex lg:flex-col">
+        <div className="px-2"><ParkingBrand inverted /></div>
+        <div className="mt-10 border-t border-sidebar-border pt-6">
+          <p className="mb-3 px-3 text-[10px] font-bold tracking-[0.18em] text-sky-100/60 uppercase">Administración</p>
+          <AdminSectionNavigation />
+        </div>
         <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-4">
-          <p className="text-xs font-semibold text-white">Modo simulación</p>
-          <p className="mt-1 text-xs leading-5 text-sky-100">
-            El selector de vistas no verifica identidad ni permisos.
-          </p>
+          <p className="text-xs font-semibold text-white">Modo demostración</p>
+          <p className="mt-1 text-xs leading-5 text-sky-100/80">Datos compartidos con la terminal del empleado.</p>
+          <Link className="mt-3 inline-block text-xs font-bold text-action underline-offset-4 hover:underline" href="/empleado">Ir a terminal →</Link>
         </div>
       </aside>
-      <div className="flex min-h-screen flex-col">
-        <div className="lg:hidden">
-          <DemoHeader compact />
-        </div>
-        <header className="hidden items-center justify-between border-b border-border bg-card px-8 py-4 lg:flex">
-          <div>
-            <p className="text-xs font-semibold tracking-[0.12em] text-secondary uppercase">
-              Administración
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Resumen general de la demo
-            </p>
+      <div className="min-w-0">
+        <header className="sticky top-0 z-30 border-b border-border bg-white/95 px-4 py-3 backdrop-blur sm:px-7 lg:px-9">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+            <div className="lg:hidden"><ParkingBrand /></div>
+            <div className="hidden lg:block"><p className="text-[11px] font-bold tracking-[0.16em] text-secondary uppercase">La Plaza / Administración</p><p className="mt-1 text-xs text-muted-foreground">Centro de gestión · Demo interactiva</p></div>
+            <Link className="rounded-full border border-border bg-muted px-3 py-2 text-xs font-semibold text-primary hover:bg-accent lg:hidden" href="/empleado">Terminal</Link>
+            <span className="hidden rounded-full border border-action/40 bg-action/15 px-3 py-1.5 text-xs font-semibold text-primary sm:inline-block">● Simulación</span>
           </div>
-          <span className="rounded-full border border-action/50 bg-action/20 px-3 py-1.5 text-xs font-semibold text-primary">
-            Simulación · Sin autenticación
-          </span>
         </header>
-        <div className="mx-auto w-full max-w-5xl px-4 pt-5 sm:px-6 lg:px-8"><AdminRecordsNavigation /></div>
-        {children}
+        <div className="bg-sidebar px-2 py-2 lg:hidden"><AdminSectionNavigation compact /></div>
+        <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-7 lg:px-9 lg:py-9">{children}</main>
       </div>
     </div>
   );

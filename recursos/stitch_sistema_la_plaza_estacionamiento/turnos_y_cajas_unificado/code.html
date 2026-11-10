@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-variant":"#d5e4f6","primary-fixed-dim":"#a6cbe8","on-primary-container":"#7498b4","inverse-surface":"#243240","on-primary-fixed":"#001e2f","on-primary-fixed-variant":"#254a63","secondary":"#00677d","tertiary":"#2a1100","primary-fixed":"#c8e6ff","surface-tint":"#3e627b","error-container":"#ffdad6","surface":"#f7f9ff","inverse-primary":"#a6cbe8","on-tertiary-fixed":"#301400","on-secondary-fixed":"#001f27","secondary-fixed-dim":"#69d4f4","surface-container-high":"#dbeafc","tertiary-fixed-dim":"#ffb781","on-tertiary-fixed-variant":"#703800","tertiary-fixed":"#ffdcc4","on-tertiary":"#ffffff","on-background":"#0e1d2a","on-secondary-container":"#006075","on-secondary-fixed-variant":"#004e5f","surface-container":"#e3efff","surface-bright":"#f7f9ff","outline":"#72787d","surface-dim":"#cddbee","secondary-fixed":"#b2ebff","background":"#f7f9ff","outline-variant":"#c2c7cd","secondary-container":"#72ddfd","on-tertiary-container":"#e27700","surface-container-low":"#edf4ff","inverse-on-surface":"#e8f2ff","tertiary-container":"#492200","on-secondary":"#ffffff","on-primary":"#ffffff","primary-container":"#023047","on-surface":"#0e1d2a","on-error":"#ffffff","on-error-container":"#93000a","primary":"#001a2a","on-surface-variant":"#42474d","surface-container-highest":"#d5e4f6","surface-container-lowest":"#ffffff","error":"#ba1a1a"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.25rem","margin-lg":"2rem","space-2xl":"3rem","space-sm":"0.5rem","space-md":"0.75rem","gutter":"1rem","margin":"1rem","space-xs":"0.25rem","gutter-lg":"1.5rem","margin-md":"1.5rem","space-xl":"2rem"},fontFamily:{"body-md":["Inter"],"label-lg":["Inter"],"label-sm":["Inter"],"body-lg":["Inter"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"body-sm":["Inter"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Inter"],"monospace-data":["Inter"]},fontSize:{"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display-lg-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"24px","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"monospace-data":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center gap-space-sm px-gutter-lg bg-surface-container-low"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="font-headline-lg text-headline-lg font-bold text-on-primary">E</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-on-surface leading-tight tracking-tight">La Plaza</span><span class="font-label-sm text-label-sm text-secondary tracking-wider uppercase font-semibold">Gestión Ejecutiva</span></div></div><div class="px-gutter-lg pt-space-lg pb-space-sm"><span class="font-label-sm text-label-sm uppercase text-outline tracking-wider font-bold">Panel de Control</span></div><nav class="flex flex-col gap-space-xs px-gutter" data-active-classes="bg-primary-container text-on-primary font-semibold shadow-sm"><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inicio" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Inicio</a><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ocupacion" href="#"><span class="material-symbols-outlined text-[20px]">local_parking</span>Ocupación</a><a aria-current="page" class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg transition-colors bg-primary-container text-on-primary font-semibold shadow-sm" data-path="turnos-y-cajas" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Turnos y Cajas</a><a class="flex items-center gap-space-md px-gutter py-space-sm rounded-lg text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="configuracion" href="#"><span class="material-symbols-outlined text-[20px]">tune</span>Configuración</a></nav></div><div class="p-gutter"><div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant font-semibold uppercase">Terminal POS</span><span class="font-label-sm text-label-sm text-secondary font-bold">B-04</span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">wifi_tethering</span><span class="font-label-sm text-label-sm text-on-surface">Barreras activas</span></div></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter-lg"><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-xs bg-surface-container px-space-md py-space-xs rounded-full"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm font-bold text-on-surface">En línea / Sincronizado</span></div><div class="h-4 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm"><span class="material-symbols-outlined text-[16px] text-secondary">schedule</span><span class="font-semibold text-on-surface">Turno Mañana</span><span class="text-outline">•</span><span>Carlos Rossi</span></div></div><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-xs rounded-lg"><span class="material-symbols-outlined text-secondary text-[18px]">payments</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Caja Apertura:</span><span class="font-monospace-data text-monospace-data font-bold text-on-surface">$145.200</span></div><div class="h-5 w-[1px] bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="flex flex-col text-right"><span class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Carlos Rossi</span><span class="font-label-sm text-label-sm text-on-surface-variant">Supervisor de Turno</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background"><div class="flex flex-col w-full">
+<div class="p-gutter-lg flex flex-col gap-space-lg">
+<!-- A. HEADER Y MONITOR DE TURNO EN CURSO -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-primary-fixed/20 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-label-sm text-label-sm bg-primary-container text-on-primary px-space-sm py-0.5 rounded uppercase tracking-wider font-bold">Turno Activo</span>
+<span class="font-monospace-data text-monospace-data text-secondary font-bold">#TRN-8941</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Franja Ordinaria: 06:00 – 14:00</span>
+<div class="flex items-center gap-1 bg-surface-container-high px-space-xs py-0.5 rounded text-on-surface font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-semibold">7h 45m en curso</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-md flex-wrap mt-space-xs">
+<h1 class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">Turno Mañana — Monitoreo &amp; Control Financiero</h1>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-secondary">badge</span>
+<span>Operador: <strong class="text-on-surface font-semibold">Carlos Rossi</strong> (Legajo #4092)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-container text-primary font-label-lg text-label-lg px-space-md py-space-sm rounded-lg shadow-sm transition-transform active:scale-95" id="btn-arqueo">
+<span class="material-symbols-outlined text-[20px] text-secondary">fact_check</span>
+<span>Revisar Arqueo Físico</span>
+</button>
+<button class="flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-container text-primary font-label-lg text-label-lg px-space-md py-space-sm rounded-lg shadow-sm transition-transform active:scale-95" id="btn-gasto">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container">receipt_long</span>
+<span>Registrar Gasto de Caja</span>
+</button>
+<button class="flex items-center gap-space-xs bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg px-gutter py-space-sm rounded-lg shadow-md transition-all active:scale-95" id="btn-auditar">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span>Auditar Conciliación</span>
+</button>
+</div>
+</div>
+</div>
+<!-- B. NAVEGACIÓN DE PESTAÑAS INTERNAS -->
+<div class="flex items-center justify-between border-b-0 pb-1 overflow-x-auto">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest p-1 rounded-xl shadow-sm">
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg bg-primary-container text-on-primary shadow-sm font-semibold transition-colors" data-tab="resumen">
+          Resumen Financiero
+        </button>
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-tab="movimientos">
+          Movimientos de Caja
+        </button>
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-tab="gastos">
+          Control de Gastos
+        </button>
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-tab="historial">
+          Historial de Turnos
+        </button>
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-tab="personal">
+          Personal
+        </button>
+<button class="tab-btn px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-tab="reportes">
+          Reportes &amp; Cierre
+        </button>
+</div>
+<div class="hidden xl:flex items-center gap-space-sm text-outline font-label-sm text-label-sm">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> Auditoría POS activa</span>
+<span>•</span>
+<span class="font-monospace-data">ARQ-2024-0518</span>
+</div>
+</div>
+<!-- C. 6 TARJETAS DE MÉTRICAS GRANDES Y COMPARATIVAS -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-space-md">
+<!-- Métrica 1: Recaudación Bruta -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Recaudación Bruta</span>
+<span class="p-1 rounded bg-secondary-fixed/40 text-secondary material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary font-bold tracking-tight leading-none">$186.420</div>
+<div class="flex items-center gap-space-xs mt-space-xs">
+<span class="font-label-sm text-label-sm text-secondary font-bold">+8.4%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">vs. ayer ($172.000)</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low rounded p-space-xs flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>142 transacciones</span>
+<span class="font-bold text-on-surface">Prom: $1.312</span>
+</div>
+</div>
+<!-- Métrica 2: Conciliación Gaveta Física (Protagonista de Auditoría) -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Gaveta Física</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+            Cuadrada
+          </span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-secondary font-bold tracking-tight leading-none">$149.500</div>
+<div class="flex items-center gap-1 mt-space-xs text-on-surface font-label-sm text-label-sm">
+<span class="font-bold">Diferencia neta:</span>
+<span class="font-monospace-data font-bold text-secondary">$0,00</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-lowest rounded p-space-xs flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Teórico: $149.500</span>
+<span class="text-secondary font-bold">Contado: $149.500</span>
+</div>
+</div>
+<!-- Métrica 3: Gastos Operativos -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Gastos Operativos</span>
+<span class="p-1 rounded bg-error-container text-error material-symbols-outlined text-[18px]">price_check</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-error font-bold tracking-tight leading-none">$14.500</div>
+<div class="flex items-center gap-space-xs mt-space-xs">
+<span class="font-label-sm text-label-sm text-error font-bold">3 egresos</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">autorizados</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low rounded p-space-xs flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Gaveta: $8.500</span>
+<span class="font-bold text-on-surface">Banco: $6.000</span>
+</div>
+</div>
+<!-- Métrica 4: Resultado Operativo Estimado -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Resultado Neto</span>
+<span class="p-1 rounded bg-surface-container-high text-primary material-symbols-outlined text-[18px]">trending_up</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary font-bold tracking-tight leading-none">$171.920</div>
+<div class="flex items-center gap-space-xs mt-space-xs">
+<span class="font-label-sm text-label-sm text-secondary font-bold">92.2%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">margen turno</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low rounded p-space-xs flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Ingreso - Gastos</span>
+<span class="font-bold text-on-surface">Cierre est. 14:00</span>
+</div>
+</div>
+<!-- Métrica 5: Flujo Vehicular -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Rotación &amp; Flujo</span>
+<span class="p-1 rounded bg-secondary-fixed/40 text-secondary material-symbols-outlined text-[18px]">directions_car</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-primary font-bold tracking-tight leading-none">142</div>
+<div class="flex items-center gap-space-xs mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span>+102 ingresos</span>
+<span>•</span>
+<span>-16 cobros</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low rounded p-space-xs flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Abonados: 24</span>
+<span class="font-bold text-on-surface">Ocup: 78%</span>
+</div>
+</div>
+<!-- Métrica 6: Fondo de Apertura -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Fondo Apertura</span>
+<span class="p-1 rounded bg-surface-container text-outline material-symbols-outlined text-[18px]">point_of_sale</span>
+</div>
+<div>
+<div class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight leading-none">$25.000</div>
+<div class="flex items-center gap-space-xs mt-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<span>Validado a las 06:01</span>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-low rounded p-space-xs flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Billetes cambio</span>
+<span class="font-bold text-secondary">Verificado</span>
+</div>
+</div>
+</div>
+<!-- D. SECCIÓN PRINCIPAL: GRÁFICOS FINANCIEROS Y MATEMÁTICA DE CONCILIACIÓN -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- COLUMNA IZQUIERDA (8 COLUMNAS): CONCILIACIÓN DE GAVETA Y FLUJO HORARIO -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- 1. MÓDULO MATEMÁTICO DE CONCILIACIÓN DE GAVETA (FÓRMULA VISUAL) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Ecuación de Gaveta Física &amp; Arqueo</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Desglose estricto del efectivo en tránsito en terminal de mostrador B-04</p>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded-full">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm font-bold text-primary">Sin desvío presupuestario</span>
+</div>
+</div>
+<!-- Formula Step Cards -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-xs items-center">
+<!-- Step 1 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-outline font-bold">Fondo Apertura</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary mt-1">$25.000</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Efectivo base</span>
+</div>
+<!-- Operator + -->
+<div class="hidden md:flex justify-center text-secondary font-display-lg text-display-lg font-bold">+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-outline font-bold">Cobranza Efectivo</span>
+<span class="font-headline-lg text-headline-lg font-bold text-secondary mt-1">$124.500</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">95 cobros cash</span>
+</div>
+<!-- Operator - -->
+<div class="hidden md:flex justify-center text-error font-display-lg text-display-lg font-bold">-</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-outline font-bold">Gastos Efectivo</span>
+<span class="font-headline-lg text-headline-lg font-bold text-error mt-1">$8.500</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Comprobantes caja</span>
+</div>
+</div>
+<!-- Equal Result Banner -->
+<div class="bg-primary-container text-on-primary p-space-md rounded-xl flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-on-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px] text-secondary-fixed">calculate</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary-fixed-dim">Resultado Teórico vs Físico</span>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-headline-xl text-headline-xl font-bold tracking-tight text-on-primary">$149.500</span>
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">(100% Coincidente)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-md bg-on-primary/10 px-space-md py-space-sm rounded-lg">
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Último recuento físico</span>
+<span class="font-monospace-data text-monospace-data font-bold">13:42 por C. Rossi</span>
+</div>
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">task_alt</span>
+</div>
+</div>
+<!-- Visual Bar Comparison -->
+<div class="flex flex-col gap-space-xs mt-space-xs">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant font-bold">
+<span>Proporción Teórica en Caja</span>
+<span>100% Cubierto</span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 16.7%;" title="Fondo inicial"></div>
+<div class="h-full bg-secondary" style="width: 83.3%;" title="Cobranzas netas de gastos"></div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-outline">
+<span>Fondo Inicial: 16.7% ($25.000)</span>
+<span>Efectivo Neto Turno: 83.3% ($124.500 - $8.500 = $116.000)</span>
+</div>
+</div>
+</div>
+<!-- 2. GRÁFICO DE BARRAS DE FLUJO HORARIO (ENTRADAS VS COBROS SALIDA) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Flujo Horario de Vehículos (Turno Mañana)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Volumen transaccional discriminado por entradas vs. salidas cobradas</p>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-secondary"></span>
+<span class="text-on-surface">Ingresos (Barrera A)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded bg-primary-container"></span>
+<span class="text-on-surface">Salidas / Cobros (Caja)</span>
+</div>
+</div>
+</div>
+<!-- Inline SVG Bar Chart with Hour Blocks -->
+<div class="relative w-full h-56 mt-space-sm flex flex-col justify-end">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-b border-outline"></div>
+<div class="border-b border-outline"></div>
+<div class="border-b border-outline"></div>
+<div class="border-b border-outline"></div>
+</div>
+<!-- Bars container -->
+<div class="relative z-10 grid grid-cols-8 gap-space-sm h-48 items-end px-space-xs">
+<!-- 06:00 -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 25%;" title="Ingresos: 8"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 10%;" title="Cobros: 2"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">06h</span>
+</div>
+<!-- 07:00 -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 45%;" title="Ingresos: 18"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 15%;" title="Cobros: 4"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">07h</span>
+</div>
+<!-- 08:00 (Pico mañana laboral) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 80%;" title="Ingresos: 28"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 25%;" title="Cobros: 7"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">08h</span>
+</div>
+<!-- 09:00 -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 60%;" title="Ingresos: 20"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 40%;" title="Cobros: 12"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">09h</span>
+</div>
+<!-- 10:00 -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 50%;" title="Ingresos: 16"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 55%;" title="Cobros: 16"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">10h</span>
+</div>
+<!-- 11:00 -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 70%;" title="Ingresos: 22"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 75%;" title="Cobros: 24"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">11h</span>
+</div>
+<!-- 12:00 (Pico mediodía almuerzos) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group relative">
+<div class="absolute -top-7 px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm font-bold shadow-sm whitespace-nowrap">
+                  Pico Máx
+                </div>
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 92%;" title="Ingresos: 34"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 95%;" title="Cobros: 36"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold mt-1">12h</span>
+</div>
+<!-- 13:00 (Cierre turno) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end group">
+<div class="flex items-end gap-1 h-full w-full justify-center">
+<div class="w-4 bg-secondary rounded-t transition-all group-hover:opacity-80" style="height: 65%;" title="Ingresos: 19"></div>
+<div class="w-4 bg-primary-container rounded-t transition-all group-hover:opacity-80" style="height: 85%;" title="Cobros: 31"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">13h</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface-variant">
+<span>Mayor congestión registrada: <strong class="text-on-surface font-semibold">12:15 a 12:45</strong> (Tiempo promedio de atención en garita: 28 seg).</span>
+<span class="font-label-sm text-label-sm font-bold text-secondary">Barreras sin demoras</span>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA (4 COLUMNAS): MEDIOS DE PAGO Y COMPARADOR RECAUDACIÓN VS GASTOS -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- 3. DONUT CHART: MEDIOS DE PAGO -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Medios de Pago</h2>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-outline font-bold">142 Ops</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Distribución de cobranzas por canal</p>
+<!-- SVG Donut Chart Minimal & High Precision -->
+<div class="relative w-48 h-48 mx-auto my-space-md flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<!-- Background circle -->
+<path class="text-surface-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<!-- Efectivo: 66.8% (Dasharray 66.8, 100) -->
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="66.8, 100" stroke-linecap="round" stroke-width="4"></path>
+<!-- Débito: 22.8% (Offset -66.8, Dasharray 22.8, 100) -->
+<path class="text-primary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="22.8, 100" stroke-dashoffset="-66.8" stroke-width="4"></path>
+<!-- QR / Transfer: 10.4% (Offset -89.6, Dasharray 10.4, 100) -->
+<path class="text-secondary-fixed-dim" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="10.4, 100" stroke-dashoffset="-89.6" stroke-width="4"></path>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-label-sm text-label-sm uppercase text-outline font-bold">Total Bruto</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">$186.420</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">100% auditado</span>
+</div>
+</div>
+<!-- Legend breakdown -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Efectivo Mostrador</span>
+</div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-monospace-data text-monospace-data font-bold text-primary">$124.500</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">66.8%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Tarjeta Débito (POSNet)</span>
+</div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-monospace-data text-monospace-data font-bold text-primary">$42.600</span>
+<span class="font-label-sm text-label-sm text-outline font-bold">22.8%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-secondary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">QR / Billeteras Virtuales</span>
+</div>
+<div class="flex items-baseline gap-space-sm">
+<span class="font-monospace-data text-monospace-data font-bold text-primary">$19.320</span>
+<span class="font-label-sm text-label-sm text-outline font-bold">10.4%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-high/40 rounded p-space-xs flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span>Lote electrónico terminal:</span>
+<span class="font-bold text-on-surface font-monospace-data">#4819 CERRADO OK</span>
+</div>
+</div>
+<!-- 4. COMPARADOR VISUAL: RECAUDACIÓN VS GASTOS (EFICIENCIA FINANCIERA) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Rendimiento Operativo</h2>
+<span class="material-symbols-outlined text-secondary text-[20px]">account_balance</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Comparación directa de caja: Ingreso vs. Egreso</p>
+<div class="mt-space-md flex flex-col gap-space-md">
+<!-- Recaudación Bar -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase font-bold">Recaudación Bruta</span>
+<span class="font-bold text-primary font-monospace-data">$186.420</span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Gastos Bar -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase font-bold">Gastos Totales (Gaveta + Banco)</span>
+<span class="font-bold text-error font-monospace-data">$14.500</span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 7.8%;"></div>
+</div>
+</div>
+</div>
+<!-- Operational Net Block -->
+<div class="mt-space-lg p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-outline font-bold">Retención Neta en Caja</span>
+<span class="font-headline-lg text-headline-lg font-bold text-primary">$171.920</span>
+</div>
+<div class="text-right flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">92.2% Retención</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Eficiencia alta</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md text-on-surface-variant font-body-sm text-body-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>Los pagos digitales liquidan a cuenta Banco Galicia a las 23:59hs.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- E. SECCIÓN DE GASTOS Y AUDITORÍA DE SALIDAS DE CAJA (SUPERVISIÓN) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- TABLA DE GASTOS OPERATIVOS DEL TURNO (7 COLUMNAS) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Gastos Operativos &amp; Egresos Registrados</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Egresos computados en el turno actual con comprobante fiscal validado</p>
+</div>
+<button class="flex items-center gap-1 bg-surface-container-high hover:bg-surface-container text-primary font-label-sm text-label-sm px-space-sm py-1 rounded font-bold transition-colors" id="btn-nuevo-gasto">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Nuevo Egreso</span>
+</button>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto mt-space-xs">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase">
+<th class="py-space-sm px-space-md font-bold">Hora / Comprobante</th>
+<th class="py-space-sm px-space-md font-bold">Concepto &amp; Proveedor</th>
+<th class="py-space-sm px-space-md font-bold">Origen Fondos</th>
+<th class="py-space-sm px-space-md font-bold">Impacto Gaveta</th>
+<th class="py-space-sm px-space-md font-bold text-right">Monto</th>
+<th class="py-space-sm px-space-md font-bold text-center">Estado</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Gasto 1: Rollos térmicos -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">08:24</div>
+<div class="font-label-sm text-label-sm text-outline">Fac. B-0012-9841</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="font-semibold text-on-surface">Pack x10 Rollos Térmicos 80mm</div>
+<div class="text-on-surface-variant text-body-sm">Librería Central Rivadavia</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface font-semibold">Caja Mostrador</span>
+</td>
+<td class="py-space-sm px-space-md font-bold text-error">
+                    -$5.500
+                  </td>
+<td class="py-space-sm px-space-md text-right font-monospace-data font-bold text-on-surface">
+                    $5.500,00
+                  </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Aprobado
+                    </span>
+</td>
+</tr>
+<!-- Gasto 2: Bidones Agua -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">10:15</div>
+<div class="font-label-sm text-label-sm text-outline">Remito #4492</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="font-semibold text-on-surface">2x Bidones Agua Mineral 20L</div>
+<div class="text-on-surface-variant text-body-sm">Aguas Claras Dispenser</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface font-semibold">Caja Mostrador</span>
+</td>
+<td class="py-space-sm px-space-md font-bold text-error">
+                    -$3.000
+                  </td>
+<td class="py-space-sm px-space-md text-right font-monospace-data font-bold text-on-surface">
+                    $3.000,00
+                  </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Aprobado
+                    </span>
+</td>
+</tr>
+<!-- Gasto 3: Mantenimiento fotocélula (BANCARIO - SIN IMPACTO EN GAVETA) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">11:50</div>
+<div class="font-label-sm text-label-sm text-outline">Transf. #009381</div>
+</td>
+<td class="py-space-sm px-space-md">
+<div class="font-semibold text-on-surface">Ajuste y alineación fotocélula barrera</div>
+<div class="text-on-surface-variant text-body-sm">TecnoPortones SRL</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary font-bold">Transf. Bancaria</span>
+</td>
+<td class="py-space-sm px-space-md font-bold text-outline">
+                    $0,00 (Sin impacto)
+                  </td>
+<td class="py-space-sm px-space-md text-right font-monospace-data font-bold text-on-surface">
+                    $6.000,00
+                  </td>
+<td class="py-space-sm px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                      Conciliado
+                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Subtotal Gaveta: <strong class="text-error font-bold font-monospace-data">-$8.500</strong> | Transferencias: <strong class="text-on-surface font-bold font-monospace-data">-$6.000</strong></span>
+<span class="text-secondary font-bold">Total Egresos: $14.500</span>
+</div>
+</div>
+<!-- HISTORIAL COMPARATIVO DE TURNOS CERRADOS Y AUDITORÍAS RECIENTES (5 COLUMNAS) -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Historial de Turnos &amp; Cierres</h2>
+<span class="font-label-sm text-label-sm text-outline font-semibold">Últimas 48h</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Comparativa de desvíos y arqueos finales</p>
+<div class="flex flex-col gap-space-sm mt-space-md">
+<!-- Turno Anterior 1: Noche -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">bedtime</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Turno Noche #TRN-8940</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary font-label-sm text-label-sm font-bold">Cuadrado</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">22:00 a 06:00 • Op. Martín Vega</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">$98.400</div>
+<div class="font-label-sm text-label-sm text-secondary font-bold">Dif: $0,00</div>
+</div>
+</div>
+<!-- Turno Anterior 2: Tarde (Con Sobrante) -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_twilight</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Turno Tarde #TRN-8939</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary font-label-sm text-label-sm font-bold">Sobrante +$200</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">14:00 a 22:00 • Op. Lucía Benítez</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">$212.800</div>
+<div class="font-label-sm text-label-sm text-secondary font-bold">Redondeo cliente</div>
+</div>
+</div>
+<!-- Turno Anterior 3: Mañana Ayer -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">wb_sunny</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Turno Mañana #TRN-8938</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary font-label-sm text-label-sm font-bold">Cuadrado</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ayer 06:00 a 14:00 • Op. Carlos Rossi</span>
+</div>
+</div>
+<div class="text-right">
+<div class="font-monospace-data text-monospace-data font-bold text-on-surface">$172.000</div>
+<div class="font-label-sm text-label-sm text-secondary font-bold">Dif: $0,00</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Índice de precisión histórica: <strong class="text-secondary font-bold">99.8%</strong></span>
+<button class="font-label-sm text-label-sm text-secondary hover:underline font-bold flex items-center gap-1">
+<span>Ver auditorías completas</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MODAL INLINE OCULTO: AUDITORÍA DE ARQUEO FÍSICO INTERACTIVO -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-gutter hidden" id="modal-arqueo">
+<div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full p-space-lg shadow-2xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">fact_check</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-primary">Auditoría de Gaveta Física</h3>
+</div>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-outline" id="close-arqueo">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Supervisión directa de billetes en gaveta del puesto de cobro. Ingrese el recuento del supervisor para contrastar con el sistema:
+        </p>
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-space-md rounded-xl font-body-sm text-body-sm">
+<div class="flex justify-between items-center py-1">
+<span class="text-on-surface-variant">Saldo Teórico Calculado:</span>
+<span class="font-monospace-data text-monospace-data font-bold text-primary">$149.500,00</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="text-on-surface-variant">Recuento Físico Supervisor:</span>
+<input class="w-32 text-right p-1 rounded bg-surface-container-lowest font-monospace-data font-bold text-secondary focus:outline-none" type="text" value="$149.500"/>
+</div>
+<div class="flex justify-between items-center py-1 border-t-0 bg-surface-container px-2 rounded">
+<span class="font-bold text-primary">Diferencia Final:</span>
+<span class="font-monospace-data font-bold text-secondary">$0,00 (Cuadrado Perfecto)</span>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm mt-space-xs">
+<button class="px-space-md py-space-xs rounded-lg font-label-lg text-label-lg text-outline hover:bg-surface-container" id="cancel-arqueo">Cancelar</button>
+<button class="px-gutter py-space-xs rounded-lg font-label-lg text-label-lg bg-primary-container text-on-primary font-semibold shadow-sm hover:bg-primary transition-all" id="confirm-arqueo">Firmar Arqueo</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    // Micro-interacciones de pestañas y arqueo
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('bg-primary-container', 'text-on-primary', 'font-semibold', 'shadow-sm');
+          b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.add('bg-primary-container', 'text-on-primary', 'font-semibold', 'shadow-sm');
+        btn.classList.remove('text-on-surface-variant');
+      });
+    });
+
+    const modalArqueo = document.getElementById('modal-arqueo');
+    const btnArqueo = document.getElementById('btn-arqueo');
+    const closeArqueo = document.getElementById('close-arqueo');
+    const cancelArqueo = document.getElementById('cancel-arqueo');
+    const confirmArqueo = document.getElementById('confirm-arqueo');
+
+    if (btnArqueo && modalArqueo) {
+      btnArqueo.addEventListener('click', () => modalArqueo.classList.remove('hidden'));
+      closeArqueo.addEventListener('click', () => modalArqueo.classList.add('hidden'));
+      cancelArqueo.addEventListener('click', () => modalArqueo.classList.add('hidden'));
+      confirmArqueo.addEventListener('click', () => {
+        modalArqueo.classList.add('hidden');
+      });
+    }
+  </script>
+</div></main></div></body></html>
