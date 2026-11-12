@@ -47,7 +47,7 @@ export default function Home() {
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:items-center lg:gap-16 lg:px-8 lg:py-16">
         <section className="max-w-2xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-secondary/25 bg-secondary/10 px-3 py-1.5 text-xs font-bold tracking-wide text-primary">
-            <span aria-hidden="true" className="size-2 rounded-full bg-action" />
+            <span aria-hidden="true" className="size-2 rounded-full bg-secondary" />
             Demo frontend · La Plaza
           </p>
           <h1 className="font-display mt-5 text-4xl font-bold leading-tight tracking-tight text-primary sm:text-5xl lg:text-6xl">
@@ -98,7 +98,7 @@ export default function Home() {
               </CardContent>
             </Card>
           ))}
-          <p className="rounded-2xl border border-action/40 bg-action/15 px-4 py-3 text-sm leading-6 text-primary">
+          <p className="rounded-2xl border border-warning/40 bg-warning/20 px-4 py-3 text-sm leading-6 text-primary">
             El selector de rol es una simulación visual. No representa
             autenticación ni permisos de acceso.
           </p>

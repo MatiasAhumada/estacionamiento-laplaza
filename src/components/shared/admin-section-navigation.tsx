@@ -34,7 +34,7 @@ export function AdminSectionNavigation({ compact = false }: Readonly<{ compact?:
           <Link aria-current={ariaCurrent} className={cn(
             "flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors",
             compact && "flex-col justify-center gap-1 px-1 py-2 text-center text-[11px]",
-            isActive ? "bg-action text-primary shadow-sm" : "text-sky-50/80 hover:bg-sidebar-accent hover:text-white",
+            isActive ? "bg-sidebar-primary text-primary shadow-sm" : "text-sky-50/80 hover:bg-sidebar-accent hover:text-white",
           )} href={href} key={href}>
             <HugeiconsIcon icon={icon} size={19} strokeWidth={1.8} />
             <span>{label}</span>

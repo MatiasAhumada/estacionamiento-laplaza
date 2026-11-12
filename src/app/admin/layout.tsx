@@ -17,7 +17,7 @@ export default function AdminLayout({
         <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-4">
           <p className="text-xs font-semibold text-white">Modo demostración</p>
           <p className="mt-1 text-xs leading-5 text-sky-100/80">Datos compartidos con la terminal del empleado.</p>
-          <Link className="mt-3 inline-block text-xs font-bold text-action underline-offset-4 hover:underline" href="/empleado">Ir a terminal →</Link>
+          <Link className="mt-3 inline-block text-xs font-bold text-secondary underline-offset-4 hover:underline" href="/empleado">Ir a terminal →</Link>
         </div>
       </aside>
       <div className="min-w-0">
@@ -28,7 +28,7 @@ export default function AdminLayout({
             <div className="flex items-center gap-2">
               <Link className="rounded-full border border-border bg-muted px-3 py-2 text-xs font-semibold text-primary hover:bg-accent lg:hidden" href="/empleado">Terminal</Link>
               <DemoResetControl />
-              <span className="hidden rounded-full border border-action/40 bg-action/15 px-3 py-1.5 text-xs font-semibold text-primary sm:inline-block">● Simulación</span>
+              <span className="hidden rounded-full border border-warning/40 bg-warning/20 px-3 py-1.5 text-xs font-semibold text-primary sm:inline-block">● Simulación</span>
             </div>
           </div>
         </header>

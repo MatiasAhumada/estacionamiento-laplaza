@@ -41,7 +41,7 @@ export function AdminDonut({ segments, center, label }: Readonly<{ segments: { l
   const total = segments.reduce((sum, segment) => sum + segment.value, 0);
   return <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-around">
     <div className="relative size-40 shrink-0" role="img" aria-label={`${label}: ${segments.map((item) => `${item.label} ${item.value}`).join(", ")}`}>
-      <svg className="size-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="39" fill="none" stroke="#eaf1f5" strokeWidth="16" />
+      <svg className="size-full -rotate-90" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="39" fill="none" stroke="var(--chart-neutral)" strokeWidth="16" />
         {segments.map((item, index) => { const length = total > 0 ? item.value / total * 245 : 0; const start = total > 0 ? segments.slice(0, index).reduce((sum, previous) => sum + previous.value, 0) / total * 245 : 0; return <circle key={item.label} cx="50" cy="50" r="39" fill="none" stroke={item.color} strokeWidth="16" strokeDasharray={`${length} ${245 - length}`} strokeDashoffset={-start} />; })}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="font-display text-2xl font-extrabold text-primary">{center}</span><span className="text-[10px] text-muted-foreground">{label}</span></div>

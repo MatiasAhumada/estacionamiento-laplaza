@@ -25,7 +25,7 @@ export function DemoResetControl() {
   return (
     <>
       <Button
-        className="min-h-11 whitespace-nowrap rounded-xl"
+        className="min-h-11 whitespace-nowrap rounded-xl px-3 sm:px-4"
         onClick={() => setIsOpen(true)}
         type="button"
         variant="outline"

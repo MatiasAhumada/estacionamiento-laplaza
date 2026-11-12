@@ -84,7 +84,11 @@ function getConnectionIndicatorClass(scenario: "online" | "offline" | "syncing")
     return "bg-secondary";
   }
 
-  return "bg-action";
+  if (scenario === "syncing") {
+    return "bg-warning";
+  }
+
+  return "bg-destructive";
 }
 
 function getMovementAmountLabel(amountCents: number | undefined): string {
@@ -468,7 +472,7 @@ export function EmployeeTerminal() {
       <section className="grid gap-5 rounded-3xl bg-primary p-5 text-primary-foreground shadow-sm sm:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:p-9">
         <div className="max-w-2xl">
           <p className="mb-3 flex items-center gap-2 text-xs font-semibold tracking-wide text-sky-100 sm:text-sm">
-            <span aria-hidden="true" className="size-2 rounded-full bg-action" />
+            <span aria-hidden="true" className="size-2 rounded-full bg-secondary" />
             Terminal de atención · Simulación
           </p>
           <h1 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
@@ -499,11 +503,11 @@ export function EmployeeTerminal() {
       </section>
 
       {!isShiftOpen && (
-        <form className="grid gap-4 rounded-2xl border border-action/50 bg-action/15 p-4 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end" onSubmit={openShift}>
+        <form className="grid gap-4 rounded-2xl border border-warning/50 bg-warning/20 p-4 md:grid-cols-[1fr_1fr_1fr_auto] md:items-end" onSubmit={openShift}>
           <div className="space-y-2"><Label htmlFor="new-shift-employee">Empleado del nuevo turno</Label><Select onValueChange={setNewShiftEmployeeId} value={newShiftEmployeeId}><SelectTrigger className="w-full bg-white" id="new-shift-employee"><SelectValue placeholder="Seleccionar empleado" /></SelectTrigger><SelectContent>{state.employees.filter((item) => item.active).map((item) => <SelectItem key={item.id} value={item.id}>{item.displayName}</SelectItem>)}</SelectContent></Select></div>
           <div className="space-y-2"><Label htmlFor="new-shift-label">Nombre del turno</Label><Select onValueChange={setNewShiftLabel} value={selectedShiftLabel}><SelectTrigger className="w-full bg-white" id="new-shift-label"><SelectValue placeholder="Seleccionar turno" /></SelectTrigger><SelectContent>{state.settings.shiftLabels.map((label) => <SelectItem key={label} value={label}>{label}</SelectItem>)}</SelectContent></Select></div>
           <div className="space-y-2"><Label htmlFor="new-shift-cash">Fondo inicial (ARS)</Label><Input id="new-shift-cash" min={0} onChange={(event) => setOpeningCash(event.target.value)} step="0.01" type="number" value={openingCash} /></div>
-          <Button className="bg-action font-bold text-primary hover:bg-action/90" type="submit">Abrir turno</Button>
+          <Button variant="action" type="submit">Abrir turno</Button>
           {shiftError ? <p className="text-sm text-destructive md:col-span-4" role="alert">{shiftError}</p> : null}
         </form>
       )}

@@ -33,3 +33,11 @@ El archivo [DESIGN.md](../../recursos/stitch_sistema_la_plaza_estacionamiento/se
 Esta nota documenta el hallazgo y el criterio de aceptación; no modifica los estilos actuales.
 
 Ticket de implementación posterior: [COD-1574](https://codev-crew.atlassian.net/browse/COD-1574).
+
+## Implementación de COD-1574 · 12 de noviembre de 2026
+
+La escala de las cinco familias se centralizó en `src/app/globals.css`: los tonos 100–900 y los aliases de familia `DEFAULT` apuntan al valor 500. Los tokens semánticos mantienen estructura azul profundo, interacción Blue Green, acciones transaccionales Princeton Orange y atención Amber Flame. Los colores de series y categorías usan variables compartidas; los hexadecimales de marca ya no se repiten en los gráficos de Inicio y Turnos y Cajas.
+
+La comparación visual cubrió la terminal, Inicio, Turnos y Cajas y Configuración con el navegador local gstack a 390 px y 1440 px. Las vistas móviles conservan navegación, acciones y lectura en una columna; se corrigió el overflow del encabezado admin tras aumentar el tamaño táctil de los botones. Los recursos de Stitch disponibles son capturas de escritorio para terminal y caja; no existe una referencia administrativa móvil pixel a pixel, por lo que esa revisión valida adaptación y legibilidad, no equivalencia con una captura móvil ausente. La sección histórica de mapa queda fuera de este ajuste y pendiente del alcance COD-1575.
+
+Validación: `pnpm lint`, `pnpm exec tsc --noEmit`, `pnpm build` y las pruebas de dominio `demo.operations.test.ts` y `reporting.test.ts` finalizaron correctamente. La terminal no mostró errores de consola después de recargar; se registró una respuesta 401 aislada durante el arranque inicial de gstack/Next dev overlay que no se reprodujo tras limpiar y recargar.
