@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ParkingBrand } from "@/components/shared/parking-brand";
 import { AdminSectionNavigation } from "@/components/shared/admin-section-navigation";
+import { DemoResetControl } from "@/components/shared/demo-reset-control";
 
 export default function AdminLayout({
   children,
@@ -24,8 +25,11 @@ export default function AdminLayout({
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
             <div className="lg:hidden"><ParkingBrand /></div>
             <div className="hidden lg:block"><p className="text-[11px] font-bold tracking-[0.16em] text-secondary uppercase">La Plaza / Administración</p><p className="mt-1 text-xs text-muted-foreground">Centro de gestión · Demo interactiva</p></div>
-            <Link className="rounded-full border border-border bg-muted px-3 py-2 text-xs font-semibold text-primary hover:bg-accent lg:hidden" href="/empleado">Terminal</Link>
-            <span className="hidden rounded-full border border-action/40 bg-action/15 px-3 py-1.5 text-xs font-semibold text-primary sm:inline-block">● Simulación</span>
+            <div className="flex items-center gap-2">
+              <Link className="rounded-full border border-border bg-muted px-3 py-2 text-xs font-semibold text-primary hover:bg-accent lg:hidden" href="/empleado">Terminal</Link>
+              <DemoResetControl />
+              <span className="hidden rounded-full border border-action/40 bg-action/15 px-3 py-1.5 text-xs font-semibold text-primary sm:inline-block">● Simulación</span>
+            </div>
           </div>
         </header>
         <div className="bg-sidebar px-2 py-2 lg:hidden"><AdminSectionNavigation compact /></div>

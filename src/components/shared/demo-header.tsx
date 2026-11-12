@@ -1,4 +1,5 @@
 import { DemoRoleNavigation } from "@/components/shared/demo-role-navigation";
+import { DemoResetControl } from "@/components/shared/demo-reset-control";
 import { ParkingBrand } from "@/components/shared/parking-brand";
 
 type DemoHeaderProps = {
@@ -28,6 +29,9 @@ export function DemoHeader({ compact = false }: DemoHeaderProps) {
             {getHeaderContext(compact)}
           </p>
           <DemoRoleNavigation />
+          <div className="self-end sm:self-auto">
+            <DemoResetControl />
+          </div>
         </div>
       </div>
       <p className="border-t border-border/70 px-4 py-2 text-center text-xs text-muted-foreground sm:hidden">
