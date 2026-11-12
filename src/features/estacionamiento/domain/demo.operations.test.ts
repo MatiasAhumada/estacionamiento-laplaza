@@ -6,6 +6,7 @@ import { DEMO_STORAGE_VERSION } from "@/constants/demo.constant";
 import { applyDemoAction } from "./demo.operations";
 import { normalizePlateFragment } from "./plate";
 import { selectActiveStaySummaries, selectActiveStays, selectCashSummary, selectDailyRevenue, selectMatchingActiveStays, selectOccupancy } from "./selectors";
+import { selectMovementRecords } from "./reporting";
 import { calculateStayPrice } from "./tariff";
 import { parseDemoState } from "../demo/demo-storage";
 import { entrySchema } from "../validation/entry.schema";
@@ -114,6 +115,14 @@ describe("estado demo del estacionamiento", () => {
     assert.equal(result.state.payments.at(-1)?.changeCents, 44_000);
     assert.equal(result.state.payments.at(-1)?.netCents, 756_000);
     assert.equal(result.state.invoiceRequests.at(-1)?.status, "pending");
+    const paymentMovement = selectMovementRecords(result.state, {
+      from: "",
+      to: "",
+      employeeId: "all",
+      shiftId: "all",
+      method: "all",
+    }).find((record) => record.payment?.id === "payment-demo-test");
+    assert.equal(paymentMovement?.invoiceRequest?.stayId, "stay-active-001");
     assert.equal(result.state.movements.at(-1)?.paymentId, "payment-demo-test");
     assert.equal(selectCashSummary(result.state, "shift-current")?.expectedCashCents, 781_000);
 
@@ -185,6 +194,32 @@ describe("estado demo del estacionamiento", () => {
     });
     assert.equal(selectOccupancy(exceededCapacityState).available, 0);
     assert.equal(selectOccupancy(exceededCapacityState).percentage, 150);
+  });
+
+  it("no crea una solicitud de factura cuando el cobro se confirma sin marcarla", () => {
+    const tariff = DEMO_SEED_STATE.tariffs[0];
+    assert.ok(tariff);
+    const price = calculateStayPrice(
+      "2026-11-09T08:35:00.000-03:00",
+      "2026-11-09T12:05:00.000-03:00",
+      tariff,
+    );
+    assert.ok(price);
+    const initialInvoiceRequests = DEMO_SEED_STATE.invoiceRequests.length;
+
+    const result = applyDemoAction(DEMO_SEED_STATE, {
+      type: "confirm-payment-and-exit",
+      id: "payment-without-invoice-test",
+      occurredAt: "2026-11-09T12:05:00.000-03:00",
+      stayId: "stay-active-001",
+      method: "debito",
+      totalCents: price.totalCents,
+      requestInvoice: false,
+    });
+
+    assert.equal(result.success, true);
+    assert.equal(result.state.invoiceRequests.length, initialInvoiceRequests);
+    assert.equal(result.state.invoiceRequests.some((request) => request.stayId === "stay-active-001"), false);
   });
 
   it("bloquea efectivo insuficiente, caja cerrada y storage inválido o de otra versión", () => {

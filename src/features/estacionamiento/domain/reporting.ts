@@ -1,5 +1,6 @@
 import type {
   DemoExpense,
+  DemoInvoiceRequest,
   DemoCashCount,
   DemoCashAdjustment,
   DemoAudit,
@@ -23,6 +24,7 @@ export interface DemoMovementRecord {
   cashAdjustment: DemoCashAdjustment | undefined;
   audit: DemoAudit | undefined;
   expense: DemoExpense | undefined;
+  invoiceRequest: DemoInvoiceRequest | undefined;
 }
 
 export interface DemoReportSummary {
@@ -131,6 +133,9 @@ export function selectMovementRecords(
         ),
         audit,
         expense: selectExpense(state, movement),
+        invoiceRequest: movement.stayId
+          ? state.invoiceRequests.find((request) => request.stayId === movement.stayId)
+          : undefined,
       };
     })
     .sort((firstRecord, secondRecord) =>

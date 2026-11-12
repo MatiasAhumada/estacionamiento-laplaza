@@ -85,10 +85,17 @@ function MovementDetails({
 }>) {
   if (record.payment) {
     return (
-      <div className="grid gap-1 text-xs text-muted-foreground sm:grid-cols-3">
-        <span>Medio · {record.payment.method}</span>
-        <span>Recibido · {formatCurrency(record.payment.receivedCents ?? record.payment.netCents)}</span>
-        <span>Vuelto · {formatCurrency(record.payment.changeCents)} · Neto {formatCurrency(record.payment.netCents)}</span>
+      <div className="grid gap-2">
+        <div className="grid gap-1 text-xs text-muted-foreground sm:grid-cols-3">
+          <span>Medio · {record.payment.method}</span>
+          <span>Recibido · {formatCurrency(record.payment.receivedCents ?? record.payment.netCents)}</span>
+          <span>Vuelto · {formatCurrency(record.payment.changeCents)} · Neto {formatCurrency(record.payment.netCents)}</span>
+        </div>
+        {record.invoiceRequest ? (
+          <p className="w-fit rounded-full border border-action/50 bg-action/15 px-2.5 py-1 text-xs font-medium text-foreground">
+            Solicitud de factura · Pendiente · Simulación
+          </p>
+        ) : null}
       </div>
     );
   }

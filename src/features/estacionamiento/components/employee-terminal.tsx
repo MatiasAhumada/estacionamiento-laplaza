@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Card,
   CardContent,
@@ -231,6 +232,7 @@ export function EmployeeTerminal() {
   const [selectedStayId, setSelectedStayId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<DemoPaymentMethod>("efectivo");
   const [receivedAmount, setReceivedAmount] = useState("");
+  const [requestInvoice, setRequestInvoice] = useState(false);
   const [paymentError, setPaymentError] = useState("");
   const [isPaymentSubmitting, setIsPaymentSubmitting] = useState(false);
   const [now, setNow] = useState(0);
@@ -344,9 +346,14 @@ export function EmployeeTerminal() {
     setSelectedStayId("");
     setPaymentMethod("efectivo");
     setReceivedAmount("");
+    setRequestInvoice(false);
     setPaymentError("");
     setIsPaymentSubmitting(false);
     paymentSubmittingRef.current = false;
+  }
+
+  function updateInvoiceRequest(checked: boolean | "indeterminate"): void {
+    setRequestInvoice(checked !== "indeterminate" && checked);
   }
 
   function openTicket(stayId: string): void {
@@ -425,7 +432,7 @@ export function EmployeeTerminal() {
       method: paymentMethod,
       totalCents: selectedPrice.totalCents,
       receivedCents,
-      requestInvoice: false,
+      requestInvoice,
     });
 
     if (!operationResult.success) {
@@ -788,6 +795,22 @@ export function EmployeeTerminal() {
                       )}
                     </div>
                   )}
+                  <div className="flex min-h-14 items-start gap-3 rounded-xl border border-border bg-background p-3">
+                    <Checkbox
+                      checked={requestInvoice}
+                      disabled={isPaymentSubmitting}
+                      id="request-invoice"
+                      onCheckedChange={updateInvoiceRequest}
+                    />
+                    <div className="grid gap-1">
+                      <Label className="cursor-pointer text-sm font-semibold leading-5" htmlFor="request-invoice">
+                        Requiere factura
+                      </Label>
+                      <p className="text-xs leading-5 text-muted-foreground">
+                        Registra una solicitud visual pendiente. Es una simulación; no emite factura ni comprobante fiscal.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
               {paymentError && <p className="text-sm text-destructive" role="alert">{paymentError}</p>}
