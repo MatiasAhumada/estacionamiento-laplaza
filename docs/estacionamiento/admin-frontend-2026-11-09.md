@@ -42,4 +42,4 @@ El seed de la demo es fechado (8 y 9 de noviembre de 2026). En una fecha posteri
 
 ## Jira
 
-Trabajo relacionado con `COD-1569` (historial, auditoría y reportes), `COD-1570` (empleados, capacidad y tarifas) y `COD-1572` (integración y validación). Esos tickets se consultaron mediante Atlassian Rovo y se mantienen en el estado exacto `Estacionamiento`, conforme al pedido actual. No se crearon duplicados ni migraciones.
+Trabajo relacionado con `COD-1569` (historial, auditoría y reportes), `COD-1570` (empleados, capacidad y tarifas) y `COD-1572` (integración y validación). El estado de Jira debe consultarse en cada ticket: `COD-1569` volvió a `Finalizado` por decisión del usuario; `COD-1570` y `COD-1572` permanecen en `Estacionamiento`. La revisión cromática posterior se documenta en `COD-1574`. No se realizaron migraciones.

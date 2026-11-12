@@ -31,3 +31,5 @@ El archivo [DESIGN.md](../../recursos/stitch_sistema_la_plaza_estacionamiento/se
 5. Comparar visualmente el resultado con las capturas/HTML de `/recursos` y validar las cuatro rutas administrativas y la terminal en móvil y escritorio. Ejecutar lint, typecheck, build y pruebas pertinentes antes de publicar.
 
 Esta nota documenta el hallazgo y el criterio de aceptación; no modifica los estilos actuales.
+
+Ticket de implementación posterior: [COD-1574](https://codev-crew.atlassian.net/browse/COD-1574).
