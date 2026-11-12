@@ -1,6 +1,6 @@
 # Plan de implementación
 
-Esta ejecución solo deja documentación y Jira. Las rutas/componentes citados son **propuestos** salvo indicación expresa. Especificaciones completas en [tickets-demo.md](tickets-demo.md).
+Este plan describe la ejecución inicial de documentación y Jira. Varias rutas/componentes propuestos ya existen; el estado nuevo para implementación posterior está en [cambios frontend 2026-11-12](cambios-frontend-2026-11-12.md). Especificaciones iniciales completas en [tickets-demo.md](tickets-demo.md).
 
 | Orden | Jira | Entregable | Depende de |
 | --- | --- | --- | --- |
@@ -22,7 +22,7 @@ T01 y T02 fijan las bases; no duplicar stores, componentes ni fixtures en ticket
 
 ## Criterios transversales de terminado
 
-Cada ticket: releer Jira, `AGENTS.md`, esta documentación y el prompt técnico; buscar → reutilizar → extender → crear; usar TypeScript estricto, shadcn/CVA, tokens, Zod cuando hay entradas, mobile first, foco/teclado/labels/contraste, estados vacío/error/procesando según corresponda. Probar casos normales y alternativos reales. Ejecutar `pnpm lint`, `pnpm build` y pruebas pertinentes sin warnings; `pnpm exec tsc --noEmit` cuando aporte validación. Para UI, aplicar skill de diseño y validación en navegador gstack según el prompt técnico. Revisar diff, commit y push a `dev` solo con validaciones limpias y sin incluir cambios ajenos. **Jira permanece en `Estacionamiento` antes y después del push**. Ningún ticket agrega backend, Prisma, APIs, ARCA, servicios externos ni offline real.
+Cada ticket: releer Jira, `AGENTS.md`, esta documentación y el prompt técnico; buscar → reutilizar → extender → crear; usar TypeScript estricto, shadcn/CVA, tokens, Zod cuando hay entradas, mobile first, foco/teclado/labels/contraste, estados vacío/error/procesando según corresponda. Probar casos normales y alternativos reales. Ejecutar `pnpm lint`, `pnpm build` y pruebas pertinentes sin warnings; `pnpm exec tsc --noEmit` cuando aporte validación. Para UI, aplicar skill de diseño y validación en navegador gstack según el prompt técnico. Revisar diff, commit y push a `dev` solo con validaciones limpias y sin incluir cambios ajenos. **Jira pasa a `Finalizado` después de implementación, QA, commit y push aprobados; antes sigue en `Estacionamiento`**. Ningún ticket agrega backend, Prisma, APIs, ARCA, servicios externos ni offline real.
 
 ## Escenarios finales verificables
 

@@ -1,6 +1,6 @@
 # Investigación visual de `recursos/`
 
-> Investigación de los diseños originales. Los cuatro recursos administrativos incorporados después, incluidos el mapa visual y sus dos capturas, se analizan en [Panel administrativo 2026-11-09](admin-frontend-2026-11-09.md). La decisión antigua de no dibujar mapa de plazas fue reemplazada por un mapa **ilustrativo** sin detección física ni ubicación real.
+> Investigación de los diseños originales. Los cuatro recursos administrativos incorporados después, incluidos el mapa visual y sus capturas, se analizan en [Panel administrativo 2026-11-09](admin-frontend-2026-11-09.md). Esa implementación del mapa es histórica: la decisión vigente del 12/11 es retirarlo y conservar solo estadísticas/listas textuales de ocupación; ver [cambios frontend](cambios-frontend-2026-11-12.md).
 
 Se inspeccionaron recursivamente los siete archivos: `se_al_urbana_pos/DESIGN.md` y, en cada una de las carpetas `terminal_operativa_4_acciones`, `modal_cobro_y_vuelto_efectivo` y `modal_caja_y_arqueo_turno`, `code.html` y `screen.png`. Se leyeron las estructuras/textos HTML y se contrastaron las tres capturas. Las capturas muestran variantes de escritorio; **no hay captura administrativa ni diseño móvil final**. Los HTML de Stitch incluyen Tailwind por CDN, iconos Material y scripts demostrativos: sirven como referencia visual, no como implementación React.
 

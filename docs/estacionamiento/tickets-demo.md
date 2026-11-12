@@ -1,6 +1,6 @@
 # Especificaciones para Jira
 
-Todos pertenecen a la épica «Estacionamiento La Plaza — Demo Frontend Funcional», proyecto `COD`, estado exacto `Estacionamiento`. Son implementables por separado tras sus dependencias. Las rutas/archivos bajo `src/features/estacionamiento` y rutas nuevas de `src/app` son **propuestos**. Referencia común: `AGENTS.md`, `docs/estacionamiento/README.md`, `plan-implementacion.md` y prompt técnico adjunto. Definición de terminado común en el plan.
+Esta es la planificación inicial de la épica «Estacionamiento La Plaza — Demo Frontend Funcional» en `COD`; varias tareas ya están implementadas y finalizadas. Las rutas/archivos que se describen como propuestos corresponden a ese momento histórico. Los cambios posteriores del 12/11/2026 se especifican en [cambios frontend](cambios-frontend-2026-11-12.md) y en COD-1575 a COD-1579. Cada ticket nuevo pasa a `Finalizado` tras implementación y QA completos, commit y push a `dev`; mientras tanto sigue abierto en `Estacionamiento`.
 
 ## T01 — Identidad visual, layouts y navegación de demo
 

@@ -1,5 +1,7 @@
 # Panel administrativo: revisión e implementación, 2026-11-09
 
+> Registro histórico del frontend existente al 9/11. El 12/11 el usuario decidió retirar el mapa y la sección Ocupación, trasladar la auditoría al empleado, cerrar caja a ciegas, agregar login visual y ampliar gráficos financieros. La especificación vigente para esos cambios está en [cambios frontend 2026-11-12](cambios-frontend-2026-11-12.md); aún no están implementados.
+
 ## Recursos y correspondencia
 
 Se recorrió `recursos/stitch_sistema_la_plaza_estacionamiento` completo. Los cuatro directorios administrativos nuevos contienen `code.html`; Ocupación y Turnos y Cajas incluyen además `screen.png`. Los diseños anteriores de terminal, cobro y arqueo siguen como referencia secundaria. El HTML de Stitch se usó para composición, jerarquía y lenguaje visual, sin copiar su lógica ni sus datos.
@@ -42,4 +44,4 @@ El seed de la demo es fechado (8 y 9 de noviembre de 2026). En una fecha posteri
 
 ## Jira
 
-Trabajo relacionado con `COD-1569` (historial, auditoría y reportes), `COD-1570` (empleados, capacidad y tarifas) y `COD-1572` (integración y validación). El estado de Jira debe consultarse en cada ticket: `COD-1569` volvió a `Finalizado` por decisión del usuario; `COD-1570` y `COD-1572` permanecen en `Estacionamiento`. La revisión cromática posterior se documenta en `COD-1574`. No se realizaron migraciones.
+Trabajo relacionado con `COD-1569` (historial, auditoría y reportes), `COD-1570` (empleados, capacidad y tarifas) y `COD-1572` (integración y validación). El estado de Jira debe consultarse en cada ticket; estos tres trabajos históricos figuran `Finalizado` al 12/11/2026. La revisión cromática posterior se documenta en `COD-1574` y los cambios de producto nuevos en COD-1575 a COD-1579. No se realizaron migraciones.

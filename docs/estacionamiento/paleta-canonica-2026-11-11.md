@@ -2,7 +2,7 @@
 
 ## Decisión de producto
 
-La paleta elegida por el usuario para Estacionamiento La Plaza comprende **cinco familias, con diez tonos cada una**. Los valores de esta tabla son la referencia cromática para futuras adaptaciones de la terminal y las cuatro vistas administrativas. La columna 500 coincide con `DEFAULT`. Mantener la grafía hexadecimal es indiferente; el valor RGB no lo es.
+La paleta elegida por el usuario para Estacionamiento La Plaza comprende **cinco familias, con diez tonos cada una**. Los valores de esta tabla son la referencia cromática para la terminal y las vistas administrativas vigentes. La columna 500 coincide con `DEFAULT`. Mantener la grafía hexadecimal es indiferente; el valor RGB no lo es. La sección Ocupación y su mapa se retirarán según [la decisión posterior del 12/11](cambios-frontend-2026-11-12.md).
 
 | Familia | DEFAULT / 500 | 100 | 200 | 300 | 400 | 600 | 700 | 800 | 900 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -24,7 +24,7 @@ El archivo [DESIGN.md](../../recursos/stitch_sistema_la_plaza_estacionamiento/se
 
 ## Trabajo para un chat posterior
 
-1. Revisar los cuatro recursos administrativos nuevos y las vistas reales de Inicio, Ocupación, Turnos y Cajas y Configuración, además de la terminal, en móvil y escritorio.
+1. Revisar los recursos administrativos nuevos y las vistas vigentes de Inicio, Turnos y Cajas y Configuración, además de la terminal, en móvil y escritorio. El recurso de Ocupación queda como referencia histórica; no reconstruir el mapa.
 2. Definir los 50 tonos como fuente única y mapear roles semánticos (estructura, interacción, acción transaccional, atención, superficies, texto y gráficos) sin duplicar hexadecimales en componentes.
 3. Corregir usos que contradigan esos roles, conservando las operaciones existentes y evitando copiar HTML o funciones ficticias de Stitch.
 4. Verificar contraste y estados `hover`, `focus`, `disabled`, alertas, gráficos y legibilidad de cifras; documentar cualquier excepción necesaria por accesibilidad.

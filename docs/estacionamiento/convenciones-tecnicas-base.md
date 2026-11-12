@@ -1,4 +1,4 @@
-> Copia del documento técnico suministrado con la planificación. Para Estacionamiento La Plaza, la instrucción específica de `AGENTS.md` y del plan prevalece sobre la transición genérica a `Finalizado`: todos los tickets deben permanecer en `Estacionamiento`. El resto de las convenciones continúa vigente.
+> Copia del documento técnico suministrado con la planificación. Para Estacionamiento La Plaza rige el flujo actualizado del 12/11/2026: cada ticket pasa a `Finalizado` solo tras implementación, QA, commit y push a `dev`; mientras esté pendiente permanece en `Estacionamiento`. El resto de las convenciones continúa vigente.
 
 # PROMPT MAESTRO — IMPLEMENTACIÓN DE TICKETS Y CONVENCIONES TÉCNICAS
 

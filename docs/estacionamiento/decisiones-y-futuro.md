@@ -1,5 +1,7 @@
 # Decisiones y evolución
 
+> Las decisiones nuevas del 12/11/2026 sobre retiro del mapa, auditoría del empleado, cierre a ciegas, login visual y gráficos están en [cambios frontend](cambios-frontend-2026-11-12.md). Este documento conserva el contexto de la etapa inicial.
+
 ## Decisiones para la demo
 
 1. **Frontend exclusivamente:** el negocio se simula en cliente. Prisma/PostgreSQL y el ejemplo de usuarios no se tocan. Evita sugerir persistencia inexistente.
@@ -8,11 +10,11 @@
 4. **Dinero en centavos:** pagos netos y caja derivados de operaciones; el vuelto nunca infla recaudación.
 5. **Tarifa ilustrativa configurable:** cálculo simple por media hora solo para demo. Capacidad y tarifas se muestran como ejemplos, pendientes de validación del cliente.
 6. **shadcn y tokens:** extender lo existente; refactorizar componentes heredados si entran al alcance, sin segundo sistema visual.
-7. **Rol de desarrollo explícito:** navegación simulada, no autorización. La interfaz no debe afirmar seguridad real.
+7. **Rol de desarrollo explícito:** se planifica login visual por rol para la demo, sin autorización segura de producción. La interfaz no debe afirmar seguridad real.
 
 ## Fuera de esta etapa
 
-Backend de negocio, endpoints REST, base PostgreSQL, migraciones Prisma, sesiones/autorización, emisión fiscal ARCA/CAE, integración POS o bancaria, impresora física, barreras/sensores/OCR, asignación de plazas y offline real. Antes de implementar offline productivo, investigar almacenamiento durable, colas, IDs, conflictos, sincronización, seguridad y recuperación; hacerlo como etapa separada. Antes de facturación real, definir requisitos fiscales y proveedor con el cliente. No generar migraciones manuales; las futuras se generan únicamente con el comando Prisma indicado en `AGENTS.md` sobre desarrollo.
+Backend de negocio, endpoints REST, base PostgreSQL, migraciones Prisma, sesiones/autorización **reales de servidor**, emisión fiscal ARCA/CAE, integración POS o bancaria, impresora física, barreras/sensores/OCR, asignación de plazas y offline real. Antes de implementar offline productivo, investigar almacenamiento durable, colas, IDs, conflictos, sincronización, seguridad y recuperación; hacerlo como etapa separada. Antes de facturación real, definir requisitos fiscales y proveedor con el cliente. No generar migraciones manuales; las futuras se generan únicamente con el comando Prisma indicado en `AGENTS.md` sobre desarrollo.
 
 ## Validaciones pendientes con el cliente
 
