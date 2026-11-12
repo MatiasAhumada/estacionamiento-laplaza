@@ -306,7 +306,7 @@
       const formattedDiff = Math.abs(diff).toLocaleString('es-AR');
       diffAmountEl.textContent = '-$ ' + formattedDiff;
       diffAmountEl.className = 'font-monospace-data text-headline-sm font-bold text-error';
-
+      
       if (Math.abs(diff) <= 500) {
         diffStatusTextEl.textContent = 'Diferencia leve por redondeo o cambio';
         diffStatusTextEl.className = 'font-body-md text-body-md font-semibold text-on-surface';
@@ -356,7 +356,7 @@
                   '• Efectivo Declarado: $ ' + entered.toLocaleString('es-AR') + '\n' +
                   '• Balance: ' + (diff === 0 ? 'Exacto ($0)' : (diff > 0 ? '+$' : '-$') + Math.abs(diff).toLocaleString('es-AR')) + '\n\n' +
                   'Se emitirá el ticket de Arqueo Fiscal y se bloqueará la terminal para el siguiente turno.';
-
+    
     if (confirm(message)) {
       alert('Arqueo completado exitosamente. Gaveta liberada para Turno Tarde.');
       window.location.hash = '#terminal-operativa';
