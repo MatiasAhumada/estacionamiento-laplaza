@@ -211,49 +211,6 @@ function recordCashAdjustment(
   });
 }
 
-function countCash(
-  state: DemoState,
-  action: Extract<DemoAction, { type: "count-cash" }>,
-): DemoOperationResult {
-  const activeShift = selectActiveShift(state);
-  let summary;
-
-  if (activeShift) {
-    summary = selectCashSummary(state, activeShift.id);
-  }
-
-  if (!activeShift || !summary) {
-    return reject(state, DEMO_MESSAGES.noOpenShift);
-  }
-
-  if (!Number.isSafeInteger(action.countedCents) || action.countedCents < 0) {
-    return reject(state, DEMO_MESSAGES.invalidCash);
-  }
-
-  const cashCount = {
-    id: action.id,
-    shiftId: activeShift.id,
-    employeeId: activeShift.employeeId,
-    countedCents: action.countedCents,
-    expectedCents: summary.expectedCashCents,
-    differenceCents: action.countedCents - summary.expectedCashCents,
-    createdAt: action.occurredAt,
-  };
-
-  return succeed({
-    ...state,
-    cashCounts: [...state.cashCounts, cashCount],
-    movements: addMovement(state, {
-      id: `${action.id}-movement`,
-      kind: "cash-count",
-      shiftId: activeShift.id,
-      employeeId: activeShift.employeeId,
-      occurredAt: action.occurredAt,
-      amountCents: cashCount.differenceCents,
-    }),
-  });
-}
-
 function closeShift(
   state: DemoState,
   action: Extract<DemoAction, { type: "close-shift" }>,
@@ -265,37 +222,58 @@ function closeShift(
   }
 
   const cashSummary = selectCashSummary(state, activeShift.id);
-  const lastCashCount = state.cashCounts
-    .filter((cashCount) => cashCount.shiftId === activeShift.id)
-    .at(-1);
-  const lastCashAdjustment = state.cashAdjustments
-    .filter((adjustment) => adjustment.shiftId === activeShift.id)
-    .at(-1);
 
-  if (
-    !cashSummary ||
-    !lastCashCount ||
-    lastCashCount.expectedCents !== cashSummary.expectedCashCents ||
-    (lastCashAdjustment && new Date(lastCashCount.createdAt).getTime() < new Date(lastCashAdjustment.occurredAt).getTime())
-  ) {
-    return reject(state, DEMO_MESSAGES.cashCountRequired);
+  if (!cashSummary) {
+    return reject(state, DEMO_MESSAGES.noOpenShift);
   }
 
-  return succeed({
+  if (!Number.isSafeInteger(action.countedCents) || action.countedCents < 0) {
+    return reject(state, DEMO_MESSAGES.invalidCash);
+  }
+
+  const cashExpensesCents = state.expenses
+    .filter((expense) => expense.shiftId === activeShift.id && expense.method === "efectivo")
+    .reduce((total, expense) => total + expense.amountCents, 0);
+  const cashCount = {
+    id: action.id,
+    shiftId: activeShift.id,
+    employeeId: activeShift.employeeId,
+    countedCents: action.countedCents,
+    expectedCents: cashSummary.expectedCashCents,
+    differenceCents: action.countedCents - cashSummary.expectedCashCents,
+    createdAt: action.occurredAt,
+    openingCashCents: cashSummary.openingCashCents,
+    netByMethod: cashSummary.netByMethod,
+    adjustmentInCents: cashSummary.adjustmentInCents,
+    adjustmentOutCents: cashSummary.adjustmentOutCents,
+    cashExpensesCents,
+  };
+  const closedState: DemoState = {
     ...state,
+    cashCounts: [...state.cashCounts, cashCount],
     shifts: state.shifts.map((shift) => {
       if (shift.id === activeShift.id) {
-        return {
-          ...shift,
-          status: "closed" as const,
-          closedAt: action.occurredAt,
-          closedCashCountId: lastCashCount.id,
-        };
+        return { ...shift, status: "closed", closedAt: action.occurredAt, closedCashCountId: cashCount.id };
       }
 
       return shift;
     }),
-    movements: addMovement(state, {
+  };
+  const countedState: DemoState = {
+    ...closedState,
+    movements: addMovement(closedState, {
+      id: `${action.id}-count-movement`,
+      kind: "cash-count",
+      shiftId: activeShift.id,
+      employeeId: activeShift.employeeId,
+      occurredAt: action.occurredAt,
+      amountCents: cashCount.differenceCents,
+    }),
+  };
+
+  return succeed({
+    ...countedState,
+    movements: addMovement(countedState, {
       id: `${action.id}-movement`,
       kind: "shift-close",
       shiftId: activeShift.id,
@@ -304,7 +282,6 @@ function closeShift(
     }),
   });
 }
-
 function recordExpense(state: DemoState, action: Extract<DemoAction, { type: "record-expense" }>): DemoOperationResult {
   const shift = selectActiveShift(state);
   if (!shift) return reject(state, DEMO_MESSAGES.noOpenShift);
@@ -375,10 +352,6 @@ export function applyDemoAction(state: DemoState, action: DemoAction): DemoOpera
 
   if (action.type === "record-cash-adjustment") {
     return recordCashAdjustment(state, action);
-  }
-
-  if (action.type === "count-cash") {
-    return countCash(state, action);
   }
 
   if (action.type === "close-shift") {

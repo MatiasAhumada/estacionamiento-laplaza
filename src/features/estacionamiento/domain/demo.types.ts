@@ -84,6 +84,11 @@ export interface DemoCashCount {
   expectedCents: number;
   differenceCents: number;
   createdAt: string;
+  openingCashCents?: number;
+  netByMethod?: Record<DemoPaymentMethod, number>;
+  adjustmentInCents?: number;
+  adjustmentOutCents?: number;
+  cashExpensesCents?: number;
 }
 
 export interface DemoInvoiceRequest {
@@ -186,8 +191,7 @@ export type DemoAction =
   | { type: "register-entry"; id: string; occurredAt: string; plateFragment: string; category: DemoStayCategory }
   | { type: "confirm-payment-and-exit"; id: string; occurredAt: string; stayId: string; method: DemoPaymentMethod; totalCents: number; receivedCents?: number; requestInvoice: boolean }
   | { type: "record-cash-adjustment"; id: string; occurredAt: string; direction: DemoCashDirection; amountCents: number; reason: string }
-  | { type: "count-cash"; id: string; occurredAt: string; countedCents: number }
-  | { type: "close-shift"; id: string; occurredAt: string }
+  | { type: "close-shift"; id: string; occurredAt: string; countedCents: number }
   | { type: "open-shift"; id: string; occurredAt: string; employeeId: string; label: string; openingCashCents: number }
   | { type: "record-expense"; id: string; occurredAt: string; expenseDate: string; category: string; concept: string; method: DemoPaymentMethod; amountCents: number }
   | { type: "create-audit"; id: string; occurredAt: string }

@@ -197,8 +197,25 @@
   .entry-ticket-print,
   .entry-ticket-print *,
   .audit-print,
-  .audit-print * {
+  .audit-print *,
+  .print-receipt,
+  .print-receipt * {
     visibility: visible !important;
+  }
+
+  .print-receipt {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: #111 !important;
+    background: white !important;
+  }
+
+  .print-receipt button {
+    display: none !important;
   }
 
   .audit-print {

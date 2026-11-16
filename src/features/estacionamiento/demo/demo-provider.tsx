@@ -186,9 +186,5 @@ export function createDemoAction(action: DemoOperationInput): DemoOperationActio
     return { ...action, ...generatedDetails };
   }
 
-  if (action.type === "count-cash") {
-    return { ...action, ...generatedDetails };
-  }
-
   return { ...action, ...generatedDetails };
 }

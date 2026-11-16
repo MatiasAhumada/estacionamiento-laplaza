@@ -42,9 +42,7 @@ import {
 } from "@/features/estacionamiento/domain/tariff";
 import type { DemoStayPrice } from "@/features/estacionamiento/domain/tariff";
 import {
-  type DemoCashSummary,
   selectActiveShift,
-  selectCashSummary,
   selectEmployee,
   selectMatchingActiveStays,
   selectOccupancy,
@@ -255,12 +253,6 @@ export function EmployeeTerminal() {
   }
 
   const occupancy = selectOccupancy(state);
-  let cashSummary: DemoCashSummary | undefined;
-
-  if (activeShift) {
-    cashSummary = selectCashSummary(state, activeShift.id);
-  }
-
   const activeStays = selectMatchingActiveStays(state, searchQuery);
   const parsedSearchQuery = staySearchSchema.safeParse(searchQuery);
   const parsedReceivedCash = receivedCashSchema.safeParse(receivedAmount);
@@ -582,7 +574,7 @@ export function EmployeeTerminal() {
         </div>
       </section>
 
-      <section aria-label="Resumen del turno" className="grid gap-3 sm:grid-cols-3">
+      <section aria-label="Resumen del turno" className="grid gap-3 sm:grid-cols-2">
         <Card className="gap-2 rounded-2xl py-4 shadow-sm" size="sm">
           <CardContent className="flex items-end justify-between px-4">
             <div>
@@ -590,17 +582,6 @@ export function EmployeeTerminal() {
               <p className="font-display mt-1 text-2xl font-bold tabular-nums text-primary">{occupancy.active}</p>
             </div>
             <p className="pb-1 text-xs text-muted-foreground">de {occupancy.capacity} vehículos de referencia</p>
-          </CardContent>
-        </Card>
-        <Card className="gap-2 rounded-2xl py-4 shadow-sm" size="sm">
-          <CardContent className="flex items-end justify-between px-4">
-            <div>
-              <p className="text-xs font-medium text-muted-foreground">En caja</p>
-              <p className="font-display mt-1 text-2xl font-bold tabular-nums text-primary">
-                {formatCurrency(cashSummary?.expectedCashCents ?? 0)}
-              </p>
-            </div>
-            <p className="pb-1 text-xs text-muted-foreground">Efectivo esperado</p>
           </CardContent>
         </Card>
         <Card className="gap-2 rounded-2xl py-4 shadow-sm" size="sm">

@@ -335,53 +335,46 @@ describe("estado demo del estacionamiento", () => {
     });
     assert.equal(adjustmentWithoutReason.success, false);
 
-    const staleCashCount = applyDemoAction(adjustmentOut.state, {
-      type: "count-cash",
-      id: "cash-count-stale",
-      occurredAt: "2026-11-09T11:05:00.000-03:00",
-      countedCents: 65_000,
-    });
-    assert.equal(staleCashCount.success, true);
-
-    const closeWithoutCurrentCashCount = applyDemoAction(staleCashCount.state, {
-      type: "close-shift",
-      id: "close-without-count",
-      occurredAt: "2026-11-09T11:15:00.000-03:00",
-    });
-    assert.equal(closeWithoutCurrentCashCount.success, false);
-
-    const cashCount = applyDemoAction(adjustmentOut.state, {
-      type: "count-cash",
-      id: "cash-count-current",
-      occurredAt: "2026-11-09T11:20:00.000-03:00",
-      countedCents: 64_800,
-    });
-    assert.equal(cashCount.success, true);
-    assert.equal(cashCount.state.cashCounts.at(-1)?.differenceCents, -200);
-
     const negativeCashCount = applyDemoAction(adjustmentOut.state, {
-      type: "count-cash",
+      type: "close-shift",
       id: "cash-count-negative",
       occurredAt: "2026-11-09T11:20:00.000-03:00",
       countedCents: -1,
     });
     assert.equal(negativeCashCount.success, false);
 
-    const closedShift = applyDemoAction(cashCount.state, {
+    const closedShift = applyDemoAction(adjustmentOut.state, {
       type: "close-shift",
-      id: "shift-close-current",
+      id: "cash-count-current",
       occurredAt: "2026-11-09T11:30:00.000-03:00",
+      countedCents: 64_800,
     });
     assert.equal(closedShift.success, true);
     assert.equal(closedShift.state.shifts.find((shift) => shift.id === "shift-current")?.closedCashCountId, "cash-count-current");
+    assert.equal(closedShift.state.cashCounts.length, adjustmentOut.state.cashCounts.length + 1);
+    assert.equal(closedShift.state.cashCounts.at(-1)?.differenceCents, -200);
+    assert.equal(closedShift.state.cashCounts.at(-1)?.openingCashCents, 25_000);
     assert.equal(closedShift.state.movements.at(-1)?.kind, "shift-close");
 
     const repeatedShiftClose = applyDemoAction(closedShift.state, {
       type: "close-shift",
       id: "shift-close-repeat",
       occurredAt: "2026-11-09T11:31:00.000-03:00",
+      countedCents: 64_800,
     });
     assert.equal(repeatedShiftClose.success, false);
+
+    const nextShift = applyDemoAction(closedShift.state, {
+      type: "open-shift",
+      id: "shift-after-close",
+      occurredAt: "2026-11-09T11:32:00.000-03:00",
+      employeeId: "employee-lucia",
+      label: "Tarde",
+      openingCashCents: 0,
+    });
+    assert.equal(nextShift.success, true);
+    assert.equal(nextShift.state.cashCounts.find((item) => item.id === "cash-count-current")?.countedCents, 64_800);
+    assert.equal(nextShift.state.cashCounts.find((item) => item.id === "cash-count-current")?.expectedCents, 65_000);
 
     const cashReconciliationState = {
       ...DEMO_SEED_STATE,
@@ -397,7 +390,7 @@ describe("estado demo del estacionamiento", () => {
     assert.equal(expectedCash?.expectedCashCents, 23_500_000);
 
     const reconciliation = applyDemoAction(cashReconciliationState, {
-      type: "count-cash",
+      type: "close-shift",
       id: "cash-count-reconciliation",
       occurredAt: "2026-11-09T12:00:00.000-03:00",
       countedCents: 23_480_000,

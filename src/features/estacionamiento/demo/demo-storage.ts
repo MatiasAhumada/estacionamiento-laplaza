@@ -73,6 +73,11 @@ const demoStateSchema = z.object({
     expectedCents: nonNegativeCentsSchema,
     differenceCents: z.number().int(),
     createdAt: isoDateSchema,
+    openingCashCents: nonNegativeCentsSchema.optional(),
+    netByMethod: z.object({ efectivo: nonNegativeCentsSchema, debito: nonNegativeCentsSchema, transferencia: nonNegativeCentsSchema }).optional(),
+    adjustmentInCents: nonNegativeCentsSchema.optional(),
+    adjustmentOutCents: nonNegativeCentsSchema.optional(),
+    cashExpensesCents: nonNegativeCentsSchema.optional(),
   })),
   invoiceRequests: z.array(z.object({
     id: z.string().min(1),
