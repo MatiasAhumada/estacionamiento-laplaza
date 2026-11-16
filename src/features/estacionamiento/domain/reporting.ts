@@ -11,7 +11,7 @@ import type {
   DemoState,
   DemoStay,
 } from "./demo.types";
-import type { DemoDateRange, DemoMovementFilters, DemoReportPeriod } from "./reporting.types";
+import type { DemoDateRange, DemoMovementFilters, DemoReportPeriod, FinancialComparisonPoint, FinancialPeriodPoint, FinancialReport, FinancialReportFilters } from "./reporting.types";
 import { getLocalDateKey } from "./date.utils";
 
 export interface DemoMovementRecord {
@@ -197,6 +197,177 @@ export function selectReportSummary(
     cashCountCount: cashCounts.length,
     cashDifferenceCents,
   };
+}
+
+export function selectFinancialReport(
+  state: DemoState,
+  filters: FinancialReportFilters,
+): FinancialReport {
+  const payments = state.payments.filter((payment) =>
+    isFinancialRecordIncluded(payment.paidAt, payment.employeeId, payment.shiftId, filters),
+  );
+  const expenses = state.expenses.filter((expense) =>
+    isFinancialRecordIncluded(expense.occurredAt, expense.employeeId, expense.shiftId, filters),
+  );
+  const incomeCents = payments.reduce((total, payment) => total + payment.netCents, 0);
+  const expenseCents = expenses.reduce((total, expense) => total + expense.amountCents, 0);
+  const employeeTotals = new Map<string, FinancialPeriodPoint>();
+  const shiftTotals = new Map<string, FinancialPeriodPoint>();
+  const periodTotals = new Map<string, FinancialPeriodPoint>();
+
+  for (const payment of payments) {
+    addFinancialAmount(employeeTotals, payment.employeeId, "incomeCents", payment.netCents);
+    addFinancialAmount(shiftTotals, payment.shiftId, "incomeCents", payment.netCents);
+    addFinancialAmount(periodTotals, getFinancialPeriodKey(payment.paidAt, filters), "incomeCents", payment.netCents);
+  }
+
+  for (const expense of expenses) {
+    addFinancialAmount(employeeTotals, expense.employeeId, "expenseCents", expense.amountCents);
+    addFinancialAmount(shiftTotals, expense.shiftId, "expenseCents", expense.amountCents);
+    addFinancialAmount(periodTotals, getFinancialPeriodKey(expense.occurredAt, filters), "expenseCents", expense.amountCents);
+  }
+
+  const periods = [...periodTotals.entries()]
+    .sort(([firstKey], [secondKey]) => firstKey.localeCompare(secondKey))
+    .map(([key, totals]) => ({ ...totals, label: formatFinancialPeriodLabel(key) }));
+  const employees = state.employees
+    .filter((employee) => employeeTotals.has(employee.id))
+    .map((employee) => toFinancialComparison(employee.id, employee.displayName, employeeTotals.get(employee.id)));
+  const shifts = state.shifts
+    .filter((shift) => shiftTotals.has(shift.id))
+    .map((shift) => toFinancialComparison(shift.id, shift.label ?? "Turno sin nombre", shiftTotals.get(shift.id)));
+  const projection = selectFinancialProjection(payments, expenses, filters.to);
+
+  return {
+    incomeCents,
+    expenseCents,
+    operatingResultCents: incomeCents - expenseCents,
+    paymentCount: payments.length,
+    expenseCount: expenses.length,
+    periods,
+    employees,
+    shifts,
+    projection,
+  };
+}
+
+function isFinancialRecordIncluded(
+  occurredAt: string,
+  employeeId: string,
+  shiftId: string,
+  filters: FinancialReportFilters,
+): boolean {
+  const dateKey = getLocalDateKey(new Date(occurredAt));
+  const matchesDate = dateKey >= filters.from && dateKey <= filters.to;
+  const matchesEmployee = filters.employeeId === "all" || employeeId === filters.employeeId;
+  const matchesShift = filters.shiftId === "all" || shiftId === filters.shiftId;
+
+  return matchesDate && matchesEmployee && matchesShift;
+}
+
+function addFinancialAmount(
+  totalsByKey: Map<string, FinancialPeriodPoint>,
+  key: string,
+  field: "incomeCents" | "expenseCents",
+  amountCents: number,
+): void {
+  const totals = totalsByKey.get(key) ?? {
+    label: key,
+    incomeCents: 0,
+    expenseCents: 0,
+    operatingResultCents: 0,
+  };
+
+  totals[field] += amountCents;
+  totals.operatingResultCents = totals.incomeCents - totals.expenseCents;
+  totalsByKey.set(key, totals);
+}
+
+function getFinancialPeriodKey(occurredAt: string, filters: FinancialReportFilters): string {
+  const dateKey = getLocalDateKey(new Date(occurredAt));
+  const firstDate = new Date(`${filters.from}T12:00:00Z`);
+  const lastDate = new Date(`${filters.to}T12:00:00Z`);
+  const daysInRange = Math.floor((lastDate.getTime() - firstDate.getTime()) / 86_400_000) + 1;
+
+  if (daysInRange > 31) {
+    return dateKey.slice(0, 7);
+  }
+
+  return dateKey;
+}
+
+function formatFinancialPeriodLabel(key: string): string {
+  if (key.length === 7) {
+    return new Intl.DateTimeFormat("es-AR", { month: "short", year: "2-digit", timeZone: "UTC" })
+      .format(new Date(`${key}-01T12:00:00Z`));
+  }
+
+  return new Intl.DateTimeFormat("es-AR", { day: "2-digit", month: "short", timeZone: "UTC" })
+    .format(new Date(`${key}T12:00:00Z`));
+}
+
+function toFinancialComparison(
+  id: string,
+  label: string,
+  totals: FinancialPeriodPoint | undefined,
+): FinancialComparisonPoint {
+  const incomeCents = totals?.incomeCents ?? 0;
+  const expenseCents = totals?.expenseCents ?? 0;
+
+  return { id, label, incomeCents, expenseCents, operatingResultCents: incomeCents - expenseCents };
+}
+
+function selectFinancialProjection(
+  payments: DemoPayment[],
+  expenses: DemoExpense[],
+  rangeEnd: string,
+): FinancialReport["projection"] {
+  const endDate = new Date(`${rangeEnd}T12:00:00Z`);
+  const windowStart = new Date(endDate);
+  windowStart.setUTCDate(windowStart.getUTCDate() - 6);
+  const activityByDate = new Map<string, number>();
+
+  for (const payment of payments) {
+    addProjectionAmount(activityByDate, payment.paidAt, payment.netCents, windowStart, endDate);
+  }
+
+  for (const expense of expenses) {
+    addProjectionAmount(activityByDate, expense.occurredAt, -expense.amountCents, windowStart, endDate);
+  }
+
+  const activeDays = activityByDate.size;
+  let sevenDayResultCents = 0;
+
+  for (const dailyResultCents of activityByDate.values()) {
+    sevenDayResultCents += dailyResultCents;
+  }
+
+  const dailyAverageCents = Math.round(sevenDayResultCents / 7);
+  const isSupported = activeDays === 7;
+
+  return {
+    status: isSupported ? "supported" : "insufficient",
+    activeDays,
+    dailyAverageCents,
+    nextWeekCents: isSupported ? sevenDayResultCents : 0,
+  };
+}
+
+function addProjectionAmount(
+  resultByDate: Map<string, number>,
+  occurredAt: string,
+  amountCents: number,
+  windowStart: Date,
+  windowEnd: Date,
+): void {
+  const dateKey = getLocalDateKey(new Date(occurredAt));
+  const date = new Date(`${dateKey}T12:00:00Z`);
+
+  if (date < windowStart || date > windowEnd) {
+    return;
+  }
+
+  resultByDate.set(dateKey, (resultByDate.get(dateKey) ?? 0) + amountCents);
 }
 
 function isWithinDateRange(value: string, range: DemoDateRange): boolean {

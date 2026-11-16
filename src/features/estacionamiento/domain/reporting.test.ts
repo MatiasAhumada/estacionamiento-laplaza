@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { DEMO_SEED_STATE } from "@/constants/demo-fixture.constant";
 import { applyDemoAction } from "./demo.operations";
 import { getLocalDateKey } from "./date.utils";
-import { selectDateRange, selectMovementRecords, selectReportSummary } from "./reporting";
+import { selectDateRange, selectFinancialReport, selectMovementRecords, selectReportSummary } from "./reporting";
 import { reportRangeSchema } from "../validation/report-range.schema";
 
 describe("historial y reportes de la demo", () => {
@@ -97,5 +97,80 @@ describe("historial y reportes de la demo", () => {
       from: "2026-01-01",
       to: "2026-11-09",
     });
+  });
+
+  it("concilia cobros y gastos por fecha, turno y empleado usando centavos", () => {
+    const stateWithExpense = {
+      ...DEMO_SEED_STATE,
+      expenses: [{
+        id: "expense-report-test",
+        shiftId: "shift-closed-yesterday",
+        employeeId: "employee-marcos",
+        category: "Insumos",
+        concept: "Material",
+        method: "efectivo" as const,
+        amountCents: 20_001,
+        occurredAt: "2026-11-08T12:00:00.000-03:00",
+      }],
+    };
+    const report = selectFinancialReport(stateWithExpense, {
+      from: "2026-11-08",
+      to: "2026-11-08",
+      employeeId: "employee-marcos",
+      shiftId: "shift-closed-yesterday",
+    });
+
+    assert.equal(report.incomeCents, 820_000);
+    assert.equal(report.expenseCents, 20_001);
+    assert.equal(report.operatingResultCents, 799_999);
+    assert.equal(report.periods[0]?.operatingResultCents, 799_999);
+    assert.equal(report.employees[0]?.label, "Marcos Díaz");
+    assert.equal(report.shifts[0]?.incomeCents, 820_000);
+    assert.equal(report.projection.status, "insufficient");
+    assert.equal(report.projection.activeDays, 1);
+  });
+
+  it("proyecta solo con actividad en los siete días de la ventana", () => {
+    const payments = Array.from({ length: 7 }, (_, index) => {
+      const day = String(index + 10).padStart(2, "0");
+
+      return {
+        ...DEMO_SEED_STATE.payments[0]!,
+        id: `payment-projection-${day}`,
+        stayId: `stay-projection-${day}`,
+        shiftId: "shift-current",
+        employeeId: "employee-ana",
+        netCents: 10_001,
+        paidAt: `2026-11-${day}T12:00:00.000-03:00`,
+      };
+    });
+    const expenses = Array.from({ length: 7 }, (_, index) => {
+      const day = String(index + 10).padStart(2, "0");
+
+      return {
+        id: `expense-projection-${day}`,
+        shiftId: "shift-current",
+        employeeId: "employee-ana",
+        category: "Insumos",
+        concept: "Material",
+        method: "efectivo" as const,
+        amountCents: 1,
+        occurredAt: `2026-11-${day}T13:00:00.000-03:00`,
+      };
+    });
+    const report = selectFinancialReport({ ...DEMO_SEED_STATE, payments, expenses }, {
+      from: "2026-11-10",
+      to: "2026-11-16",
+      employeeId: "employee-ana",
+      shiftId: "shift-current",
+    });
+
+    assert.equal(report.projection.status, "supported");
+    assert.equal(report.projection.activeDays, 7);
+    assert.equal(report.projection.dailyAverageCents, 10_000);
+    assert.equal(report.projection.nextWeekCents, 70_000);
+    assert.equal(report.periods.length, 7);
+    assert.equal(report.periods[0]?.incomeCents, 10_001);
+    assert.equal(report.periods[0]?.expenseCents, 1);
   });
 });
