@@ -10,20 +10,6 @@ import { normalizePlateFragment, isValidPlateFragment } from "./plate";
 import { getLocalDateKey } from "./date.utils";
 import { selectActiveShift, selectCashSummary, selectStayById } from "./selectors";
 
-function availablePosition(state: DemoState, category: DemoStay["category"]): string | undefined {
-  const sections = category === "moto" ? [["M", state.settings.motorcyclePositions], ["A", state.settings.autoPositions]] as const
-    : category === "auto" ? [["A", state.settings.autoPositions]] as const
-      : [["C", state.settings.vanPositions]] as const;
-  const occupied = new Set(state.stays.filter((stay) => stay.status === "active").map((stay) => stay.positionId));
-  for (const [prefix, count] of sections) {
-    for (let index = 1; index <= count; index += 1) {
-      const positionId = `${prefix}-${index.toString().padStart(2, "0")}`;
-      if (!occupied.has(positionId)) return positionId;
-    }
-  }
-  return undefined;
-}
-
 function succeed(state: DemoState): DemoOperationResult {
   return { success: true, state: { ...state, notice: undefined } };
 }
@@ -59,7 +45,6 @@ function registerEntry(state: DemoState, action: Extract<DemoAction, { type: "re
     enteredByEmployeeId: activeShift.employeeId,
     shiftId: activeShift.id,
     status: "active",
-    positionId: availablePosition(state, action.category),
   };
 
   return succeed({
@@ -356,7 +341,7 @@ function createAudit(state: DemoState, action: Extract<DemoAction, { type: "crea
   const employeeName = shift ? state.employees.find((employee) => employee.id === shift.employeeId)?.displayName ?? "Sin operador" : "Sin turno activo";
   const vehicles = state.stays.filter((stay) => stay.status === "active").map((stay) => ({
     stayId: stay.id, ticketNumber: stay.ticketNumber, plateFragment: stay.plateFragment,
-    category: stay.category, positionId: stay.positionId, enteredAt: stay.enteredAt,
+    category: stay.category, enteredAt: stay.enteredAt,
     employeeName: state.employees.find((employee) => employee.id === stay.enteredByEmployeeId)?.displayName ?? "No disponible",
     shiftId: stay.shiftId,
   }));

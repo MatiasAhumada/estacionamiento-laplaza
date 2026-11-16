@@ -1,6 +1,5 @@
-import { OccupancyMap } from "@/features/estacionamiento/components/occupancy-map";
+import { redirect } from "next/navigation";
 
-export default async function OccupancyPage({ searchParams }: Readonly<{ searchParams: Promise<{ modo?: string }> }>) {
-  const params = await searchParams;
-  return <OccupancyMap auditMode={params.modo === "auditoria"} />;
+export default function OccupancyPage() {
+  redirect("/admin");
 }

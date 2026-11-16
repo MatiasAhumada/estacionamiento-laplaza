@@ -33,7 +33,7 @@ const DEMO_ROLES = [
     eyebrow: "Supervisión",
     title: "Administración",
     description:
-      "Un espacio para revisar ocupación, movimientos, caja y reportes.",
+      "Un espacio para revisar estadías activas, movimientos, caja y reportes.",
     href: ROUTES.ADMIN,
     action: "Ver administración",
     key: "PANEL",

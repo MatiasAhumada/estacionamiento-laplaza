@@ -58,7 +58,6 @@ export const DEMO_SEED_STATE: DemoState = {
       enteredByEmployeeId: "employee-ana",
       shiftId: "shift-current",
       status: "active",
-      positionId: "A-01",
     },
     {
       id: "stay-active-002",
@@ -69,7 +68,6 @@ export const DEMO_SEED_STATE: DemoState = {
       enteredByEmployeeId: "employee-ana",
       shiftId: "shift-current",
       status: "active",
-      positionId: "C-01",
     },
     {
       id: "stay-active-003",
@@ -80,7 +78,6 @@ export const DEMO_SEED_STATE: DemoState = {
       enteredByEmployeeId: "employee-ana",
       shiftId: "shift-current",
       status: "active",
-      positionId: "M-01",
     },
   ],
   payments: [

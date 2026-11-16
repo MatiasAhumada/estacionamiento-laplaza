@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Home01Icon, ParkingAreaCircleIcon, Settings01Icon, Wallet01Icon } from "@hugeicons/core-free-icons";
+import { Home01Icon, Settings01Icon, Wallet01Icon } from "@hugeicons/core-free-icons";
 
 import { cn } from "@/lib/utils";
 
 const ADMIN_SECTIONS = [
   { href: "/admin", label: "Inicio", icon: Home01Icon },
-  { href: "/admin/ocupacion", label: "Ocupación", icon: ParkingAreaCircleIcon },
   { href: "/admin/turnos-cajas", label: "Turnos y Cajas", icon: Wallet01Icon },
   { href: "/admin/configuracion", label: "Configuración", icon: Settings01Icon },
 ] as const;
@@ -20,7 +19,7 @@ export function AdminSectionNavigation({ compact = false }: Readonly<{ compact?:
   return (
     <nav
       aria-label="Secciones de administración"
-      className={cn(compact ? "grid grid-cols-4 gap-1" : "grid gap-1.5")}
+      className={cn(compact ? "grid grid-cols-3 gap-1" : "grid gap-1.5")}
     >
       {ADMIN_SECTIONS.map(({ href, label, icon }) => {
         const isActive = pathname === href || (href !== "/admin" && pathname.startsWith(href));

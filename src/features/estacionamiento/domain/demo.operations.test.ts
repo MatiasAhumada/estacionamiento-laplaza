@@ -415,22 +415,22 @@ describe("estado demo del estacionamiento", () => {
 
   });
 
-  it("asigna una posición simulada libre y conserva la auditoría tras un egreso", () => {
+  it("registra ingresos sin asignar posiciones y conserva la auditoría tras un egreso", () => {
     const entry = applyDemoAction(DEMO_SEED_STATE, {
-      type: "register-entry", id: "stay-map-test", occurredAt: "2026-11-09T11:00:00.000-03:00",
+      type: "register-entry", id: "stay-no-position-test", occurredAt: "2026-11-09T11:00:00.000-03:00",
       plateFragment: "P45", category: "moto",
     });
-    assert.equal(entry.state.stays.at(-1)?.positionId, "M-02");
-    const audit = applyDemoAction(entry.state, { type: "create-audit", id: "audit-map-test", occurredAt: "2026-11-09T11:10:00.000-03:00" });
-    assert.equal(audit.state.audits.at(-1)?.vehicles.find((vehicle) => vehicle.stayId === "stay-map-test")?.positionId, "M-02");
+    assert.equal(entry.state.stays.at(-1)?.positionId, undefined);
+    const audit = applyDemoAction(entry.state, { type: "create-audit", id: "audit-text-test", occurredAt: "2026-11-09T11:10:00.000-03:00" });
+    assert.equal(audit.state.audits.at(-1)?.vehicles.find((vehicle) => vehicle.stayId === "stay-no-position-test")?.positionId, undefined);
     const tariff = audit.state.tariffs.find((item) => item.category === "moto");
     assert.ok(tariff);
     const price = calculateStayPrice("2026-11-09T11:00:00.000-03:00", "2026-11-09T12:00:00.000-03:00", tariff);
     assert.ok(price);
-    const exit = applyDemoAction(audit.state, { type: "confirm-payment-and-exit", id: "payment-map-test", occurredAt: "2026-11-09T12:00:00.000-03:00", stayId: "stay-map-test", method: "debito", totalCents: price.totalCents, requestInvoice: false });
+    const exit = applyDemoAction(audit.state, { type: "confirm-payment-and-exit", id: "payment-no-position-test", occurredAt: "2026-11-09T12:00:00.000-03:00", stayId: "stay-no-position-test", method: "debito", totalCents: price.totalCents, requestInvoice: false });
     assert.equal(exit.success, true);
-    assert.equal(selectActiveStays(exit.state).some((stay) => stay.id === "stay-map-test"), false);
-    assert.equal(exit.state.audits.at(-1)?.vehicles.some((vehicle) => vehicle.stayId === "stay-map-test"), true);
+    assert.equal(selectActiveStays(exit.state).some((stay) => stay.id === "stay-no-position-test"), false);
+    assert.equal(exit.state.audits.at(-1)?.vehicles.some((vehicle) => vehicle.stayId === "stay-no-position-test"), true);
   });
 
   it("descuenta una vez el gasto en efectivo y conserva empleados desactivados", () => {
@@ -456,13 +456,14 @@ describe("estado demo del estacionamiento", () => {
   });
 
   it("restaura sesiones antiguas con los campos nuevos de administración", () => {
-    const legacyState = { ...DEMO_SEED_STATE, expenses: undefined, audits: undefined, settings: { capacity: 80, connectionScenario: "online" } };
+    const legacyState = { ...DEMO_SEED_STATE, expenses: undefined, audits: undefined, stays: DEMO_SEED_STATE.stays.map((stay) => ({ ...stay, positionId: `LEGACY-${stay.ticketNumber}` })), settings: { capacity: 80, connectionScenario: "online" } };
     const loaded = parseDemoState(JSON.stringify({ version: DEMO_STORAGE_VERSION, savedAt: "2026-11-09T12:00:00.000-03:00", state: legacyState }));
     assert.equal(loaded.status, "restored");
     if (loaded.status === "restored") {
       assert.deepEqual(loaded.state.expenses, []);
       assert.deepEqual(loaded.state.audits, []);
       assert.equal(loaded.state.settings.capacity, 30);
+      assert.equal(loaded.state.stays[2]?.positionId, "LEGACY-3");
     }
   });
 });

@@ -72,7 +72,7 @@ function getMovementTitle(kind: DemoMovementKind): string {
   }
 
   if (kind === "audit") {
-    return "Auditoría de ocupación";
+    return "Auditoría de estadías activas";
   }
 
   return "Cierre de turno";

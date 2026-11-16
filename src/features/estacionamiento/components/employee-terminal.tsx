@@ -585,7 +585,7 @@ export function EmployeeTerminal() {
               <p className="text-xs font-medium text-muted-foreground">En playa</p>
               <p className="font-display mt-1 text-2xl font-bold tabular-nums text-primary">{occupancy.active}</p>
             </div>
-            <p className="pb-1 text-xs text-muted-foreground">de {occupancy.capacity} lugares ilustrativos</p>
+            <p className="pb-1 text-xs text-muted-foreground">de {occupancy.capacity} vehículos de referencia</p>
           </CardContent>
         </Card>
         <Card className="gap-2 rounded-2xl py-4 shadow-sm" size="sm">
@@ -655,7 +655,7 @@ export function EmployeeTerminal() {
       </Card>
 
       <p className="mt-auto border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
-        La Plaza es una simulación visual. No controla barreras, espacios ni dispositivos físicos.
+        La Plaza es una simulación visual. No asigna cocheras ni controla dispositivos físicos.
       </p>
 
       <Dialog onOpenChange={(open) => { if (!open) { resetDialog(); } }} open={Boolean(dialog)}>
