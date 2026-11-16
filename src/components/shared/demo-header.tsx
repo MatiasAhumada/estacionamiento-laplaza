@@ -1,5 +1,4 @@
-import { DemoRoleNavigation } from "@/components/shared/demo-role-navigation";
-import { DemoResetControl } from "@/components/shared/demo-reset-control";
+import { DemoSessionControl } from "@/components/shared/demo-session-control";
 import { ParkingBrand } from "@/components/shared/parking-brand";
 
 type DemoHeaderProps = {
@@ -28,14 +27,11 @@ export function DemoHeader({ compact = false }: DemoHeaderProps) {
           <p className="hidden text-xs text-muted-foreground sm:block">
             {getHeaderContext(compact)}
           </p>
-          <DemoRoleNavigation />
-          <div className="self-end sm:self-auto">
-            <DemoResetControl />
-          </div>
+          <DemoSessionControl />
         </div>
       </div>
       <p className="border-t border-border/70 px-4 py-2 text-center text-xs text-muted-foreground sm:hidden">
-        Simulación de roles · No es autenticación
+        Simulación de acceso · No es autenticación
       </p>
     </header>
   );

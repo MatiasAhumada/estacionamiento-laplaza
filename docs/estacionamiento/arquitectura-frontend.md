@@ -28,4 +28,10 @@ Las acciones del reducer representan operaciones completas (`registerEntry`, `co
 
 Reutilizar `Button`, `Dialog`, `Input`, `Label`, `Select`, `Card`, `Table` y Sonner; extender variantes CVA y tokens en `globals.css`. Evaluar `GenericModal` y `DataTable` antes de uso; sus implementaciones actuales no son patrón a replicar. Incorporar otras primitivas shadcn solo cuando el ticket las requiera. Separar terminal y panel administrativo mediante layouts compartidos. Terminal optimizada para escritorio con adaptación móvil; administración mobile first con cards o tabla adaptada.
 
-El límite de sustitución futura es el origen de acciones y lecturas de dominio. Cuando exista backend, cambiar la implementación de esa capa por servicios Axios tipados y manejo centralizado de errores; no introducir API ni interfaz abstracta vacía ahora. Autenticación/autorización real, persistencia y sincronización se diseñarán por separado. El selector de rol de demo no es un control de seguridad.
+El límite de sustitución futura es el origen de acciones y lecturas de dominio. Cuando exista backend, cambiar la implementación de esa capa por servicios Axios tipados y manejo centralizado de errores; no introducir API ni interfaz abstracta vacía ahora. Autenticación/autorización real, persistencia y sincronización se diseñarán por separado. Las restricciones de navegación en el cliente no son controles de seguridad.
+
+## Acceso de demostración por rol
+
+La portada ofrece un login simulado para administración y empleados activos de la fuente de datos de la demo. La sesión del rol vive en `sessionStorage`, separada de `la-plaza-demo-state`; cerrar sesión elimina solo la sesión visual y conserva los datos operativos. Las rutas `/admin` y `/empleado` muestran una carga neutra mientras se verifica la sesión y redirigen al login si falta el rol correspondiente. Las credenciales son públicas dentro del frontend y se muestran en el login.
+
+La validación de credenciales y la protección de navegación se ejecutan en el cliente y pueden eludirse modificando el navegador. No protegen datos ni sustituyen autenticación o autorización real. Un despliegue con información sensible requiere validar la sesión y los permisos en el servidor antes de entregar páginas o datos y proteger cada operación en el backend.

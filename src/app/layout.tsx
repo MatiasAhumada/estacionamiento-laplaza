@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { DemoProvider } from "@/features/estacionamiento/demo/demo-provider";
+import { DemoAuthProvider } from "@/features/estacionamiento/auth/demo-auth-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,10 +31,17 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={cn("h-full", "antialiased", inter.variable, plusJakartaSans.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        inter.variable,
+        plusJakartaSans.variable,
+      )}
     >
       <body className="min-h-full flex flex-col">
-        <DemoProvider>{children}</DemoProvider>
+        <DemoProvider>
+          <DemoAuthProvider>{children}</DemoAuthProvider>
+        </DemoProvider>
       </body>
     </html>
   );

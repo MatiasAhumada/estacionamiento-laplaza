@@ -1,5 +1,9 @@
 export const DEMO_STORAGE_KEY = "la-plaza-demo-state";
 export const DEMO_STORAGE_VERSION = 1;
+export const DEMO_SESSION_KEY = "la-plaza-demo-session";
+export const DEMO_ADMIN_USERNAME = "admin";
+export const DEMO_ADMIN_PASSWORD = "admin123";
+export const DEMO_EMPLOYEE_PASSWORD = "empleado123";
 export const DEMO_CAPACITY = 80;
 export const DEMO_CURRENCY = "ARS";
 export const DEMO_LOCALE = "es-AR";

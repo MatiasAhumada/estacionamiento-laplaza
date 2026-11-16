@@ -2,7 +2,7 @@
 
 ## Actores y alcance
 
-Playa atendida por personas. El **empleado** registra ingresos, cobra salidas, consulta turno, arquea y cierra caja desde una terminal sencilla. El **administrador** consulta ocupación, estadías, movimientos, empleados, tarifas de demo, recaudación, arqueos, diferencias y reportes. Un selector de rol claramente marcado «modo demostración» representa los roles, sin permisos reales.
+Playa atendida por personas. El **empleado** registra ingresos, cobra salidas, consulta turno, arquea y cierra caja desde una terminal sencilla. El **administrador** consulta ocupación, estadías, movimientos, empleados, tarifas de demo, recaudación, arqueos, diferencias y reportes. Un login compartido claramente marcado «modo demostración» representa los roles y limita la navegación del frontend; no ofrece autenticación ni permisos reales de producción.
 
 La secuencia es **ingreso → estadía activa → cálculo y cobro → egreso**. No existen cámaras, barreras, sensores, OCR, escáner ni asignación de espacio físico. La capacidad es un parámetro ilustrativo, no un dato contractual.
 
