@@ -32,6 +32,7 @@ import type { DemoMovementKind } from "@/features/estacionamiento/domain/demo.ty
 import type { DemoMovementFilters } from "@/features/estacionamiento/domain/reporting.types";
 import { selectMovementRecords } from "@/features/estacionamiento/domain/reporting";
 import { movementRangeSchema } from "@/features/estacionamiento/validation/movement-range.schema";
+import { AuditHistoryDialog } from "@/features/estacionamiento/components/audit-receipt";
 
 const currencyFormatter = new Intl.NumberFormat(DEMO_LOCALE, {
   currency: DEMO_CURRENCY,
@@ -118,9 +119,7 @@ function MovementDetails({
 
   if (record.audit) {
     return (
-      <p className="text-xs text-muted-foreground">
-        Auditoría #{record.audit.number} · {record.audit.vehicles.length} estadías activas · Capacidad ilustrativa {record.audit.capacity}
-      </p>
+      <div><p className="text-xs text-muted-foreground">Auditoría #{record.audit.number} · {record.audit.vehicles.length} estadías capturadas</p><AuditHistoryDialog audit={record.audit} shift={record.shift} /></div>
     );
   }
 

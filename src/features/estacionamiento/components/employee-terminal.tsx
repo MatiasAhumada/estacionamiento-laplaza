@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EntryTicket } from "@/features/estacionamiento/components/entry-ticket";
+import { EmployeeAuditDialog } from "@/features/estacionamiento/components/employee-audit-dialog";
 import {
   Dialog,
   DialogContent,
@@ -482,7 +483,10 @@ export function EmployeeTerminal() {
           <p className="mt-2 max-w-xl text-sm leading-6 text-sky-100 sm:mt-3 sm:text-base">
             Registrá ingresos y cobros del turno desde una sola pantalla.
           </p>
-          <Button asChild className="mt-4 border-white/30 bg-white/10 text-white hover:bg-white/20" variant="outline"><a href="#caja-turno">Caja y arqueo ↓</a></Button>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+            <Button asChild className="border-white/30 bg-white/10 text-white hover:bg-white/20" variant="outline"><a href="#caja-turno">Caja y arqueo ↓</a></Button>
+            <EmployeeAuditDialog />
+          </div>
         </div>
         <div className="flex min-w-0 items-center justify-between gap-4 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 sm:min-w-64 sm:justify-start">
           <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-action font-display text-lg font-bold text-action-foreground">

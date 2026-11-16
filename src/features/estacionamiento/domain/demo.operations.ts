@@ -338,8 +338,17 @@ function recordExpense(state: DemoState, action: Extract<DemoAction, { type: "re
 
 function createAudit(state: DemoState, action: Extract<DemoAction, { type: "create-audit" }>): DemoOperationResult {
   const shift = selectActiveShift(state);
-  const employeeName = shift ? state.employees.find((employee) => employee.id === shift.employeeId)?.displayName ?? "Sin operador" : "Sin turno activo";
-  const vehicles = state.stays.filter((stay) => stay.status === "active").map((stay) => ({
+  if (!shift) {
+    return reject(state, "Abrí un turno para emitir una auditoría.");
+  }
+  const employeeName = state.employees.find((employee) => employee.id === shift.employeeId)?.displayName ?? "Sin operador";
+  const vehicles = state.stays.filter((stay) => stay.status === "active").toSorted((first, second) => {
+    const timeOrder = Date.parse(first.enteredAt) - Date.parse(second.enteredAt);
+    if (timeOrder !== 0) return timeOrder;
+    const ticketOrder = first.ticketNumber - second.ticketNumber;
+    if (ticketOrder !== 0) return ticketOrder;
+    return first.id.localeCompare(second.id);
+  }).map((stay) => ({
     stayId: stay.id, ticketNumber: stay.ticketNumber, plateFragment: stay.plateFragment,
     category: stay.category, enteredAt: stay.enteredAt,
     employeeName: state.employees.find((employee) => employee.id === stay.enteredByEmployeeId)?.displayName ?? "No disponible",
@@ -347,7 +356,7 @@ function createAudit(state: DemoState, action: Extract<DemoAction, { type: "crea
   }));
   return succeed({ ...state, audits: [...state.audits, {
     id: action.id, number: state.audits.length + 1, createdAt: action.occurredAt,
-    shiftId: shift?.id, employeeName, vehicles, capacity: state.settings.capacity,
+    shiftId: shift.id, employeeName, vehicles, capacity: state.settings.capacity,
     parkingName: state.settings.parkingName,
     motorcyclePositions: state.settings.motorcyclePositions,
     autoPositions: state.settings.autoPositions,

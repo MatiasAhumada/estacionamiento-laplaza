@@ -433,6 +433,30 @@ describe("estado demo del estacionamiento", () => {
     assert.equal(exit.state.audits.at(-1)?.vehicles.some((vehicle) => vehicle.stayId === "stay-no-position-test"), true);
   });
 
+  it("requiere un turno abierto y conserva una lista vacía como auditoría válida", () => {
+    const closedState = { ...DEMO_SEED_STATE, shifts: DEMO_SEED_STATE.shifts.map((shift) => shift.status === "open" ? { ...shift, status: "closed" as const, closedAt: "2026-11-09T16:00:00.000-03:00" } : shift) };
+    const rejected = applyDemoAction(closedState, { type: "create-audit", id: "audit-closed", occurredAt: "2026-11-09T16:01:00.000-03:00" });
+    assert.equal(rejected.success, false);
+    assert.equal(rejected.state.audits.some((audit) => audit.id === "audit-closed"), false);
+
+    const emptyState = { ...DEMO_SEED_STATE, stays: DEMO_SEED_STATE.stays.map((stay) => ({ ...stay, status: "closed" as const })) };
+    const emptyAudit = applyDemoAction(emptyState, { type: "create-audit", id: "audit-empty", occurredAt: "2026-11-09T16:01:00.000-03:00" });
+    assert.equal(emptyAudit.success, true);
+    assert.deepEqual(emptyAudit.state.audits.at(-1)?.vehicles, []);
+    assert.equal(emptyAudit.state.audits.at(-1)?.shiftId, "shift-current");
+  });
+
+  it("ordena la captura por ingreso y distingue fragmentos repetidos por ticket e ID", () => {
+    const audit = applyDemoAction(DEMO_SEED_STATE, { type: "create-audit", id: "audit-order", occurredAt: "2026-11-09T16:01:00.000-03:00" });
+    assert.equal(audit.success, true);
+    const vehicles = audit.state.audits.at(-1)?.vehicles ?? [];
+    assert.deepEqual(vehicles.map((vehicle) => vehicle.enteredAt), vehicles.map((vehicle) => vehicle.enteredAt).toSorted((first, second) => Date.parse(first) - Date.parse(second)));
+    const duplicates = vehicles.filter((vehicle) => vehicle.plateFragment === "782Z");
+    assert.equal(new Set(duplicates.map((vehicle) => vehicle.stayId)).size, duplicates.length);
+    assert.equal(new Set(duplicates.map((vehicle) => vehicle.ticketNumber)).size, duplicates.length);
+    assert.equal(vehicles.every((vehicle) => !vehicle.positionId), true);
+  });
+
   it("descuenta una vez el gasto en efectivo y conserva empleados desactivados", () => {
     const expense = applyDemoAction(DEMO_SEED_STATE, { type: "record-expense", id: "expense-test", occurredAt: "2026-11-09T12:00:00.000-03:00", expenseDate: "2026-11-09T12:00:00.000-03:00", category: "Insumos", concept: "Papel", method: "efectivo", amountCents: 5_000 });
     assert.equal(expense.success, true);

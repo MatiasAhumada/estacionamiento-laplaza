@@ -215,10 +215,10 @@
   .audit-print h1 { font-size: 20px; font-weight: bold; }
   .audit-print h2 { margin: 8px 0; font-size: 15px; font-weight: bold; }
   .audit-print h3 { margin-top: 16px; font-size: 13px; font-weight: bold; }
-  .audit-print-map { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin: 16px 0; }
-  .audit-print-map > div { min-height: 32px; border: 1px solid #999; padding: 4px; }
-  .audit-print table { width: 100%; border-collapse: collapse; }
-  .audit-print th, .audit-print td { border: 1px solid #999; padding: 5px; text-align: left; }
+  .audit-print header { border-color: #023047; }
+  .audit-print ol { list-style: none; padding: 0; }
+  .audit-print li { break-inside: avoid; border: 1px solid #bbb; }
+  .audit-print > p { color: #333; }
 
   .entry-ticket-print {
     position: static !important;
